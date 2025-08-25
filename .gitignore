@@ -1,0 +1,207 @@
+# =====================================
+# GITIGNORE - PROJETO GLOJAS MONOREPO
+# =====================================
+
+# =====================================
+# JAVA / MAVEN (Legacy API)
+# =====================================
+legacy-api/target/
+legacy-api/*.jar
+legacy-api/*.war
+legacy-api/*.ear
+legacy-api/*.class
+legacy-api/*.log
+legacy-api/.mvn/
+legacy-api/mvnw
+legacy-api/mvnw.cmd
+
+# Business API (quando implementado)
+business-api/target/
+business-api/*.jar
+business-api/*.war
+business-api/*.ear
+business-api/*.class
+business-api/*.log
+business-api/.mvn/
+business-api/mvnw
+business-api/mvnw.cmd
+
+# =====================================
+# NODE.JS / FRONTEND
+# =====================================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+frontend/.nuxt/
+frontend/.vuepress/dist/
+frontend/.serverless/
+frontend/.fusebox/
+frontend/.dynamodb/
+frontend/.tern-port
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/lerna-debug.log*
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# =====================================
+# IDEs E EDITORES
+# =====================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# =====================================
+# SISTEMA OPERACIONAL
+# =====================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =====================================
+# LOGS E TEMPORARIOS
+# =====================================
+*.log
+*.tmp
+*.temp
+*.cache
+logs/
+temp/
+tmp/
+
+# =====================================
+# CONFIGURAÇÕES SENSÍVEIS
+# =====================================
+# Arquivos de configuração com senhas
+*.env
+.env
+.env.local
+.env.production
+config/secrets.yml
+application-prod.yml
+application-production.yml
+
+# Chaves e certificados
+*.key
+*.pem
+*.p12
+*.jks
+*.keystore
+
+# =====================================
+# DEPENDÊNCIAS E BUILDS
+# =====================================
+# Maven
+.m2/
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# Gradle
+.gradle/
+gradle-wrapper.jar
+gradlew
+gradlew.bat
+
+# =====================================
+# DOCKER
+# =====================================
+.dockerignore
+docker-compose.override.yml
+
+# =====================================
+# DATABASES
+# =====================================
+*.db
+*.sqlite
+*.sqlite3
+database/dumps/
+database/backups/
+
+# =====================================
+# ARQUIVOS DE TESTE
+# =====================================
+coverage/
+.nyc_output/
+*.test.js.snap
+junit.xml
+test-results/
+
+# =====================================
+# ARQUIVOS ESPECÍFICOS DO PROJETO
+# =====================================
+# Scripts de teste temporários
+test-api.ps1
+test-*.ps1
+temp-*
+*.backup
+
+# Arquivos de configuração local
+local-config.*
+dev-config.*
+
+# =====================================
+# FERRAMENTAS DE BUILD
+# =====================================
+.tool-versions
+.nvmrc
+.sdkmanrc
