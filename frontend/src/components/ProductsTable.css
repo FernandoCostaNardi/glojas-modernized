@@ -1,0 +1,176 @@
+/* Container da tabela */
+.products-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Informações da tabela */
+.table-info {
+  background: #f8f9fa;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.table-info p {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Wrapper para scroll horizontal */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Tabela */
+.products-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.products-table th {
+  background: #667eea;
+  color: white;
+  padding: 1rem 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.products-table td {
+  padding: 0.875rem 0.75rem;
+  border-bottom: 1px solid #e9ecef;
+  vertical-align: middle;
+}
+
+.products-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.products-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.products-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Status badges */
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status.ativo {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status.inativo {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status.bloqueado {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+/* Estado sem produtos */
+.no-products {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: white;
+}
+
+.no-products p {
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+/* Paginação */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  background: white;
+  border: 1px solid #dee2e6;
+  color: #6c757d;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  min-width: 44px;
+  text-align: center;
+}
+
+.pagination-btn:hover:not(.active) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+  color: #495057;
+}
+
+.pagination-btn.active {
+  background: #667eea;
+  border-color: #667eea;
+  color: white;
+  font-weight: 600;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .products-table {
+    font-size: 0.8rem;
+  }
+  
+  .products-table th,
+  .products-table td {
+    padding: 0.5rem 0.4rem;
+  }
+  
+  .table-info {
+    padding: 0.75rem 1rem;
+  }
+  
+  .table-info p {
+    font-size: 0.8rem;
+  }
+  
+  .pagination {
+    padding: 1rem;
+    gap: 0.25rem;
+  }
+  
+  .pagination-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    min-width: 36px;
+  }
+}

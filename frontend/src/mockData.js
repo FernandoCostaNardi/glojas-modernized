@@ -1,0 +1,92 @@
+// Mock data para testar sem API
+export const mockProducts = {
+  content: [
+    {
+      id: 1,
+      codigo: 'PROD001',
+      descricao: 'Notebook Dell Inspiron 15 3000',
+      preco: 2299.99,
+      estoque: 15,
+      status: 'ATIVO',
+    },
+    {
+      id: 2,
+      codigo: 'PROD002',
+      descricao: 'Mouse Logitech MX Master 3',
+      preco: 299.9,
+      estoque: 32,
+      status: 'ATIVO',
+    },
+    {
+      id: 3,
+      codigo: 'PROD003',
+      descricao: 'Teclado Mecânico Corsair K95',
+      preco: 899.99,
+      estoque: 8,
+      status: 'INATIVO',
+    },
+    {
+      id: 4,
+      codigo: 'PROD004',
+      descricao: 'Monitor Samsung 27" 4K',
+      preco: 1599.99,
+      estoque: 0,
+      status: 'BLOQUEADO',
+    },
+    {
+      id: 5,
+      codigo: 'PROD005',
+      descricao: 'Headset HyperX Cloud II',
+      preco: 399.99,
+      estoque: 25,
+      status: 'ATIVO',
+    },
+    {
+      id: 6,
+      codigo: 'PROD006',
+      descricao: 'SSD Kingston 1TB NVMe',
+      preco: 599.99,
+      estoque: 18,
+      status: 'ATIVO',
+    },
+    {
+      id: 7,
+      codigo: 'PROD007',
+      descricao: 'Placa de Vídeo RTX 4060',
+      preco: 2799.99,
+      estoque: 3,
+      status: 'ATIVO',
+    },
+    {
+      id: 8,
+      codigo: 'PROD008',
+      descricao: 'Cadeira Gamer DXRacer',
+      preco: 1199.99,
+      estoque: 12,
+      status: 'ATIVO',
+    },
+    {
+      id: 9,
+      codigo: 'PROD009',
+      descricao: 'Webcam Logitech C920',
+      preco: 449.99,
+      estoque: 7,
+      status: 'INATIVO',
+    },
+    {
+      id: 10,
+      codigo: 'PROD010',
+      descricao: 'Smartphone Samsung Galaxy S24',
+      preco: 3499.99,
+      estoque: 9,
+      status: 'ATIVO',
+    },
+  ],
+  totalPages: 3,
+  totalElements: 25,
+  number: 0,
+  size: 10,
+};
+
+// Função para simular delay da API
+export const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
