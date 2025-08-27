@@ -48,3 +48,9 @@ logging:
     root: INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Configurações para integração com Legacy API
+legacy-api:
+  base-url: http://localhost:8082
+  context-path: /api/legacy
+  timeout: 30

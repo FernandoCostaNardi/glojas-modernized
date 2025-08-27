@@ -4,7 +4,7 @@ echo INICIANDO LEGACY API COM JAVA 8
 echo ========================================
 
 echo Configurando Java 8...
-set JAVA_HOME=I:\Program Files\Java\jdk1.8.0_211
+set JAVA_HOME=C:\Program Files\Java\jdk1.8.0_211
 set PATH=%JAVA_HOME%\bin;%PATH%
 
 echo Verificando versao do Java:
