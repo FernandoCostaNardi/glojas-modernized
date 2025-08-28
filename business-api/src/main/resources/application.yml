@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8082
   servlet:
     context-path: /api/business
 
@@ -38,6 +38,33 @@ spring:
         format_sql: true
     open-in-view: false
 
+    # Configuração Flyway
+  flyway:
+    enabled: false
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    locations: classpath:db/migration
+    schemas: public
+    baseline-version: 0
+  
+  # Configurações JWT
+  jwt:
+    secret: Z2xvamFzLXNlY3JldC1rZXktMjAyNC12ZXJ5LXNlY3VyZS1zdHJpbmctY2hhbmdlLWluLXByb2R1Y3Rpb24tYXQtbGVhc3QtNjQtY2hhcmFjdGVycy1sb25n
+    expiration: 86400000 # 24 horas em millisegundos
+    
+  # Configurações Email (para reset de senha)
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME:}
+    password: ${EMAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 # Actuator para health checks
 management:
   endpoints:
@@ -50,7 +77,9 @@ management:
 
 logging:
   level:
-    com.sysconard.business: INFO
+    com.sysconard.business: DEBUG
+    org.springframework.security: DEBUG
+    org.flywaydb: DEBUG
     root: INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
