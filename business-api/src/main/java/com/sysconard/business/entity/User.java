@@ -1,25 +1,39 @@
 package com.sysconard.business.entity;
 
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
+/**
+ * Entidade User que representa um usuário no sistema.
+ * Implementa UserDetails para integração com Spring Security.
+ * Utiliza Lombok para reduzir boilerplate e melhorar manutenibilidade.
+ * Usa UUID como chave primária para melhor distribuição e segurança.
+ */
 @Entity
 @Table(name = "users")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements UserDetails {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
     
     @Column(unique = true, nullable = false)
@@ -44,9 +58,11 @@ public class User implements UserDetails {
     private LocalDateTime joinDate;
     
     @Column(name = "is_active")
+    @Builder.Default
     private boolean isActive = true;
     
     @Column(name = "is_not_locked")
+    @Builder.Default
     private boolean isNotLocked = true;
     
     // Relacionamento M:N com roles
@@ -56,59 +72,10 @@ public class User implements UserDetails {
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
     
-    // Construtores
-    public User() {}
-    
-    public User(String name, String username, String email, String password) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.joinDate = LocalDateTime.now();
-    }
-    
-    // Getters e Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    
-    public String getProfileImageUrl() { return profileImageUrl; }
-    public void setProfileImageUrl(String profileImageUrl) { this.profileImageUrl = profileImageUrl; }
-    
-    public LocalDateTime getLastLoginDate() { return lastLoginDate; }
-    public void setLastLoginDate(LocalDateTime lastLoginDate) { this.lastLoginDate = lastLoginDate; }
-    
-    public LocalDateTime getLastLoginDateDisplay() { return lastLoginDateDisplay; }
-    public void setLastLoginDateDisplay(LocalDateTime lastLoginDateDisplay) { this.lastLoginDateDisplay = lastLoginDateDisplay; }
-    
-    public LocalDateTime getJoinDate() { return joinDate; }
-    public void setJoinDate(LocalDateTime joinDate) { this.joinDate = joinDate; }
-    
-    public boolean isActive() { return isActive; }
-    public void setActive(boolean active) { isActive = active; }
-    
-    public boolean isNotLocked() { return isNotLocked; }
-    public void setNotLocked(boolean notLocked) { isNotLocked = notLocked; }
-    
-    public Set<Role> getRoles() { return roles; }
-    public void setRoles(Set<Role> roles) { this.roles = roles; }
-    
     // UserDetails implementation
-    @Override
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-    
-    @Override
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authorities = new HashSet<>();
@@ -126,16 +93,24 @@ public class User implements UserDetails {
     }
     
     @Override
-    public boolean isAccountNonExpired() { return true; }
+    public boolean isAccountNonExpired() { 
+        return true; 
+    }
     
     @Override
-    public boolean isAccountNonLocked() { return isNotLocked; }
+    public boolean isAccountNonLocked() { 
+        return isNotLocked; 
+    }
     
     @Override
-    public boolean isCredentialsNonExpired() { return true; }
+    public boolean isCredentialsNonExpired() { 
+        return true; 
+    }
     
     @Override
-    public boolean isEnabled() { return isActive; }
+    public boolean isEnabled() { 
+        return isActive; 
+    }
     
     // Métodos auxiliares
     public void addRole(Role role) {

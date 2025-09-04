@@ -1,17 +1,32 @@
 package com.sysconard.business.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
+/**
+ * Entidade Role que representa uma role/perfil no sistema.
+ * Utiliza Lombok para reduzir boilerplate e melhorar manutenibilidade.
+ * Usa UUID como chave primária para melhor distribuição e segurança.
+ */
 @Entity
 @Table(name = "roles")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     
     @Column(unique = true, nullable = false)
     private String name;
@@ -20,7 +35,8 @@ public class Role {
     private String description;
     
     @Column(name = "is_active")
-    private boolean isActive = true;
+    @Builder.Default
+    private boolean active = true;
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -35,39 +51,8 @@ public class Role {
         joinColumns = @JoinColumn(name = "role_id"),
         inverseJoinColumns = @JoinColumn(name = "permission_id")
     )
+    @Builder.Default
     private Set<Permission> permissions = new HashSet<>();
-    
-    // Construtores
-    public Role() {}
-    
-    public Role(String name, String description) {
-        this.name = name;
-        this.description = description;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-    }
-    
-    // Getters e Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    
-    public boolean isActive() { return isActive; }
-    public void setActive(boolean active) { isActive = active; }
-    
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-    
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
-    
-    public Set<Permission> getPermissions() { return permissions; }
-    public void setPermissions(Set<Permission> permissions) { this.permissions = permissions; }
     
     // Métodos auxiliares
     public void addPermission(Permission permission) {

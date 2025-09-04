@@ -1,0 +1,38 @@
+# Configuração específica para testes
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.H2Dialect
+  
+  h2:
+    console:
+      enabled: false
+  
+  # Desabilitar Flyway para testes
+  flyway:
+    enabled: false
+
+# Configurações de logging para testes
+logging:
+  level:
+    com.sysconard.business: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Configurações de segurança para testes
+jwt:
+  secret: test-secret-key-for-testing-purposes-only
+  expiration: 86400000 # 24 horas em milissegundos

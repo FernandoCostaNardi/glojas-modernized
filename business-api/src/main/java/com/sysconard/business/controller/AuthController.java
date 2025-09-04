@@ -14,8 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,16 +36,16 @@ public class AuthController {
     private JwtService jwtService;
     
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         logger.info("=== INICIANDO LOGIN ===");
-        logger.info("Username recebido: {}", loginRequest.getUsername());
-        logger.info("Password recebido: {}", loginRequest.getPassword() != null ? "***" : "NULL");
+        logger.info("Email recebido: {}", loginRequest.email());
+        logger.info("Password recebido: {}", loginRequest.password() != null ? "***" : "NULL");
         
         try {
             logger.info("Criando token de autenticação...");
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                loginRequest.getUsername(), 
-                loginRequest.getPassword()
+                loginRequest.email(), 
+                loginRequest.password()
             );
             
             logger.info("Tentando autenticar com AuthenticationManager...");
@@ -56,6 +61,7 @@ public class AuthController {
             // Buscar dados completos do usuário
             User user = (User) userDetails;
             logger.info("Usuário encontrado: {} (ID: {})", user.getUsername(), user.getId());
+            logger.info("Email do usuário: {}", user.getEmail());
             
             // Extrair roles e permissions
             logger.info("Extraindo roles e permissions...");
@@ -86,13 +92,35 @@ public class AuthController {
             logger.error("Exceção capturada: {}", e.getClass().getSimpleName());
             logger.error("Mensagem de erro: {}", e.getMessage());
             logger.error("Stack trace:", e);
-            return ResponseEntity.badRequest().build();
+            
+            // Retornar erro mais específico
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Erro na autenticação");
+            errorResponse.put("message", e.getMessage());
+            
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
     
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        logger.info("Teste do endpoint /auth/test");
-        return ResponseEntity.ok("Auth endpoint funcionando!");
+    /**
+     * Handler para erros de validação
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, Object> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        
+        logger.error("Erro de validação no login: {}", errors);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("error", "Erro de validação");
+        response.put("details", errors);
+        
+        return ResponseEntity.badRequest().body(response);
     }
+   
 }

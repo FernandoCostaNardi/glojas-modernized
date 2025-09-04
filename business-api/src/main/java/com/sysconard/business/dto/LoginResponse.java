@@ -2,62 +2,35 @@ package com.sysconard.business.dto;
 
 import java.util.Set;
 
-public class LoginResponse {
-    private String token;
-    private String username;
-    private String name;
-    private Set<String> roles;
-    private Set<String> permissions;
-    
-    // Construtores
-    public LoginResponse() {}
-    
-    public LoginResponse(String token, String username, String name, Set<String> roles, Set<String> permissions) {
-        this.token = token;
-        this.username = username;
-        this.name = name;
-        this.roles = roles;
-        this.permissions = permissions;
-    }
-    
-    // Getters e Setters
-    public String getToken() {
-        return token;
-    }
-    
-    public void setToken(String token) {
-        this.token = token;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public Set<String> getRoles() {
-        return roles;
-    }
-    
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
-    }
-    
-    public Set<String> getPermissions() {
-        return permissions;
-    }
-    
-    public void setPermissions(Set<String> permissions) {
-        this.permissions = permissions;
+/**
+ * DTO para resposta de login.
+ * Utiliza Record para simplicidade e imutabilidade.
+ */
+public record LoginResponse(
+    String token,
+    String username,
+    String name,
+    Set<String> roles,
+    Set<String> permissions
+) {
+    /**
+     * Construtor com validações básicas
+     */
+    public LoginResponse {
+        if (token == null || token.trim().isEmpty()) {
+            throw new IllegalArgumentException("Token não pode ser nulo ou vazio");
+        }
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username não pode ser nulo ou vazio");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+        }
+        if (roles == null) {
+            throw new IllegalArgumentException("Roles não pode ser nulo");
+        }
+        if (permissions == null) {
+            throw new IllegalArgumentException("Permissions não pode ser nulo");
+        }
     }
 }

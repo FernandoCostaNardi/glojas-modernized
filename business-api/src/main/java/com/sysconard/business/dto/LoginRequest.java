@@ -1,31 +1,19 @@
 package com.sysconard.business.dto;
 
-public class LoginRequest {
-    private String username;
-    private String password;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
+/**
+ * DTO para requisição de login.
+ * Utiliza Record para simplicidade e imutabilidade.
+ */
+public record LoginRequest(
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Formato de email inválido")
+    String email,
     
-    // Construtores
-    public LoginRequest() {}
-    
-    public LoginRequest(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-    
-    // Getters e Setters
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @NotBlank(message = "Senha é obrigatória")
+    String password
+) {
+    // Construtor sem validações para evitar problemas de deserialização JSON
 }

@@ -19,20 +19,21 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
     
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("=== LOADING USER BY USERNAME ===");
-        logger.info("Username solicitado: {}", username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        logger.info("=== LOADING USER BY EMAIL ===");
+        logger.info("Email solicitado: {}", email);
         
         try {
-            User user = userRepository.findByUsernameWithRolesAndPermissions(username)
+            User user = userRepository.findByEmailWithRolesAndPermissions(email)
                 .orElse(null);
             
             if (user == null) {
-                logger.error("Usuário não encontrado: {}", username);
-                throw new UsernameNotFoundException("Usuário não encontrado: " + username);
+                logger.error("Usuário não encontrado com email: {}", email);
+                throw new UsernameNotFoundException("Usuário não encontrado com email: " + email);
             }
             
             logger.info("Usuário encontrado: {} (ID: {})", user.getUsername(), user.getId());
+            logger.info("Email do usuário: {}", user.getEmail());
             logger.info("Usuário ativo: {}", user.isEnabled());
             logger.info("Usuário não bloqueado: {}", user.isAccountNonLocked());
             logger.info("Número de roles: {}", user.getRoles().size());

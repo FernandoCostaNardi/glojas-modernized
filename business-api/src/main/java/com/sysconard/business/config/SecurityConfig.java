@@ -72,6 +72,8 @@ public class SecurityConfig {
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/test/public").permitAll()
                 .requestMatchers("/test/debug-authorities").permitAll()
+                .requestMatchers("/roles/health").permitAll()
+                .requestMatchers("/roles/debug").permitAll()
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())

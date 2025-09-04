@@ -53,6 +53,11 @@ public class JwtService {
     
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        // Usar email em vez de username para compatibilidade com o sistema
+        if (userDetails instanceof com.sysconard.business.entity.User) {
+            com.sysconard.business.entity.User user = (com.sysconard.business.entity.User) userDetails;
+            return createToken(claims, user.getEmail());
+        }
         return createToken(claims, userDetails.getUsername());
     }
     
@@ -67,7 +72,13 @@ public class JwtService {
     }
     
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        final String email = extractUsername(token); // Agora extrai o email do JWT
+        // Comparar com o email do usuário em vez do username
+        if (userDetails instanceof com.sysconard.business.entity.User) {
+            com.sysconard.business.entity.User user = (com.sysconard.business.entity.User) userDetails;
+            return (email.equals(user.getEmail()) && !isTokenExpired(token));
+        }
+        // Fallback para outros tipos de UserDetails
+        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

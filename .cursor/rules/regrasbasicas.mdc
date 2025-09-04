@@ -1,0 +1,522 @@
+# Project Rules - Business API - Clean Code & Context7
+
+## 🎯 **Visão Geral**
+Este arquivo define as regras e boas práticas para o projeto Business API, seguindo princípios de Clean Code e Context7 para Spring Boot.
+
+## 📋 **Estrutura do Projeto**
+
+### **Organização de Pacotes**
+```
+com.sysconard.business/
+├── config/          # Configurações do Spring Boot
+├── controller/      # Controllers REST
+├── dto/            # Data Transfer Objects
+├── entity/         # Entidades JPA
+├── exception/      # Exceções customizadas
+├── factory/        # Factories para criação de objetos
+├── mapper/         # Mappers para conversão de DTOs
+├── repository/     # Repositories JPA
+└── service/        # Serviços de negócio
+```
+
+## 🔧 **Tecnologias e Dependências**
+
+### **Spring Boot 3.x**
+- Java 17+
+- Spring Security com JWT
+- Spring Data JPA
+- Bean Validation
+- Flyway para migrações
+
+### **Lombok**
+- Reduzir boilerplate em entidades e DTOs complexos
+- Anotações: `@Data`, `@Builder`, `@NoArgsConstructor`, `@AllArgsConstructor`
+- `@Builder.Default` para valores padrão
+
+### **Records**
+- Para DTOs simples (até 5 campos)
+- Imutabilidade nativa
+- Validações no construtor compacto
+
+## 📝 **Padrões de Código**
+
+### **1. Entidades JPA**
+```java
+@Entity
+@Table(name = "table_name")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class EntityName {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false)
+    private String name;
+    
+    @Builder.Default
+    private boolean isActive = true;
+    
+    // Métodos de negócio apenas
+    public void addItem(Item item) { /* ... */ }
+    public boolean hasPermission(String permission) { /* ... */ }
+}
+```
+
+### **2. DTOs - Abordagem Híbrida**
+
+#### **Records para DTOs Simples (≤5 campos)**
+```java
+public record SimpleDto(
+    String field1,
+    String field2,
+    Set<String> field3
+) {
+    public SimpleDto {
+        if (field1 == null || field1.trim().isEmpty()) {
+            throw new IllegalArgumentException("Field1 não pode ser nulo ou vazio");
+        }
+        // ... outras validações
+    }
+}
+```
+
+#### **Lombok para DTOs Complexos (>5 campos ou com validações Bean)**
+```java
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ComplexDto {
+    
+    @NotBlank(message = "Campo é obrigatório")
+    @Size(min = 2, max = 100, message = "Campo deve ter entre 2 e 100 caracteres")
+    private String field;
+    
+    @Email(message = "Email deve ser válido")
+    private String email;
+    
+    @Override
+    public String toString() {
+        return "ComplexDto{" +
+                "field='" + field + '\'' +
+                ", email='[PROTECTED]'" +
+                '}';
+    }
+}
+```
+
+### **3. Serviços - Clean Code**
+
+#### **Separação de Responsabilidades**
+```java
+@Service
+public class BusinessService {
+    
+    private final ValidationService validationService;
+    private final MapperService mapperService;
+    private final FactoryService factoryService;
+    
+    public BusinessService(ValidationService validationService, 
+                         MapperService mapperService,
+                         FactoryService factoryService) {
+        this.validationService = validationService;
+        this.mapperService = mapperService;
+        this.factoryService = factoryService;
+    }
+    
+    public ResponseDto createEntity(RequestDto request) {
+        // 1. Validação
+        validationService.validateRequest(request);
+        
+        // 2. Criação da entidade
+        Entity entity = factoryService.createEntity(request);
+        
+        // 3. Persistência
+        Entity savedEntity = repository.save(entity);
+        
+        // 4. Mapeamento para resposta
+        return mapperService.toResponse(savedEntity);
+    }
+}
+```
+
+### **4. Controllers REST**
+```java
+@RestController
+@RequestMapping("/api/v1/resource")
+@PreAuthorize("hasRole('ADMIN')")  // Segurança por método
+public class ResourceController {
+    
+    private final BusinessService businessService;
+    
+    @PostMapping
+    public ResponseEntity<ResponseDto> createResource(@Valid @RequestBody RequestDto request) {
+        ResponseDto response = businessService.createEntity(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+}
+```
+
+### **5. Exceções Customizadas**
+```java
+public class CustomException extends RuntimeException {
+    
+    private final String field;
+    private final String value;
+    
+    public CustomException(String field, String value) {
+        super(String.format("%s '%s' não encontrado", field, value));
+        this.field = field;
+        this.value = value;
+    }
+}
+```
+
+### **6. Global Exception Handler**
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiErrorResponse> handleValidationExceptions(
+            MethodArgumentNotValidException ex, WebRequest request) {
+        
+        Map<String, String> fieldErrors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            fieldErrors.put(fieldName, errorMessage);
+        });
+        
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+            "ERROR",
+            "Erro de validação dos dados",
+            request.getDescription(false),
+            fieldErrors
+        );
+        
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+}
+```
+
+## 🔒 **Segurança**
+
+### **Spring Security**
+```java
+@Configuration
+@EnableMethodSecurity
+public class SecurityConfig {
+    
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            );
+        
+        return http.build();
+    }
+}
+```
+
+### **Autorização por Método**
+```java
+@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('USER_CREATE')")
+@PreAuthorize("hasRole('ADMIN') and hasAuthority('USER_DELETE')")
+```
+
+## 🧪 **Testes**
+
+### **Testes Unitários**
+```java
+@ExtendWith(MockitoExtension.class)
+class ServiceTest {
+    
+    @Mock
+    private Repository repository;
+    
+    @Mock
+    private ValidationService validationService;
+    
+    @InjectMocks
+    private BusinessService businessService;
+    
+    @Test
+    void shouldCreateEntitySuccessfully() {
+        // Given
+        RequestDto request = RequestDto.builder()
+            .name("Test")
+            .email("test@email.com")
+            .build();
+        
+        Entity entity = Entity.builder()
+            .id(1L)
+            .name("Test")
+            .build();
+        
+        // When
+        when(validationService.validateRequest(request)).thenReturn(true);
+        when(repository.save(any(Entity.class))).thenReturn(entity);
+        
+        ResponseDto response = businessService.createEntity(request);
+        
+        // Then
+        assertThat(response).isNotNull();
+        assertThat(response.getName()).isEqualTo("Test");
+        verify(validationService).validateRequest(request);
+        verify(repository).save(any(Entity.class));
+    }
+}
+```
+
+### **Testes de Integração**
+```java
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@Transactional
+class ControllerIntegrationTest {
+    
+    @Autowired
+    private MockMvc mockMvc;
+    
+    @Test
+    void shouldReturn201WhenCreatingEntity() throws Exception {
+        // Given
+        RequestDto request = RequestDto.builder()
+            .name("Test")
+            .email("test@email.com")
+            .build();
+        
+        // When & Then
+        mockMvc.perform(post("/api/v1/entities")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(request)))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.name").value("Test"));
+    }
+}
+```
+
+## 📊 **Validações**
+
+### **Bean Validation**
+```java
+public class RequestDto {
+    
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
+    private String name;
+    
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email deve ser válido")
+    @Size(max = 100, message = "Email deve ter no máximo 100 caracteres")
+    private String email;
+    
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 6, max = 100, message = "Senha deve ter entre 6 e 100 caracteres")
+    private String password;
+    
+    @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Username deve conter apenas letras, números e underscore")
+    private String username;
+}
+```
+
+## 🗄️ **Banco de Dados**
+
+### **Flyway Migrations**
+```sql
+-- V1__Create_initial_tables.sql
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    is_not_locked BOOLEAN DEFAULT TRUE,
+    join_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### **JPA Repositories**
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    
+    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+    
+    @Query("SELECT u FROM User u WHERE u.isActive = true")
+    List<User> findAllActiveUsers();
+}
+```
+
+## 🎨 **Nomenclatura**
+
+### **Classes e Interfaces**
+- **Controllers**: `*Controller`
+- **Services**: `*Service`
+- **Repositories**: `*Repository`
+- **Entities**: Nome singular (ex: `User`, `Role`)
+- **DTOs**: `*Request`, `*Response`
+- **Exceptions**: `*Exception`
+
+### **Métodos**
+- **Controllers**: `create*`, `update*`, `delete*`, `get*`, `find*`
+- **Services**: `create*`, `update*`, `delete*`, `find*`, `validate*`
+- **Repositories**: `findBy*`, `existsBy*`, `countBy*`
+
+### **Variáveis**
+- **Boolean**: `isActive`, `isNotLocked`, `hasPermission`
+- **Collections**: `users`, `roles`, `permissions`
+- **IDs**: `userId`, `roleId`
+
+## 📝 **Documentação**
+
+### **JavaDoc**
+```java
+/**
+ * Serviço responsável pela gestão de usuários.
+ * Implementa operações CRUD e validações de negócio.
+ * 
+ * @author Seu Nome
+ * @version 1.0
+ * @since 2025-01-01
+ */
+@Service
+public class UserService {
+    
+    /**
+     * Cria um novo usuário no sistema.
+     * 
+     * @param request Dados do usuário a ser criado
+     * @return Dados do usuário criado
+     * @throws UserAlreadyExistsException se o username ou email já existirem
+     * @throws RoleNotFoundException se alguma role não for encontrada
+     */
+    public CreateUserResponse createUser(CreateUserRequest request) {
+        // implementação
+    }
+}
+```
+
+## 🔄 **Versionamento**
+
+### **API Versioning**
+```java
+@RestController
+@RequestMapping("/api/v1/users")  // Versionamento na URL
+public class UserControllerV1 { }
+
+@RestController
+@RequestMapping("/api/v2/users")
+public class UserControllerV2 { }
+```
+
+### **Semantic Versioning**
+- **MAJOR**: Mudanças incompatíveis
+- **MINOR**: Novas funcionalidades compatíveis
+- **PATCH**: Correções de bugs compatíveis
+
+## 🚀 **Performance**
+
+### **Lazy Loading**
+```java
+@ManyToMany(fetch = FetchType.LAZY)
+private Set<Role> roles;
+```
+
+### **Indexes**
+```sql
+CREATE INDEX idx_users_username ON users(username);
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_active ON users(is_active);
+```
+
+## 🔍 **Logging**
+
+### **SLF4J + Logback**
+```java
+private static final Logger logger = LoggerFactory.getLogger(ServiceName.class);
+
+logger.info("Iniciando criação de usuário: {}", username);
+logger.warn("Tentativa de criar usuário já existente: {}", username);
+logger.error("Erro inesperado: {}", ex.getMessage(), ex);
+```
+
+## 📦 **Empacotamento**
+
+### **Maven**
+```xml
+<groupId>com.sysconard</groupId>
+<artifactId>business-api</artifactId>
+<version>1.0.0</version>
+<packaging>jar</packaging>
+```
+
+### **Docker**
+```dockerfile
+FROM openjdk:17-jdk-slim
+COPY target/business-api-1.0.0.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+```
+
+## ✅ **Checklist de Qualidade**
+
+### **Antes do Commit**
+- [ ] Código compila sem erros
+- [ ] Todos os testes passam
+- [ ] Cobertura de testes ≥ 80%
+- [ ] Validações implementadas
+- [ ] Tratamento de exceções
+- [ ] Documentação atualizada
+- [ ] Logs apropriados
+- [ ] Segurança implementada
+
+### **Code Review**
+- [ ] Princípios SOLID aplicados
+- [ ] Clean Code seguido
+- [ ] Performance considerada
+- [ ] Segurança verificada
+- [ ] Testes adequados
+- [ ] Documentação clara
+
+## 🎯 **Métricas de Qualidade**
+
+### **Cobertura de Código**
+- **Mínimo**: 80%
+- **Ideal**: 90%+
+
+### **Complexidade Ciclomática**
+- **Métodos**: ≤ 10
+- **Classes**: ≤ 50
+
+### **Linhas por Método**
+- **Máximo**: 20 linhas
+- **Ideal**: 10 linhas
+
+### **Parâmetros por Método**
+- **Máximo**: 5 parâmetros
+- **Ideal**: 3 parâmetros
+
+---
+
+**Última Atualização**: 28/08/2025  
+**Versão**: 1.0  
+**Responsável**: Equipe de Desenvolvimento

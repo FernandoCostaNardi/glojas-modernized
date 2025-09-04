@@ -1,0 +1,915 @@
+# Project Rules - Multi-API Architecture - Clean Code & Context7
+
+## 🎯 **Visão Geral**
+Este arquivo define as regras e boas práticas para o projeto multi-API, diferenciando entre **Business API (Java 17)** e **Legacy API (Java 8)**, seguindo princípios de Clean Code e Context7.
+
+## 📋 **Arquitetura do Projeto**
+
+### **Estrutura Multi-API**
+```
+glojas-modernized/
+├── business-api/          # Java 17 - Spring Boot 3.x - Moderno
+│   ├── config/           # Configurações avançadas
+│   ├── controller/       # Controllers REST
+│   ├── dto/             # DTOs com Records e Lombok
+│   ├── entity/          # Entidades JPA modernas
+│   ├── exception/       # Exceções customizadas
+│   ├── factory/         # Factories para criação
+│   ├── mapper/          # Mappers para conversão
+│   ├── repository/      # Repositories JPA
+│   └── service/         # Serviços de negócio
+├── legacy-api/           # Java 8 - Spring Boot 2.x - Legacy
+│   ├── controller/      # Controllers REST
+│   ├── dto/            # DTOs com Lombok
+│   ├── entity/         # Entidades JPA
+│   ├── repository/     # Repositories JPA
+│   └── service/        # Serviços de acesso a dados
+└── frontend/            # React/Node.js
+```
+
+## 🔧 **Tecnologias por API**
+
+### **Business API (Java 17)**
+- **Java**: 17+
+- **Spring Boot**: 3.x
+- **Spring Security**: JWT + OAuth2
+- **Spring Data JPA**: 3.x
+- **Bean Validation**: 3.x
+- **Flyway**: Migrações
+- **Lombok**: Redução de boilerplate
+- **Records**: DTOs simples (≤5 campos)
+- **Sealed Classes**: Hierarquias fechadas
+- **Pattern Matching**: Switch expressions
+- **Text Blocks**: Strings multi-linha
+
+### **Legacy API (Java 8)**
+- **Java**: 8
+- **Spring Boot**: 2.7.x
+- **Spring Security**: Básico
+- **Spring Data JPA**: 2.x
+- **Bean Validation**: 2.x
+- **Lombok**: Redução de boilerplate
+- **Classes Tradicionais**: DTOs complexos
+- **Streams API**: Processamento de dados
+- **Optional**: Tratamento de nulos
+- **Lambda Expressions**: Programação funcional
+
+## 📝 **Padrões de Código por API**
+
+### **1. DTOs - Abordagem Diferenciada**
+
+#### **Business API (Java 17) - Records para Simples**
+```java
+// DTOs simples (≤5 campos) - Usar Records
+public record UserSummaryDto(
+    Long id,
+    String name,
+    String email,
+    boolean isActive
+) {
+    public UserSummaryDto {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+        }
+        if (email == null || !email.contains("@")) {
+            throw new IllegalArgumentException("Email deve ser válido");
+        }
+    }
+}
+
+// DTOs complexos (>5 campos) - Usar Lombok
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDetailDto {
+    
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
+    private String name;
+    
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email deve ser válido")
+    private String email;
+    
+    @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Username deve conter apenas letras, números e underscore")
+    private String username;
+    
+    private Set<RoleDto> roles;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastLoginAt;
+    
+    @Override
+    public String toString() {
+        return "UserDetailDto{" +
+                "name='" + name + '\'' +
+                ", email='[PROTECTED]'" +
+                ", username='" + username + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+}
+```
+
+#### **Legacy API (Java 8) - Lombok para Todos**
+```java
+// Todos os DTOs usam Lombok (Java 8 não tem Records)
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductRegisteredDTO {
+    
+    /**
+     * Código do produto
+     */
+    private Long codigo;
+    
+    /**
+     * Descrição da seção
+     */
+    private String secao;
+    
+    /**
+     * Descrição do grupo
+     */
+    private String grupo;
+    
+    /**
+     * Descrição do subgrupo
+     */
+    private String subgrupo;
+    
+    /**
+     * Descrição da marca
+     */
+    private String marca;
+    
+    /**
+     * Código do part number
+     */
+    private String partNumberCodigo;
+    
+    /**
+     * Código PLU da referência
+     */
+    private String refplu;
+    
+    /**
+     * Descrição do produto
+     */
+    private String descricao;
+    
+    /**
+     * Código NCM do produto
+     */
+    private String ncm;
+}
+```
+
+### **2. Entidades JPA**
+
+#### **Business API (Java 17) - Moderno**
+```java
+@Entity
+@Table(name = "users")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(nullable = false, unique = true, length = 50)
+    private String username;
+    
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+    
+    @Column(nullable = false)
+    private String password;
+    
+    @Column(name = "is_active")
+    @Builder.Default
+    private boolean isActive = true;
+    
+    @Column(name = "is_not_locked")
+    @Builder.Default
+    private boolean isNotLocked = true;
+    
+    @Column(name = "join_date")
+    @Builder.Default
+    private LocalDateTime joinDate = LocalDateTime.now();
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+    
+    // Métodos de negócio
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
+    
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+    
+    public boolean hasRole(String roleName) {
+        return roles.stream()
+                .anyMatch(role -> role.getName().equals(roleName));
+    }
+}
+```
+
+#### **Legacy API (Java 8) - Compatível**
+```java
+@Entity
+@Table(name = "products")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(name = "codigo", nullable = false, unique = true)
+    private String codigo;
+    
+    @Column(name = "descricao", nullable = false)
+    private String descricao;
+    
+    @Column(name = "secao")
+    private String secao;
+    
+    @Column(name = "grupo")
+    private String grupo;
+    
+    @Column(name = "marca")
+    private String marca;
+    
+    @Column(name = "ncm")
+    private String ncm;
+    
+    @Column(name = "is_active")
+    @Builder.Default
+    private boolean isActive = true;
+    
+    // Métodos de negócio simples
+    public boolean isValid() {
+        return codigo != null && !codigo.trim().isEmpty() &&
+               descricao != null && !descricao.trim().isEmpty();
+    }
+}
+```
+
+### **3. Serviços - Clean Code**
+
+#### **Business API (Java 17) - Separação Avançada**
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final UserValidator userValidator;
+    
+    /**
+     * Cria um novo usuário no sistema.
+     * 
+     * @param request Dados do usuário a ser criado
+     * @return Dados do usuário criado
+     * @throws UserAlreadyExistsException se o username ou email já existirem
+     */
+    public CreateUserResponse createUser(CreateUserRequest request) {
+        log.info("Criando usuário: {}", request.username());
+        
+        // 1. Validação
+        userValidator.validateCreateRequest(request);
+        
+        // 2. Verificação de existência
+        if (userRepository.existsByUsername(request.username())) {
+            throw new UserAlreadyExistsException("username", request.username());
+        }
+        if (userRepository.existsByEmail(request.email())) {
+            throw new UserAlreadyExistsException("email", request.email());
+        }
+        
+        // 3. Criação da entidade
+        User user = userMapper.toEntity(request);
+        user.setPassword(passwordEncoder.encode(request.password()));
+        
+        // 4. Persistência
+        User savedUser = userRepository.save(user);
+        
+        log.info("Usuário criado com sucesso: {}", savedUser.getId());
+        
+        // 5. Mapeamento para resposta
+        return userMapper.toCreateResponse(savedUser);
+    }
+    
+    /**
+     * Busca usuários com filtros e paginação.
+     */
+    public Page<UserSummaryDto> findUsers(UserSearchRequest request) {
+        log.debug("Buscando usuários com filtros: {}", request);
+        
+        Pageable pageable = PageRequest.of(
+            request.page(), 
+            request.size(), 
+            Sort.by(Sort.Direction.fromString(request.sortDir()), request.sortBy())
+        );
+        
+        Page<User> users = userRepository.findByFilters(
+            request.name(),
+            request.email(),
+            request.isActive(),
+            pageable
+        );
+        
+        return users.map(userMapper::toSummaryDto);
+    }
+}
+```
+
+#### **Legacy API (Java 8) - Foco em Acesso a Dados**
+```java
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+    
+    private final ProductRepository productRepository;
+    
+    /**
+     * Busca produtos cadastrados com filtros, paginação e ordenação
+     */
+    public Page<ProductRegisteredDTO> findProductsWithFilters(
+            String secao, String grupo, String marca, String descricao,
+            int page, int size, String sortBy, String sortDir) {
+        
+        log.debug("Buscando produtos com filtros: secao={}, grupo={}, marca={}, descricao={}, page={}, size={}, sortBy={}, sortDir={}",
+                secao, grupo, marca, descricao, page, size, sortBy, sortDir);
+        
+        // 1. Validação
+        validatePaginationParameters(page, size);
+        validateSortParameters(sortBy, sortDir);
+        
+        // 2. Configuração
+        Pageable pageable = createPageable(page, size, sortBy, sortDir);
+        ProductFilters filters = createProductFilters(secao, grupo, marca, descricao);
+        
+        // 3. Busca de dados
+        List<Object[]> rows = fetchProductData(filters, pageable);
+        Long totalElements = countProductData(filters);
+        
+        // 4. Conversão
+        List<ProductRegisteredDTO> dtos = convertToProductDTOs(rows);
+        
+        log.debug("Produtos encontrados: {} de {}", dtos.size(), totalElements);
+        
+        return new PageImpl<>(dtos, pageable, totalElements);
+    }
+    
+    /**
+     * Conta o total de produtos cadastrados
+     */
+    public long countTotalProducts() {
+        log.debug("Contando total de produtos cadastrados");
+        long count = productRepository.countTotalProducts();
+        log.debug("Total de produtos: {}", count);
+        return count;
+    }
+    
+    // Métodos privados para validação, configuração e conversão...
+}
+```
+
+### **4. Controllers REST**
+
+#### **Business API (Java 17) - Moderno**
+```java
+@RestController
+@RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
+@Validated
+public class UserController {
+    
+    private final UserService userService;
+    
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
+    public CreateUserResponse createUser(@Valid @RequestBody CreateUserRequest request) {
+        return userService.createUser(request);
+    }
+    
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Page<UserSummaryDto> getUsers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Boolean isActive,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        
+        UserSearchRequest request = new UserSearchRequest(name, email, isActive, page, size, sortBy, sortDir);
+        return userService.findUsers(request);
+    }
+    
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public UserDetailDto getUser(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+    
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or #id == authentication.principal.id")
+    public UpdateUserResponse updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateUserRequest request) {
+        return userService.updateUser(id, request);
+    }
+    
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+    }
+}
+```
+
+#### **Legacy API (Java 8) - Simples**
+```java
+@RestController
+@RequestMapping("/products")
+@RequiredArgsConstructor
+public class ProductController {
+    
+    private final ProductControllerService productControllerService;
+    
+    @GetMapping("/registered")
+    public ResponseEntity<ProductPageResponse> getRegisteredProducts(
+            @RequestParam(required = false) String secao,
+            @RequestParam(required = false) String grupo,
+            @RequestParam(required = false) String marca,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "codigo") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir) {
+        
+        ProductPageResponse response = productControllerService.getRegisteredProducts(
+            secao, grupo, marca, descricao, page, size, sortBy, sortDir
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/test-connection")
+    public ResponseEntity<ProductConnectionResponse> testConnection() {
+        ProductConnectionResponse response = productControllerService.testConnection();
+        
+        if ("ERROR".equals(response.getStatus())) {
+            return ResponseEntity.status(500).body(response);
+        }
+        
+        return ResponseEntity.ok(response);
+    }
+}
+```
+
+### **5. Repositories**
+
+#### **Business API (Java 17) - Avançado**
+```java
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    
+    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
+    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
+    
+    @Query("SELECT u FROM User u WHERE u.isActive = true")
+    List<User> findAllActiveUsers();
+    
+    @Query("SELECT u FROM User u WHERE " +
+           "(:name IS NULL OR LOWER(u.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
+           "(:email IS NULL OR LOWER(u.email) LIKE LOWER(CONCAT('%', :email, '%'))) AND " +
+           "(:isActive IS NULL OR u.isActive = :isActive)")
+    Page<User> findByFilters(
+        @Param("name") String name,
+        @Param("email") String email,
+        @Param("isActive") Boolean isActive,
+        Pageable pageable
+    );
+    
+    @Query("SELECT COUNT(u) FROM User u WHERE u.isActive = true")
+    long countActiveUsers();
+}
+```
+
+#### **Legacy API (Java 8) - SQL Nativo**
+```java
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
+    
+    @Query(value = "SELECT p.codigo, p.secao, p.grupo, p.subgrupo, p.marca, " +
+                   "p.part_number_codigo, p.refplu, p.descricao, p.ncm " +
+                   "FROM products p " +
+                   "WHERE (:secao IS NULL OR p.secao LIKE :secaoFilter) " +
+                   "AND (:grupo IS NULL OR p.grupo LIKE :grupoFilter) " +
+                   "AND (:marca IS NULL OR p.marca LIKE :marcaFilter) " +
+                   "AND (:descricao IS NULL OR p.descricao LIKE :descricaoFilter) " +
+                   "ORDER BY " +
+                   "CASE WHEN :sortBy = 'codigo' THEN p.codigo END " +
+                   "CASE WHEN :sortBy = 'descricao' THEN p.descricao END " +
+                   "CASE WHEN :sortBy = 'marca' THEN p.marca END " +
+                   "OFFSET :offset ROWS FETCH NEXT :size ROWS ONLY",
+           nativeQuery = true)
+    List<Object[]> findProductsWithFilters(
+        @Param("secao") String secao,
+        @Param("grupo") String grupo,
+        @Param("marca") String marca,
+        @Param("descricao") String descricao,
+        @Param("secaoFilter") String secaoFilter,
+        @Param("grupoFilter") String grupoFilter,
+        @Param("marcaFilter") String marcaFilter,
+        @Param("descricaoFilter") String descricaoFilter,
+        @Param("sortBy") String sortBy,
+        @Param("offset") int offset,
+        @Param("size") int size
+    );
+    
+    @Query(value = "SELECT COUNT(*) FROM products p " +
+                   "WHERE (:secao IS NULL OR p.secao LIKE :secaoFilter) " +
+                   "AND (:grupo IS NULL OR p.grupo LIKE :grupoFilter) " +
+                   "AND (:marca IS NULL OR p.marca LIKE :marcaFilter) " +
+                   "AND (:descricao IS NULL OR p.descricao LIKE :descricaoFilter)",
+           nativeQuery = true)
+    Long countProductsWithFilters(
+        @Param("secao") String secao,
+        @Param("grupo") String grupo,
+        @Param("marca") String marca,
+        @Param("descricao") String descricao,
+        @Param("secaoFilter") String secaoFilter,
+        @Param("grupoFilter") String grupoFilter,
+        @Param("marcaFilter") String marcaFilter,
+        @Param("descricaoFilter") String descricaoFilter
+    );
+    
+    @Query(value = "SELECT COUNT(*) FROM products", nativeQuery = true)
+    long countTotalProducts();
+}
+```
+
+## 🧪 **Testes por API**
+
+### **Business API (Java 17) - Testes Avançados**
+```java
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
+    
+    @Mock
+    private UserRepository userRepository;
+    
+    @Mock
+    private PasswordEncoder passwordEncoder;
+    
+    @Mock
+    private UserMapper userMapper;
+    
+    @Mock
+    private UserValidator userValidator;
+    
+    @InjectMocks
+    private UserService userService;
+    
+    @Test
+    void shouldCreateUserSuccessfully() {
+        // Given
+        CreateUserRequest request = new CreateUserRequest(
+            "john.doe", "john@example.com", "password123", "John Doe"
+        );
+        
+        User user = User.builder()
+            .id(1L)
+            .username("john.doe")
+            .email("john@example.com")
+            .name("John Doe")
+            .build();
+        
+        CreateUserResponse expectedResponse = new CreateUserResponse(
+            1L, "john.doe", "john@example.com", "John Doe"
+        );
+        
+        // When
+        when(userValidator.validateCreateRequest(request)).thenReturn(true);
+        when(userRepository.existsByUsername("john.doe")).thenReturn(false);
+        when(userRepository.existsByEmail("john@example.com")).thenReturn(false);
+        when(userMapper.toEntity(request)).thenReturn(user);
+        when(passwordEncoder.encode("password123")).thenReturn("encodedPassword");
+        when(userRepository.save(any(User.class))).thenReturn(user);
+        when(userMapper.toCreateResponse(user)).thenReturn(expectedResponse);
+        
+        CreateUserResponse response = userService.createUser(request);
+        
+        // Then
+        assertThat(response).isNotNull();
+        assertThat(response.id()).isEqualTo(1L);
+        assertThat(response.username()).isEqualTo("john.doe");
+        assertThat(response.email()).isEqualTo("john@example.com");
+        
+        verify(userValidator).validateCreateRequest(request);
+        verify(userRepository).existsByUsername("john.doe");
+        verify(userRepository).existsByEmail("john@example.com");
+        verify(userMapper).toEntity(request);
+        verify(passwordEncoder).encode("password123");
+        verify(userRepository).save(any(User.class));
+        verify(userMapper).toCreateResponse(user);
+    }
+    
+    @Test
+    void shouldThrowExceptionWhenUsernameAlreadyExists() {
+        // Given
+        CreateUserRequest request = new CreateUserRequest(
+            "john.doe", "john@example.com", "password123", "John Doe"
+        );
+        
+        // When
+        when(userValidator.validateCreateRequest(request)).thenReturn(true);
+        when(userRepository.existsByUsername("john.doe")).thenReturn(true);
+        
+        // Then
+        assertThatThrownBy(() -> userService.createUser(request))
+            .isInstanceOf(UserAlreadyExistsException.class)
+            .hasMessage("Usuário com username 'john.doe' já existe");
+        
+        verify(userRepository).existsByUsername("john.doe");
+        verify(userRepository, never()).save(any(User.class));
+    }
+}
+```
+
+### **Legacy API (Java 8) - Testes Simples**
+```java
+@ExtendWith(MockitoExtension.class)
+class ProductServiceTest {
+    
+    @Mock
+    private ProductRepository productRepository;
+    
+    @InjectMocks
+    private ProductService productService;
+    
+    @Test
+    void shouldFindProductsWithFiltersSuccessfully() {
+        // Given
+        String secao = "Eletrônicos";
+        String grupo = "Smartphones";
+        String marca = "Apple";
+        String descricao = "iPhone";
+        int page = 0;
+        int size = 20;
+        String sortBy = "codigo";
+        String sortDir = "asc";
+        
+        List<Object[]> rows = Arrays.asList(
+            createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00"),
+            createProductRow(2L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE14", "124", "iPhone 14", "8517.12.00")
+        );
+        
+        when(productRepository.findProductsWithFilters(
+            eq(secao), eq(grupo), eq(marca), eq(descricao),
+            eq("%" + secao + "%"), eq("%" + grupo + "%"), eq("%" + marca + "%"), eq("%" + descricao + "%"),
+            eq(sortBy), eq(0), eq(size)
+        )).thenReturn(rows);
+        
+        when(productRepository.countProductsWithFilters(
+            eq(secao), eq(grupo), eq(marca), eq(descricao),
+            eq("%" + secao + "%"), eq("%" + grupo + "%"), eq("%" + marca + "%"), eq("%" + descricao + "%")
+        )).thenReturn(2L);
+        
+        // When
+        Page<ProductRegisteredDTO> result = productService.findProductsWithFilters(
+            secao, grupo, marca, descricao, page, size, sortBy, sortDir
+        );
+        
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getContent()).hasSize(2);
+        assertThat(result.getTotalElements()).isEqualTo(2);
+        assertThat(result.getTotalPages()).isEqualTo(1);
+        assertThat(result.getNumber()).isEqualTo(0);
+        assertThat(result.getSize()).isEqualTo(20);
+    }
+    
+    private Object[] createProductRow(Long codigo, String secao, String grupo, String subgrupo, 
+                                    String marca, String partNumber, String refplu, String descricao, String ncm) {
+        return new Object[]{codigo, secao, grupo, subgrupo, marca, partNumber, refplu, descricao, ncm};
+    }
+}
+```
+
+## 🎨 **Nomenclatura por API**
+
+### **Business API (Java 17)**
+- **Controllers**: `*Controller`
+- **Services**: `*Service`
+- **Repositories**: `*Repository`
+- **Entities**: Nome singular (ex: `User`, `Role`)
+- **DTOs**: `*Request`, `*Response`, `*Dto`
+- **Records**: `*Summary`, `*Info`, `*Basic`
+- **Exceptions**: `*Exception`
+- **Mappers**: `*Mapper`
+- **Validators**: `*Validator`
+
+### **Legacy API (Java 8)**
+- **Controllers**: `*Controller`
+- **Services**: `*Service`
+- **Repositories**: `*Repository`
+- **Entities**: Nome singular (ex: `Product`)
+- **DTOs**: `*DTO`, `*Response`
+- **Exceptions**: `*Exception`
+
+## 📊 **Validações**
+
+### **Business API (Java 17) - Bean Validation Avançado**
+```java
+public record CreateUserRequest(
+    @NotBlank(message = "Username é obrigatório")
+    @Size(min = 3, max = 50, message = "Username deve ter entre 3 e 50 caracteres")
+    @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "Username deve conter apenas letras, números e underscore")
+    String username,
+    
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Email deve ser válido")
+    @Size(max = 100, message = "Email deve ter no máximo 100 caracteres")
+    String email,
+    
+    @NotBlank(message = "Senha é obrigatória")
+    @Size(min = 8, max = 100, message = "Senha deve ter entre 8 e 100 caracteres")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", 
+             message = "Senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial")
+    String password,
+    
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
+    String name
+) {
+    public CreateUserRequest {
+        Objects.requireNonNull(username, "Username não pode ser nulo");
+        Objects.requireNonNull(email, "Email não pode ser nulo");
+        Objects.requireNonNull(password, "Senha não pode ser nula");
+        Objects.requireNonNull(name, "Nome não pode ser nulo");
+    }
+}
+```
+
+### **Legacy API (Java 8) - Validação Manual**
+```java
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductSearchRequest {
+    
+    private String secao;
+    private String grupo;
+    private String marca;
+    private String descricao;
+    private Integer page;
+    private Integer size;
+    private String sortBy;
+    private String sortDir;
+    
+    public void validate() {
+        if (page != null && page < 0) {
+            throw new IllegalArgumentException("Número da página deve ser >= 0");
+        }
+        if (size != null && (size <= 0 || size > 1000)) {
+            throw new IllegalArgumentException("Tamanho da página deve ser entre 1 e 1000");
+        }
+        if (sortDir != null && !sortDir.equalsIgnoreCase("asc") && !sortDir.equalsIgnoreCase("desc")) {
+            throw new IllegalArgumentException("Direção de ordenação deve ser 'asc' ou 'desc'");
+        }
+    }
+}
+```
+
+## 🔍 **Logging**
+
+### **Business API (Java 17) - Estruturado**
+```java
+@Slf4j
+@Service
+public class UserService {
+    
+    public CreateUserResponse createUser(CreateUserRequest request) {
+        log.info("Iniciando criação de usuário: username={}, email={}", 
+                request.username(), request.email());
+        
+        try {
+            // ... lógica de negócio
+            
+            log.info("Usuário criado com sucesso: id={}, username={}", 
+                    savedUser.getId(), savedUser.getUsername());
+            
+            return response;
+        } catch (Exception e) {
+            log.error("Erro ao criar usuário: username={}, error={}", 
+                     request.username(), e.getMessage(), e);
+            throw e;
+        }
+    }
+}
+```
+
+### **Legacy API (Java 8) - Simples**
+```java
+@Slf4j
+@Service
+public class ProductService {
+    
+    public Page<ProductRegisteredDTO> findProductsWithFilters(
+            String secao, String grupo, String marca, String descricao,
+            int page, int size, String sortBy, String sortDir) {
+        
+        log.debug("Buscando produtos com filtros: secao={}, grupo={}, marca={}, descricao={}, page={}, size={}, sortBy={}, sortDir={}",
+                secao, grupo, marca, descricao, page, size, sortBy, sortDir);
+        
+        // ... lógica de negócio
+        
+        log.debug("Produtos encontrados: {} de {}", dtos.size(), totalElements);
+        
+        return result;
+    }
+}
+```
+
+## ✅ **Checklist de Qualidade por API**
+
+### **Business API (Java 17)**
+- [ ] Records para DTOs simples (≤5 campos)
+- [ ] Lombok para DTOs complexos (>5 campos)
+- [ ] Bean Validation com anotações
+- [ ] Separação de responsabilidades (Service, Mapper, Validator)
+- [ ] Testes unitários com Mockito
+- [ ] Testes de integração com @SpringBootTest
+- [ ] Logging estruturado com SLF4J
+- [ ] Documentação JavaDoc completa
+- [ ] Segurança com Spring Security
+- [ ] Versionamento de API
+
+### **Legacy API (Java 8)**
+- [ ] Lombok para todos os DTOs
+- [ ] Validação manual de parâmetros
+- [ ] Foco em acesso a dados
+- [ ] Testes unitários simples
+- [ ] Logging básico
+- [ ] Documentação JavaDoc
+- [ ] Compatibilidade com Java 8
+- [ ] SQL nativo quando necessário
+
+## 🎯 **Métricas de Qualidade**
+
+### **Cobertura de Código**
+- **Business API**: Mínimo 90%
+- **Legacy API**: Mínimo 80%
+
+### **Complexidade Ciclomática**
+- **Métodos**: ≤ 10
+- **Classes**: ≤ 50
+
+### **Linhas por Método**
+- **Business API**: Máximo 15 linhas
+- **Legacy API**: Máximo 20 linhas
+
+### **Parâmetros por Método**
+- **Máximo**: 5 parâmetros
+- **Ideal**: 3 parâmetros
+
+---
+
+**Última Atualização**: 28/08/2025  
+**Versão**: 2.0  
+**Responsável**: Equipe de Desenvolvimento
+
