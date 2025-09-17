@@ -141,11 +141,11 @@ if !javacount! gtr 0 (
         echo   • Business API: ❌ Não responde (porta 8081)
     )
     
-    curl -s http://localhost:8082/api/legacy/health >nul 2>&1
+    curl -s http://localhost:8081/api/legacy/health >nul 2>&1
     if not errorlevel 1 (
-        echo   • Legacy API: ✅ Rodando (porta 8082)
+        echo   • Legacy API: ✅ Rodando (porta 8081)
     ) else (
-        echo   • Legacy API: ❌ Não responde (porta 8082)
+        echo   • Legacy API: ❌ Não responde (porta 8081)
     )
     
 ) else (

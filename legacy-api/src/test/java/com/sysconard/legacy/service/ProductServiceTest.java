@@ -8,10 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,10 +48,9 @@ class ProductServiceTest {
         String sortBy = "codigo";
         String sortDir = "asc";
 
-        List<Object[]> rows = Arrays.asList(
-            createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00"),
-            createProductRow(2L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE14", "124", "iPhone 14", "8517.12.00")
-        );
+        Object[] row1 = createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00");
+        Object[] row2 = createProductRow(2L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE14", "124", "iPhone 14", "8517.12.00");
+        List<Object[]> rows = Arrays.asList(row1, row2);
 
         when(productRepository.findProductsWithFilters(
             eq(secao), eq(grupo), eq(marca), eq(descricao),
@@ -93,9 +88,8 @@ class ProductServiceTest {
     @Test
     void shouldFindProductsWithNullFilters() {
         // Given
-        List<Object[]> rows = Arrays.asList(
-            createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00")
-        );
+        Object[] row1 = createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00");
+        List<Object[]> rows = Arrays.<Object[]>asList(row1);
 
         when(productRepository.findProductsWithFilters(
             isNull(), isNull(), isNull(), isNull(),
@@ -122,10 +116,9 @@ class ProductServiceTest {
     @Test
     void shouldFindProductsWithDescSorting() {
         // Given
-        List<Object[]> rows = Arrays.asList(
-            createProductRow(2L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE14", "124", "iPhone 14", "8517.12.00"),
-            createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00")
-        );
+        Object[] row1 = createProductRow(2L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE14", "124", "iPhone 14", "8517.12.00");
+        Object[] row2 = createProductRow(1L, "Eletrônicos", "Smartphones", "Apple", "Apple", "IPHONE13", "123", "iPhone 13", "8517.12.00");
+        List<Object[]> rows = Arrays.asList(row1, row2);
 
         when(productRepository.findProductsWithFilters(
             any(), any(), any(), any(),

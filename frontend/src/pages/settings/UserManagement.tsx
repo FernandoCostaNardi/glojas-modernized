@@ -219,7 +219,7 @@ const UserManagement: React.FC = () => {
             currentPage={currentPage}
             totalPages={totalPages}
             totalElements={totalElements}
-            itemsPerPage={pageSize}
+            pageSize={pageSize}
             onPageChange={changePage}
           />
         </>

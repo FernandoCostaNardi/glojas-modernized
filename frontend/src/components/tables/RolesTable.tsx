@@ -18,7 +18,7 @@ interface RolesTableProps {
  * Tabela de roles do sistema
  * Seguindo princípios de Clean Code com responsabilidade única
  */
-export const RolesTable: React.FC<RolesTableProps> = ({
+const RolesTable: React.FC<RolesTableProps> = ({
   roles,
   isLoading,
   onEditRole,
@@ -201,3 +201,5 @@ export const RolesTable: React.FC<RolesTableProps> = ({
     </div>
   );
 };
+
+export { RolesTable };

@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8081
   servlet:
     context-path: /api/legacy
 
@@ -56,7 +56,8 @@ management:
 
 logging:
   level:
-    com.sysconard.legacy: INFO
+    com.sysconard.legacy: DEBUG
+    com.sysconard.legacy.config.ReadOnlyInterceptor: DEBUG
     org.springframework.web: INFO
     org.hibernate.SQL: WARN
     com.zaxxer.hikari: DEBUG

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.sysconard.legacy.entity.store.Store;
+
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.math.BigDecimal;

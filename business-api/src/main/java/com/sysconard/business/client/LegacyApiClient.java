@@ -1,6 +1,5 @@
 package com.sysconard.business.client;
 
-import com.sysconard.business.dto.LegacyApiResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,8 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
+import com.sysconard.business.dto.config.LegacyApiResponseDTO;
+import com.sysconard.business.dto.operation.OperationKindDto;
+import com.sysconard.business.dto.store.StoreResponseDto;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -94,6 +97,68 @@ public class LegacyApiClient {
         } catch (Exception e) {
             log.error("Erro inesperado ao chamar Legacy API", e);
             throw new RuntimeException("Erro inesperado ao buscar produtos: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Busca tipos de operação na Legacy API
+     * 
+     * @return Lista de tipos de operação
+     * @throws RuntimeException Se houver erro na comunicação
+     */
+    public List<OperationKindDto> getOperationKinds() {
+        log.info("Buscando tipos de operação na Legacy API");
+        
+        try {
+            return legacyApiWebClient
+                    .get()
+                    .uri("/operations")
+                    .retrieve()
+                    .bodyToFlux(OperationKindDto.class)
+                    .collectList()
+                    .timeout(Duration.ofSeconds(timeoutSeconds))
+                    .doOnSuccess(response -> log.info("Sucesso ao buscar tipos de operação. Total encontrado: {}", 
+                            response != null ? response.size() : "N/A"))
+                    .doOnError(error -> log.error("Erro ao buscar tipos de operação na Legacy API", error))
+                    .block();
+                    
+        } catch (WebClientResponseException e) {
+            log.error("Erro HTTP ao chamar Legacy API: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Erro ao buscar tipos de operação na Legacy API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Erro inesperado ao chamar Legacy API", e);
+            throw new RuntimeException("Erro inesperado ao buscar tipos de operação: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Busca lojas na Legacy API
+     * 
+     * @return Lista de lojas com id, name e city
+     * @throws RuntimeException Se houver erro na comunicação
+     */
+    public List<StoreResponseDto> getStores() {
+        log.info("Buscando lojas na Legacy API");
+        
+        try {
+            return legacyApiWebClient
+                    .get()
+                    .uri("/stores")
+                    .retrieve()
+                    .bodyToFlux(StoreResponseDto.class)
+                    .collectList()
+                    .timeout(Duration.ofSeconds(timeoutSeconds))
+                    .doOnSuccess(response -> log.info("Sucesso ao buscar lojas. Total encontrado: {}", 
+                            response != null ? response.size() : "N/A"))
+                    .doOnError(error -> log.error("Erro ao buscar lojas na Legacy API", error))
+                    .block();
+                    
+        } catch (WebClientResponseException e) {
+            log.error("Erro HTTP ao chamar Legacy API: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Erro ao buscar lojas na Legacy API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Erro inesperado ao chamar Legacy API", e);
+            throw new RuntimeException("Erro inesperado ao buscar lojas: " + e.getMessage(), e);
         }
     }
     

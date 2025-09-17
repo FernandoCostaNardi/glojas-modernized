@@ -1,8 +1,13 @@
 package com.sysconard.business.service;
 
-import com.sysconard.business.entity.Role;
-import com.sysconard.business.entity.User;
-import com.sysconard.business.repository.UserRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,13 +16,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.when;
+import com.sysconard.business.entity.security.User;
+import com.sysconard.business.repository.security.UserRepository;
+import com.sysconard.business.service.security.CustomUserDetailsService;
 
 @ExtendWith(MockitoExtension.class)
 class CustomUserDetailsServiceTest {

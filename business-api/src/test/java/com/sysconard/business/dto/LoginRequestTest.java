@@ -7,6 +7,8 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import com.sysconard.business.dto.security.LoginRequest;
+
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;

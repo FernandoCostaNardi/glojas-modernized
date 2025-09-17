@@ -19,7 +19,7 @@ echo Limpando e compilando...
 mvn clean compile
 
 echo.
-echo Iniciando aplicacao com Java 8 e TLS legado...
-mvn spring-boot:run "-Dspring-boot.run.jvmArguments=-Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2"
+echo Iniciando aplicacao com Java 8 e TLS legado na porta 8081...
+mvn spring-boot:run "-Dspring-boot.run.jvmArguments=-Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dserver.port=8081"
 
 pause

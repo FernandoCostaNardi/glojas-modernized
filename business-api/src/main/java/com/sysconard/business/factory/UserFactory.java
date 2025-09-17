@@ -1,8 +1,9 @@
 package com.sysconard.business.factory;
 
-import com.sysconard.business.dto.CreateUserRequest;
-import com.sysconard.business.entity.Role;
-import com.sysconard.business.entity.User;
+import com.sysconard.business.dto.security.CreateUserRequest;
+import com.sysconard.business.entity.security.Role;
+import com.sysconard.business.entity.security.User;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

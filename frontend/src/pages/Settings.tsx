@@ -56,11 +56,18 @@ const Settings: React.FC = () => {
       href: '/settings/origin-codes'
     },
     {
-      id: 'operation-codes',
+      id: 'operations',
       title: 'Cadastro e Edição de Código de Operação',
       description: 'Gerenciar códigos de operação do sistema',
       icon: '⚙️',
-      href: '/settings/operation-codes'
+      href: '/settings/operations'
+    },
+    {
+      id: 'stores',
+      title: 'Cadastro e Edição de Lojas',
+      description: 'Gerenciar lojas do sistema e suas configurações',
+      icon: '🏪',
+      href: '/settings/stores'
     }
   ];
 
@@ -98,8 +105,12 @@ const Settings: React.FC = () => {
       window.location.href = '/settings/users';
     } else if (action.id === 'permissions') {
       window.location.href = '/settings/permissions';
-    } else {
-      // TODO: Implementar outras páginas
+    } else if (action.id === 'origin-codes') {
+      window.location.href = '/settings/origin-codes';
+    } else if (action.id === 'operations') {
+      window.location.href = '/settings/operations';
+    } else if (action.id === 'stores') {
+      window.location.href = '/settings/stores';
     }
   };
 

@@ -1,11 +1,15 @@
 package com.sysconard.business.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sysconard.business.dto.CreateUserRequest;
-import com.sysconard.business.entity.Role;
-import com.sysconard.business.entity.User;
-import com.sysconard.business.repository.RoleRepository;
-import com.sysconard.business.repository.UserRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,13 +23,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sysconard.business.dto.security.CreateUserRequest;
+import com.sysconard.business.entity.security.Role;
+import com.sysconard.business.entity.security.User;
+import com.sysconard.business.repository.security.RoleRepository;
+import com.sysconard.business.repository.security.UserRepository;
 
 /**
  * Testes de integração para a API de Usuários

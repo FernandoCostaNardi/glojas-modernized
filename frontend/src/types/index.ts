@@ -4,6 +4,16 @@
  */
 
 // =====================================================
+// EXPORTS DE MÓDULOS ESPECÍFICOS
+// =====================================================
+
+// Exportar tipos do EventOrigin
+export * from './eventOrigin';
+
+// Exportar tipos de Store
+export * from './store';
+
+// =====================================================
 // TIPOS DE COMPONENTES UI
 // =====================================================
 
@@ -415,6 +425,82 @@ export interface RolePageResponse {
  */
 export interface PermissionPageResponse {
   readonly content: readonly Permission[];
+  readonly totalElements: number;
+  readonly totalPages: number;
+  readonly size: number;
+  readonly number: number;
+  readonly first: boolean;
+  readonly last: boolean;
+  readonly numberOfElements: number;
+}
+
+// =====================================================
+// TIPOS DE OPERAÇÕES
+// =====================================================
+
+/**
+ * Enum para fonte da operação
+ * Mapeia os valores do backend OperationSource
+ */
+export type OperationSource = 'SELL' | 'EXCHANGE';
+
+/**
+ * Interface para tipo de operação (OperationKind)
+ * Usado no select do modal de operação
+ */
+export interface OperationKind {
+  readonly id: string;
+  readonly description: string;
+}
+
+/**
+ * Interface para operação do sistema
+ * Mapeia os campos exatos retornados pela API
+ */
+export interface Operation {
+  readonly id: string;
+  readonly code: string;
+  readonly description: string;
+  readonly operationSource: OperationSource;
+  readonly createdAt: string | number[];
+  readonly updatedAt?: string | number[];
+}
+
+/**
+ * Interface para criação/edição de operação
+ * Inclui o tipo de operação e a fonte do evento
+ */
+export interface OperationFormData {
+  readonly operationKindId: string;
+  readonly operationSource: OperationSource;
+}
+
+/**
+ * Interface para resposta de operações da API com paginação
+ */
+export interface OperationSearchResponse {
+  readonly operations: readonly Operation[];
+  readonly pagination: {
+    readonly currentPage: number;
+    readonly pageSize: number;
+    readonly totalPages: number;
+    readonly totalElements: number;
+    readonly hasNext: boolean;
+    readonly hasPrevious: boolean;
+  };
+  readonly totalElements: number;
+  readonly totalPages: number;
+  readonly currentPage: number;
+  readonly pageSize: number;
+  readonly hasNext: boolean;
+  readonly hasPrevious: boolean;
+}
+
+/**
+ * Interface para resposta de operações da API (legacy)
+ */
+export interface OperationPageResponse {
+  readonly content: readonly Operation[];
   readonly totalElements: number;
   readonly totalPages: number;
   readonly size: number;

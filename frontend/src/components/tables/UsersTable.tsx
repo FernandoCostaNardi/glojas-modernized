@@ -1,5 +1,6 @@
 import React from 'react';
 import { ApiSystemUser } from '@/types';
+import { formatDateToBrazilian } from '@/utils/dateUtils';
 
 /**
  * Props da tabela de usuários
@@ -19,7 +20,7 @@ interface UsersTableProps {
  * Componente de tabela de usuários
  * Seguindo princípios de Clean Code com responsabilidade única
  */
-export const UsersTable: React.FC<UsersTableProps> = ({
+const UsersTable: React.FC<UsersTableProps> = ({
   users,
   sortBy,
   sortDir,
@@ -146,7 +147,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-xs text-smart-gray-500">
                   {user.lastLoginDate 
-                    ? new Date(user.lastLoginDate).toLocaleDateString('pt-BR')
+                    ? formatDateToBrazilian(user.lastLoginDate)
                     : 'Nunca'
                   }
                 </td>
@@ -221,3 +222,5 @@ export const UsersTable: React.FC<UsersTableProps> = ({
     </div>
   );
 };
+
+export { UsersTable };

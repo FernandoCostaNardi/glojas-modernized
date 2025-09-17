@@ -1,6 +1,7 @@
 package com.sysconard.business.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -20,7 +21,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * Mantém consistência com a configuração de segurança.
      */
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
@@ -35,7 +36,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      * tente tratar rotas da API como recursos estáticos.
      */
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
         // Configura recursos estáticos específicos
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/static/");

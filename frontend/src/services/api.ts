@@ -6,7 +6,22 @@ import {
   UpdateUserRequest,
   UpdateUserResponse,
   UserSearchFilters,
-  UserPageResponse
+  UserPageResponse,
+  CreateEventOriginRequest,
+  UpdateEventOriginRequest,
+  EventOriginResponse,
+  EventOriginSearchResponse,
+  EventOriginSearchParams,
+  Operation,
+  OperationKind,
+  OperationFormData,
+  ApiStore,
+  CreateStoreRequest,
+  CreateStoreResponse,
+  UpdateStoreRequest,
+  UpdateStoreResponse,
+  StoreSearchFilters,
+  StorePageResponse
 } from '@/types';
 
 /**
@@ -322,6 +337,338 @@ export const userService = {
       return response.data;
     } catch (error) {
       console.error('❌ Erro ao alterar status de bloqueio do usuário:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para operações de EventOrigin (Códigos de Origem)
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const eventOriginService = {
+  /**
+   * Cria um novo código de origem no sistema
+   * @param data Dados do código de origem a ser criado
+   * @returns Resposta da API com dados do código criado
+   */
+  createEventOrigin: async (data: CreateEventOriginRequest): Promise<EventOriginResponse> => {
+    try {
+      const response = await api.post('/event-origins', data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao criar código de origem:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Atualiza um código de origem existente no sistema
+   * @param id ID do código de origem a ser atualizado
+   * @param data Dados do código de origem a ser atualizado
+   * @returns Resposta da API com dados do código atualizado
+   */
+  updateEventOrigin: async (id: string, data: UpdateEventOriginRequest): Promise<EventOriginResponse> => {
+    try {
+      const response = await api.put(`/event-origins/${id}`, data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao atualizar código de origem:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca um código de origem por ID
+   * @param id ID do código de origem
+   * @returns Dados do código de origem
+   */
+  getEventOriginById: async (id: string): Promise<EventOriginResponse> => {
+    try {
+      const response = await api.get(`/event-origins/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar código de origem por ID:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca códigos de origem com filtros e paginação
+   * @param params Parâmetros de busca (filtros, paginação, ordenação)
+   * @returns Página de códigos de origem com metadados de paginação
+   */
+  getEventOrigins: async (params: EventOriginSearchParams): Promise<EventOriginSearchResponse> => {
+    try {
+      const response = await api.get('/event-origins', { params });
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar códigos de origem:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para operações de Operation (Códigos de Operação)
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const operationService = {
+  /**
+   * Busca operações com filtros e paginação
+   * @param code Filtro por código (opcional)
+   * @param page Número da página (0-based)
+   * @param size Tamanho da página
+   * @param sortBy Campo para ordenação
+   * @param sortDir Direção da ordenação (asc/desc)
+   * @returns Promise com resposta paginada
+   */
+  getOperationsWithFilters: async (
+    code?: string,
+    page: number = 0,
+    size: number = 5,
+    sortBy: string = 'code',
+    sortDir: string = 'asc'
+  ): Promise<OperationSearchResponse> => {
+    try {
+      console.log('🌐 API: Fazendo requisição GET /operations com paginação');
+      
+      const params = new URLSearchParams();
+      if (code) params.append('code', code);
+      params.append('page', page.toString());
+      params.append('size', size.toString());
+      params.append('sortBy', sortBy);
+      params.append('sortDir', sortDir);
+      
+      const response = await api.get(`/operations?${params.toString()}`);
+      console.log('🌐 API: Resposta recebida para /operations:', response.data);
+      
+      // Debug: verificar formato das datas
+      if (response.data.operations && response.data.operations.length > 0) {
+        console.log('🌐 API: Exemplo de data recebida:', response.data.operations[0].createdAt);
+        console.log('🌐 API: Tipo da data:', typeof response.data.operations[0].createdAt);
+      }
+      
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar operações:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca todas as operações do sistema (método legacy)
+   * @returns Promise com lista de todas as operações
+   */
+  getAllOperations: async (): Promise<Operation[]> => {
+    try {
+      const response = await operationService.getOperationsWithFilters(undefined, 0, 1000);
+      return response.operations;
+    } catch (error) {
+      console.error('❌ Erro ao buscar operações:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca uma operação específica por ID
+   * @param operationId ID da operação
+   * @returns Promise com dados da operação
+   */
+  getOperationById: async (operationId: string): Promise<Operation> => {
+    try {
+      const response = await api.get(`/operations/${operationId}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar operação por ID:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Cria uma nova operação no sistema
+   * @param operationData Dados da operação a ser criada
+   * @returns Promise com dados da operação criada
+   */
+  createOperation: async (operationData: any): Promise<Operation> => {
+    try {
+      const response = await api.post('/operations', operationData);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao criar operação:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Atualiza uma operação existente
+   * @param operationId ID da operação
+   * @param operationData Dados atualizados da operação
+   * @returns Promise com dados da operação atualizada
+   */
+  updateOperation: async (operationId: string, operationData: any): Promise<Operation> => {
+    try {
+      const response = await api.put(`/operations/${operationId}`, operationData);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao atualizar operação:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para tipos de operação (OperationKind)
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const operationKindService = {
+  /**
+   * Busca todos os tipos de operação disponíveis
+   * @returns Promise com lista de tipos de operação
+   */
+  getAllOperationKinds: async (): Promise<OperationKind[]> => {
+    try {
+      console.log('🌐 API: Fazendo requisição GET /operation-kinds');
+      const response = await api.get('/operation-kinds');
+      console.log('🌐 API: Resposta recebida para /operation-kinds:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar tipos de operação:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para operações de lojas
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const storeService = {
+  /**
+   * Busca todas as lojas cadastradas
+   * @returns Promise com lista de todas as lojas
+   */
+  getAllStores: async (): Promise<ApiStore[]> => {
+    try {
+      const response = await api.get('/stores');
+      // A API retorna um objeto Page, precisamos extrair o content
+      if (response.data && response.data.content) {
+        return response.data.content;
+      }
+      // Fallback: se não for um objeto Page, retorna os dados diretamente
+      return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+      console.error('❌ Erro ao buscar lojas:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca lojas com paginação e filtros
+   * @param page Número da página (baseado em 0)
+   * @param size Tamanho da página
+   * @param sortBy Campo para ordenação
+   * @param sortDir Direção da ordenação (asc ou desc)
+   * @returns Promise com resposta paginada
+   */
+  getStoresWithPagination: async (
+    page: number = 0,
+    size: number = 5,
+    sortBy: string = 'code',
+    sortDir: string = 'asc'
+  ): Promise<{
+    stores: ApiStore[];
+    totalElements: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+    hasNext: boolean;
+    hasPrevious: boolean;
+  }> => {
+    try {
+      const response = await api.get('/stores', {
+        params: {
+          page,
+          size,
+          sortBy,
+          sortDir
+        }
+      });
+
+      // A API retorna um objeto Page do Spring
+      const pageData = response.data;
+      
+      return {
+        stores: pageData.content || [],
+        totalElements: pageData.totalElements || 0,
+        totalPages: pageData.totalPages || 0,
+        currentPage: pageData.number || 0,
+        pageSize: pageData.size || size,
+        hasNext: pageData.last === false,
+        hasPrevious: pageData.first === false
+      };
+    } catch (error) {
+      console.error('❌ Erro ao buscar lojas com paginação:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Cria uma nova loja no sistema
+   * @param storeData Dados da loja a ser criada
+   * @returns Resposta da API com dados da loja criada
+   */
+  createStore: async (storeData: CreateStoreRequest): Promise<CreateStoreResponse> => {
+    try {
+      const response = await api.post('/stores', storeData);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao criar loja:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Atualiza uma loja existente no sistema
+   * @param storeId ID da loja a ser atualizada
+   * @param storeData Dados da loja a ser atualizada
+   * @returns Resposta da API com dados da loja atualizada
+   */
+  updateStore: async (storeId: string, storeData: UpdateStoreRequest): Promise<UpdateStoreResponse> => {
+    try {
+      const response = await api.put(`/stores/${storeId}`, storeData);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao atualizar loja:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca uma loja específica por ID
+   * @param storeId ID da loja
+   * @returns Promise com dados da loja
+   */
+  getStoreById: async (storeId: string): Promise<CreateStoreResponse> => {
+    try {
+      const response = await api.get(`/stores/${storeId}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar loja por ID:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca lojas legacy para seleção no modal
+   * @returns Promise com lista de lojas legacy
+   */
+  getLegacyStores: async (): Promise<any[]> => {
+    try {
+      const response = await api.get('/stores-legacy');
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar lojas legacy:', error);
       throw error;
     }
   }

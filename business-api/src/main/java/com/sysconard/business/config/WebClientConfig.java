@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
     
-    @Value("${legacy-api.base-url:http://localhost:8082}")
+    @Value("${legacy-api.base-url:http://localhost:8081}")
     private String legacyApiBaseUrl;
     
     @Value("${legacy-api.context-path:/api/legacy}")
@@ -32,8 +32,18 @@ public class WebClientConfig {
      */
     @Bean("legacyApiWebClient")
     public WebClient legacyApiWebClient() {
+        // FORÇA A URL CORRETA DIRETAMENTE (SEM CACHE)
+        String forcedBaseUrl = "http://localhost:8081/api/legacy";
+        
+        System.out.println("=== WEBCLIENT CONFIG DEBUG ===");
+        System.out.println("legacyApiBaseUrl value: " + legacyApiBaseUrl);
+        System.out.println("legacyApiContextPath value: " + legacyApiContextPath);
+        System.out.println("Full URL would be: " + legacyApiBaseUrl + legacyApiContextPath);
+        System.out.println("FORCED URL: " + forcedBaseUrl);
+        System.out.println("================================");
+        
         return WebClient.builder()
-                .baseUrl(legacyApiBaseUrl + legacyApiContextPath)
+                .baseUrl(forcedBaseUrl)  // URL FIXA PARA GARANTIR
                 .codecs(configurer -> configurer
                         .defaultCodecs()
                         .maxInMemorySize(16 * 1024 * 1024)) // 16MB buffer

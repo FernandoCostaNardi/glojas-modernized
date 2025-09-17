@@ -1,12 +1,14 @@
 package com.sysconard.business.service;
 
-import com.sysconard.business.dto.CreateRoleRequest;
-import com.sysconard.business.dto.RoleResponse;
-import com.sysconard.business.dto.UpdateRoleStatusRequest;
-import com.sysconard.business.entity.Role;
-import com.sysconard.business.entity.Permission;
-import com.sysconard.business.repository.RoleRepository;
-import com.sysconard.business.repository.PermissionRepository;
+import com.sysconard.business.dto.security.CreateRoleRequest;
+import com.sysconard.business.dto.security.RoleResponse;
+import com.sysconard.business.dto.security.UpdateRoleStatusRequest;
+import com.sysconard.business.entity.security.Permission;
+import com.sysconard.business.entity.security.Role;
+import com.sysconard.business.repository.security.PermissionRepository;
+import com.sysconard.business.repository.security.RoleRepository;
+import com.sysconard.business.service.security.RoleService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

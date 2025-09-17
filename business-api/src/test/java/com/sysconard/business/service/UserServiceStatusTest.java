@@ -1,12 +1,14 @@
 package com.sysconard.business.service;
 
-import com.sysconard.business.dto.UpdateUserStatusRequest;
-import com.sysconard.business.dto.UpdateUserStatusResponse;
-import com.sysconard.business.dto.UpdateUserLockRequest;
-import com.sysconard.business.dto.UpdateUserLockResponse;
-import com.sysconard.business.entity.User;
-import com.sysconard.business.exception.UserNotFoundException;
-import com.sysconard.business.repository.UserRepository;
+import com.sysconard.business.dto.security.UpdateUserLockRequest;
+import com.sysconard.business.dto.security.UpdateUserLockResponse;
+import com.sysconard.business.dto.security.UpdateUserStatusRequest;
+import com.sysconard.business.dto.security.UpdateUserStatusResponse;
+import com.sysconard.business.entity.security.User;
+import com.sysconard.business.exception.security.UserNotFoundException;
+import com.sysconard.business.repository.security.UserRepository;
+import com.sysconard.business.service.security.UserService;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

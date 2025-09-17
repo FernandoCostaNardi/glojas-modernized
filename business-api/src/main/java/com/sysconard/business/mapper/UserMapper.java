@@ -1,9 +1,10 @@
 package com.sysconard.business.mapper;
 
-import com.sysconard.business.dto.CreateUserResponse;
-import com.sysconard.business.dto.UpdateUserResponse;
-import com.sysconard.business.dto.ChangePasswordResponse;
-import com.sysconard.business.entity.User;
+import com.sysconard.business.dto.security.ChangePasswordResponse;
+import com.sysconard.business.dto.security.CreateUserResponse;
+import com.sysconard.business.dto.security.UpdateUserResponse;
+import com.sysconard.business.entity.security.User;
+
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

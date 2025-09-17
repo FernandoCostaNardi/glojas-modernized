@@ -1,8 +1,9 @@
 package com.sysconard.business.service;
 
 import com.sysconard.business.client.LegacyApiClient;
-import com.sysconard.business.dto.LegacyApiResponseDTO;
 import com.sysconard.business.dto.ProductsBusinessResponseDTO;
+import com.sysconard.business.dto.config.LegacyApiResponseDTO;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

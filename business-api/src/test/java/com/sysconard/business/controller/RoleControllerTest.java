@@ -1,8 +1,10 @@
 package com.sysconard.business.controller;
 
-import com.sysconard.business.dto.RoleResponse;
-import com.sysconard.business.dto.UpdateRoleStatusRequest;
-import com.sysconard.business.service.RoleService;
+import com.sysconard.business.controller.security.RoleController;
+import com.sysconard.business.dto.security.RoleResponse;
+import com.sysconard.business.dto.security.UpdateRoleStatusRequest;
+import com.sysconard.business.service.security.RoleService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

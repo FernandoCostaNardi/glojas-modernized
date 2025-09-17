@@ -5,6 +5,9 @@ import Dashboard from '@/pages/Dashboard';
 import Settings from '@/pages/Settings';
 import UserManagement from '@/pages/settings/UserManagement';
 import PermissionManagement from '@/pages/settings/PermissionManagement';
+import OperationManagement from '@/pages/settings/OperationManagement';
+import EventOriginManagement from '@/pages/settings/EventOriginManagement';
+import StoreManagement from '@/pages/settings/StoreManagement';
 import Login from '@/pages/Login';
 
 /**
@@ -54,6 +57,30 @@ const AppContent: React.FC = () => {
     return (
       <ProtectedRoute>
         <PermissionManagement />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/settings/operations') {
+    return (
+      <ProtectedRoute>
+        <OperationManagement />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/settings/origin-codes') {
+    return (
+      <ProtectedRoute>
+        <EventOriginManagement />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/settings/stores') {
+    return (
+      <ProtectedRoute>
+        <StoreManagement />
       </ProtectedRoute>
     );
   }

@@ -1,24 +1,18 @@
 package com.sysconard.business.service;
 
-import com.sysconard.business.dto.UserSearchRequest;
-import com.sysconard.business.dto.UserSearchResponse;
-import com.sysconard.business.repository.UserRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import com.sysconard.business.dto.security.UserSearchRequest;
+import com.sysconard.business.dto.security.UserSearchResponse;
+import com.sysconard.business.repository.security.UserRepository;
+import com.sysconard.business.service.security.UserService;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {

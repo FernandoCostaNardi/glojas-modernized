@@ -1,7 +1,11 @@
 package com.sysconard.business.exception;
 
-import com.sysconard.business.dto.ApiErrorResponse;
-import com.sysconard.business.dto.CreateUserRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -18,12 +22,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.sysconard.business.dto.config.ApiErrorResponse;
+import com.sysconard.business.exception.config.GlobalExceptionHandler;
+import com.sysconard.business.exception.security.RoleNotFoundException;
+import com.sysconard.business.exception.security.UserAlreadyExistsException;
 
 /**
  * Testes unitários para o GlobalExceptionHandler
@@ -41,6 +43,18 @@ class GlobalExceptionHandlerTest {
     void setUp() {
         mockWebRequest = mock(WebRequest.class);
         when(mockWebRequest.getDescription(false)).thenReturn("/api/business/users/create");
+    }
+    
+    /**
+     * Extrai e valida o body da resposta HTTP de forma segura.
+     * 
+     * @param response Resposta HTTP
+     * @return Body da resposta validado e não nulo
+     */
+    private ApiErrorResponse extractValidatedBody(ResponseEntity<ApiErrorResponse> response) {
+        ApiErrorResponse body = response.getBody();
+        assertThat(body).isNotNull();
+        return body;
     }
 
     @Nested
@@ -66,15 +80,16 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("Erro de validação dos dados");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
-            assertThat(response.getBody().getFieldErrors()).isNotNull();
-            assertThat(response.getBody().getFieldErrors()).containsKeys("name", "email", "password");
-            assertThat(response.getBody().getFieldErrors().get("name")).isEqualTo("Nome é obrigatório");
-            assertThat(response.getBody().getFieldErrors().get("email")).isEqualTo("Email deve ser válido");
-            assertThat(response.getBody().getFieldErrors().get("password")).isEqualTo("Senha deve ter entre 6 e 100 caracteres");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("Erro de validação dos dados");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
+            assertThat(body.getFieldErrors()).isNotNull();
+            assertThat(body.getFieldErrors()).containsKeys("name", "email", "password");
+            assertThat(body.getFieldErrors().get("name")).isEqualTo("Nome é obrigatório");
+            assertThat(body.getFieldErrors().get("email")).isEqualTo("Email deve ser válido");
+            assertThat(body.getFieldErrors().get("password")).isEqualTo("Senha deve ter entre 6 e 100 caracteres");
         }
     }
 
@@ -93,10 +108,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("username 'joao.silva' já está em uso");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("username 'joao.silva' já está em uso");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
 
         @Test
@@ -110,10 +126,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("email 'joao.silva@exemplo.com' já está em uso");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("email 'joao.silva@exemplo.com' já está em uso");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
     }
 
@@ -132,10 +149,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("Role 'ROLE_INEXISTENTE' não encontrada no sistema");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("Role 'ROLE_INEXISTENTE' não encontrada no sistema");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
     }
 
@@ -155,10 +173,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("Credenciais inválidas");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("Credenciais inválidas");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
     }
 
@@ -177,10 +196,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("Acesso negado. Você não tem permissão para executar esta operação.");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("Acesso negado. Você não tem permissão para executar esta operação.");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
     }
 
@@ -199,10 +219,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("Argumento inválido");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("Argumento inválido");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
     }
 
@@ -221,10 +242,11 @@ class GlobalExceptionHandlerTest {
 
             // Then
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-            assertThat(response.getBody()).isNotNull();
-            assertThat(response.getBody().getStatus()).isEqualTo("ERROR");
-            assertThat(response.getBody().getMessage()).isEqualTo("Erro interno do servidor. Tente novamente mais tarde.");
-            assertThat(response.getBody().getPath()).isEqualTo("/api/business/users/create");
+            
+            ApiErrorResponse body = extractValidatedBody(response);
+            assertThat(body.getStatus()).isEqualTo("ERROR");
+            assertThat(body.getMessage()).isEqualTo("Erro interno do servidor. Tente novamente mais tarde.");
+            assertThat(body.getPath()).isEqualTo("/api/business/users/create");
         }
     }
 }
