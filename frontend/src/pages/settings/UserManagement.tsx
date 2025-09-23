@@ -6,6 +6,7 @@ import { Pagination } from '@/components/pagination';
 import { SystemStatsCards } from '@/components/stats';
 import { UsersTable } from '@/components/tables';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLayout } from '@/contexts/LayoutContext';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { ApiSystemUser } from '@/types';
 import React, { useEffect, useState } from 'react';
@@ -18,7 +19,7 @@ import React, { useEffect, useState } from 'react';
  */
 const UserManagement: React.FC = () => {
   const { hasPermission } = useAuth();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const { isMobile } = useLayout();
   
   // Hook customizado para lógica de negócio (Context7 - separação de responsabilidades)
   const {
@@ -149,21 +150,36 @@ const UserManagement: React.FC = () => {
    * Renderiza o cabeçalho da página
    */
   const renderPageHeader = (): React.ReactNode => (
-    <div className="mb-6">
-      <div className="flex items-center justify-between">
+    <div className={`mb-6 ${isMobile ? 'mb-4' : 'mb-6'}`}>
+      <div className={`${
+        isMobile 
+          ? 'space-y-4' 
+          : 'flex items-center justify-between'
+      }`}>
         <div>
-          <h1 className="text-2xl font-bold text-smart-gray-800 mb-1">
+          <h1 className={`font-bold text-smart-gray-800 mb-1 ${
+            isMobile ? 'text-xl' : 'text-2xl'
+          }`}>
             Gerenciamento de Usuários 👥
           </h1>
-          <p className="text-sm text-smart-gray-600">
-            Cadastre, edite e gerencie usuários do sistema Smart Eletron.
+          <p className={`text-smart-gray-600 ${
+            isMobile ? 'text-xs' : 'text-sm'
+          }`}>
+            {isMobile 
+              ? 'Gerencie usuários do sistema.' 
+              : 'Cadastre, edite e gerencie usuários do sistema Smart Eletron.'
+            }
           </p>
         </div>
         <button
           onClick={handleCreateUser}
-          className="bg-smart-red-600 hover:bg-smart-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200 flex items-center text-sm"
+          className={`bg-smart-red-600 hover:bg-smart-red-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center ${
+            isMobile 
+              ? 'px-4 py-3 text-sm w-full justify-center' 
+              : 'px-4 py-2 text-sm'
+          }`}
         >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className={`${isMobile ? 'w-5 h-5 mr-2' : 'w-4 h-4 mr-2'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
           </svg>
           Novo Usuário
@@ -179,7 +195,9 @@ const UserManagement: React.FC = () => {
    * Renderiza o conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className="flex-1 p-6 bg-smart-gray-50 overflow-auto">
+    <main className={`flex-1 bg-smart-gray-50 overflow-auto ${
+      isMobile ? 'p-4' : 'p-6'
+    }`}>
       {renderPageHeader()}
       
       {/* Estatísticas rápidas */}
@@ -198,8 +216,14 @@ const UserManagement: React.FC = () => {
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-smart-red-600 mx-auto mb-4"></div>
-            <p className="text-smart-gray-600">Carregando usuários...</p>
+            <div className={`animate-spin rounded-full border-b-2 border-smart-red-600 mx-auto mb-4 ${
+              isMobile ? 'h-8 w-8' : 'h-12 w-12'
+            }`}></div>
+            <p className={`text-smart-gray-600 ${
+              isMobile ? 'text-sm' : 'text-base'
+            }`}>
+              {isMobile ? 'Carregando...' : 'Carregando usuários...'}
+            </p>
           </div>
         </div>
       ) : (
@@ -263,16 +287,20 @@ const UserManagement: React.FC = () => {
   if (!canManageUsers()) {
     return (
       <div className="h-screen flex flex-col bg-smart-gray-50">
-        <Header isSidebarCollapsed={isSidebarCollapsed} />
+        <Header />
         <div className="flex flex-1 overflow-hidden relative">
-          <Sidebar onCollapseChange={setIsSidebarCollapsed} />
+          <Sidebar />
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
-              <div className="text-6xl mb-4">🚫</div>
-              <h1 className="text-2xl font-bold text-smart-gray-800 mb-2">
+              <div className={`mb-4 ${isMobile ? 'text-4xl' : 'text-6xl'}`}>🚫</div>
+              <h1 className={`font-bold text-smart-gray-800 mb-2 ${
+                isMobile ? 'text-xl' : 'text-2xl'
+              }`}>
                 Acesso Negado
               </h1>
-              <p className="text-smart-gray-600">
+              <p className={`text-smart-gray-600 ${
+                isMobile ? 'text-sm px-4' : 'text-base'
+              }`}>
                 Você não tem permissão para gerenciar usuários do sistema.
               </p>
             </div>
@@ -285,12 +313,12 @@ const UserManagement: React.FC = () => {
   return (
     <div className="h-screen flex flex-col bg-smart-gray-50">
       {/* Header */}
-      <Header isSidebarCollapsed={isSidebarCollapsed} />
+      <Header />
       
       {/* Layout principal */}
       <div className="flex flex-1 overflow-hidden relative">
         {/* Sidebar */}
-        <Sidebar onCollapseChange={setIsSidebarCollapsed} />
+        <Sidebar />
         
         {/* Conteúdo principal */}
         <div className="flex-1">

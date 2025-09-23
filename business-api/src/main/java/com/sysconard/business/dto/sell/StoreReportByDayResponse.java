@@ -3,24 +3,27 @@ package com.sysconard.business.dto.sell;
 import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
- * Record para resposta do relatório de vendas por loja.
- * Contém os dados agregados de vendas para uma loja específica.
+ * Record para resposta do relatório de vendas por loja e por dia.
+ * Contém os dados agregados de vendas para uma loja específica em uma data específica.
  * 
- * @param storeName Nome da loja
+ * @param storeName Nome fantasia da loja
  * @param storeCode Código da loja
- * @param danfe Valor total das vendas DANFE
- * @param pdv Valor total das vendas PDV
- * @param troca Valor total das trocas (tipo 3)
+ * @param reportDate Data do relatório (apenas a data, sem horário)
+ * @param danfe Valor total das vendas DANFE para esta loja nesta data
+ * @param pdv Valor total das vendas PDV para esta loja nesta data
+ * @param troca Valor total das trocas (TROCA3) para esta loja nesta data
  * 
  * @author Business API
  * @version 1.0
  */
 @Builder
-public record StoreReportResponse(
+public record StoreReportByDayResponse(
     String storeName,
     String storeCode,
+    LocalDate reportDate,
     BigDecimal danfe,
     BigDecimal pdv,
     BigDecimal troca
@@ -28,7 +31,7 @@ public record StoreReportResponse(
     /**
      * Construtor compacto com validações e inicializações
      */
-    public StoreReportResponse {
+    public StoreReportByDayResponse {
         // Garantir que valores nulos sejam convertidos para zero
         danfe = danfe != null ? danfe : BigDecimal.ZERO;
         pdv = pdv != null ? pdv : BigDecimal.ZERO;
@@ -36,10 +39,10 @@ public record StoreReportResponse(
     }
     
     /**
-     * Calcula o valor total geral (DANFE + PDV - TROCA3) para esta loja.
+     * Calcula o valor total geral (DANFE + PDV - TROCA3) para esta loja nesta data.
      * A troca é subtraída pois representa devoluções/trocas que reduzem o faturamento.
      * 
-     * @return Valor total líquido das vendas
+     * @return Valor total líquido das vendas do dia
      */
     public BigDecimal getTotal() {
         return danfe.add(pdv).subtract(troca);

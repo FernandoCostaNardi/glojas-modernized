@@ -1,29 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLayout } from '@/contexts/LayoutContext';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 
 /**
  * Página principal do Dashboard
- * Layout com sidebar, header e área de conteúdo de boas-vindas
+ * Layout responsivo com sidebar, header e área de conteúdo de boas-vindas
  * Seguindo princípios de Clean Code com responsabilidade única
  */
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const { isMobile, isDesktop } = useLayout();
 
   /**
    * Renderiza estatísticas rápidas (placeholder)
    */
   const renderQuickStats = (): React.ReactNode => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className={`grid gap-4 mb-6 ${
+      isMobile 
+        ? 'grid-cols-1' 
+        : 'grid-cols-2 lg:grid-cols-4'
+    }`}>
       {[
         { title: 'Usuários Ativos', value: '248', icon: '👥', color: 'bg-blue-500' },
         { title: 'Vendas Hoje', value: 'R$ 12.450', icon: '💰', color: 'bg-green-500' },
         { title: 'Produtos', value: '1.024', icon: '📦', color: 'bg-purple-500' },
         { title: 'Relatórios', value: '15', icon: '📊', color: 'bg-orange-500' },
       ].map((stat, index) => (
-        <div key={index} className="bg-white rounded-lg shadow-smart-md p-6 border border-smart-gray-100">
+        <div key={index} className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
+          isMobile ? 'p-4' : 'p-6'
+        }`}>
           <div className="flex items-center">
             <div className={`${stat.color} rounded-lg p-3 text-white text-2xl mr-4`}>
               {stat.icon}
@@ -42,9 +49,15 @@ const Dashboard: React.FC = () => {
    * Renderiza ações rápidas
    */
   const renderQuickActions = (): React.ReactNode => (
-    <div className="bg-white rounded-lg shadow-smart-md p-6 border border-smart-gray-100 mb-8">
-      <h2 className="text-lg font-semibold text-smart-gray-800 mb-4">Ações Rápidas</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 mb-6 ${
+      isMobile ? 'p-4' : 'p-6'
+    }`}>
+      <h2 className={`font-semibold text-smart-gray-800 mb-4 ${
+        isMobile ? 'text-base' : 'text-lg'
+      }`}>Ações Rápidas</h2>
+      <div className={`grid gap-4 ${
+        isMobile ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'
+      }`}>
         {[
           { title: 'Novo Produto', description: 'Cadastrar novo produto', icon: '➕' },
           { title: 'Relatório de Vendas', description: 'Gerar relatório do dia', icon: '📈' },
@@ -67,8 +80,12 @@ const Dashboard: React.FC = () => {
    * Renderiza informações do usuário
    */
   const renderUserInfo = (): React.ReactNode => (
-    <div className="bg-white rounded-lg shadow-smart-md p-6 border border-smart-gray-100">
-      <h2 className="text-lg font-semibold text-smart-gray-800 mb-4">Informações da Sessão</h2>
+    <div className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
+      isMobile ? 'p-4' : 'p-6'
+    }`}>
+      <h2 className={`font-semibold text-smart-gray-800 mb-4 ${
+        isMobile ? 'text-base' : 'text-lg'
+      }`}>Informações da Sessão</h2>
       <div className="space-y-3">
         <div>
           <span className="text-sm font-medium text-smart-gray-600">Nome: </span>
@@ -112,13 +129,19 @@ const Dashboard: React.FC = () => {
    * Renderiza conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className="flex-1 p-6 bg-smart-gray-50 overflow-auto">
+    <main className={`flex-1 bg-smart-gray-50 overflow-auto ${
+      isMobile ? 'p-4' : 'p-6'
+    }`}>
       {/* Cabeçalho de boas-vindas */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-smart-gray-800 mb-2">
+      <div className={`mb-6 ${isMobile ? 'mb-4' : 'mb-6'}`}>
+        <h1 className={`font-bold text-smart-gray-800 mb-2 ${
+          isMobile ? 'text-xl' : 'text-3xl'
+        }`}>
           Bem-vindo de volta, {user?.name?.split(' ')[0] || user?.username}! 👋
         </h1>
-        <p className="text-smart-gray-600">
+        <p className={`text-smart-gray-600 ${
+          isMobile ? 'text-sm' : 'text-base'
+        }`}>
           Aqui está um resumo das atividades do seu sistema Smart Eletron.
         </p>
       </div>
@@ -126,8 +149,12 @@ const Dashboard: React.FC = () => {
       {/* Conteúdo da dashboard */}
       {renderQuickStats()}
       
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className={`grid gap-6 ${
+        isMobile 
+          ? 'grid-cols-1' 
+          : 'grid-cols-1 lg:grid-cols-3'
+      }`}>
+        <div className={isMobile ? '' : 'lg:col-span-2'}>
           {renderQuickActions()}
         </div>
         <div>
@@ -140,12 +167,12 @@ const Dashboard: React.FC = () => {
   return (
     <div className="h-screen flex flex-col bg-smart-gray-50">
       {/* Header */}
-      <Header isSidebarCollapsed={isSidebarCollapsed} />
+      <Header />
       
       {/* Layout principal */}
       <div className="flex flex-1 overflow-hidden relative">
         {/* Sidebar */}
-        <Sidebar onCollapseChange={setIsSidebarCollapsed} />
+        <Sidebar />
         
         {/* Conteúdo principal */}
         <div className="flex-1">

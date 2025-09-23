@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import { ApiSystemUser } from '@/types';
 import { formatDateToBrazilian } from '@/utils/dateUtils';
 
@@ -17,7 +18,7 @@ interface UsersTableProps {
 }
 
 /**
- * Componente de tabela de usuários
+ * Componente de tabela de usuários mobile-first
  * Seguindo princípios de Clean Code com responsabilidade única
  */
 const UsersTable: React.FC<UsersTableProps> = ({
@@ -30,6 +31,8 @@ const UsersTable: React.FC<UsersTableProps> = ({
   onToggleUserLock,
   onChangePassword
 }) => {
+  const { isMobile } = useLayout();
+
   /**
    * Renderiza o ícone de ordenação
    */
@@ -48,8 +51,137 @@ const UsersTable: React.FC<UsersTableProps> = ({
     );
   };
 
-  return (
-    <div className="bg-white rounded-lg shadow-sm border border-smart-gray-100 overflow-hidden">
+  /**
+   * Renderiza um card de usuário para mobile
+   */
+  const renderUserCard = (user: ApiSystemUser): React.ReactNode => (
+    <div key={user.id} className="bg-white rounded-lg shadow-sm border border-smart-gray-200 p-4 mb-3">
+      {/* Header do card */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center">
+          <div className="w-10 h-10 bg-smart-red-100 rounded-full flex items-center justify-center">
+            <span className="text-smart-red-600 font-medium text-sm">
+              {user.name.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          <div className="ml-3">
+            <div className="text-sm font-semibold text-smart-gray-900">
+              {user.name}
+            </div>
+            <div className="text-xs text-smart-gray-500">
+              @{user.username}
+            </div>
+          </div>
+        </div>
+        
+        {/* Status badges */}
+        <div className="flex flex-col gap-1">
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+            user.active 
+              ? 'bg-green-100 text-green-800' 
+              : 'bg-red-100 text-red-800'
+          }`}>
+            {user.active ? 'Ativo' : 'Inativo'}
+          </span>
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+            user.notLocked 
+              ? 'bg-blue-100 text-blue-800' 
+              : 'bg-orange-100 text-orange-800'
+          }`}>
+            {user.notLocked ? 'Desbloqueado' : 'Bloqueado'}
+          </span>
+        </div>
+      </div>
+      
+      {/* Email */}
+      <div className="mb-3">
+        <div className="text-xs text-smart-gray-500 mb-1">Email</div>
+        <div className="text-sm text-smart-gray-800">{user.email}</div>
+      </div>
+      
+      {/* Roles */}
+      <div className="mb-3">
+        <div className="text-xs text-smart-gray-500 mb-2">Roles</div>
+        <div className="flex flex-wrap gap-1">
+          {user.roles.map((role, index) => (
+            <span
+              key={index}
+              className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-smart-red-100 text-smart-red-800"
+            >
+              {role}
+            </span>
+          ))}
+        </div>
+      </div>
+      
+      {/* Último login */}
+      <div className="mb-4">
+        <div className="text-xs text-smart-gray-500 mb-1">Último Login</div>
+        <div className="text-sm text-smart-gray-800">
+          {user.lastLoginDate 
+            ? formatDateToBrazilian(user.lastLoginDate)
+            : 'Nunca'
+          }
+        </div>
+      </div>
+      
+      {/* Ações */}
+      <div className="flex justify-end space-x-2 pt-3 border-t border-smart-gray-100">
+        <button
+          onClick={() => onEditUser(user)}
+          className="flex items-center px-3 py-1.5 text-xs font-medium text-smart-blue-600 hover:text-smart-blue-800 hover:bg-smart-blue-50 rounded-md transition-colors duration-200"
+        >
+          <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Editar
+        </button>
+        
+        <button
+          onClick={() => onToggleUserStatus(user)}
+          className={`flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-colors duration-200 ${
+            user.active 
+              ? 'text-red-600 hover:text-red-800 hover:bg-red-50' 
+              : 'text-green-600 hover:text-green-800 hover:bg-green-50'
+          }`}
+        >
+          <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {user.active ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L5.636 5.636" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            )}
+          </svg>
+          {user.active ? 'Desativar' : 'Ativar'}
+        </button>
+        
+        <button
+          onClick={() => onChangePassword(user)}
+          className="flex items-center px-3 py-1.5 text-xs font-medium text-smart-purple-600 hover:text-smart-purple-800 hover:bg-smart-purple-50 rounded-md transition-colors duration-200"
+        >
+          <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z" />
+          </svg>
+          Senha
+        </button>
+      </div>
+    </div>
+  );
+
+  /**
+   * Renderiza visualização mobile com cards
+   */
+  const renderMobileView = (): React.ReactNode => (
+    <div className="mx-2">
+      {users.map(renderUserCard)}
+    </div>
+  );
+
+  /**
+   * Renderiza tabela desktop
+   */
+  const renderDesktopTable = (): React.ReactNode => (
+    <div className="bg-white rounded-lg shadow-smart-md border border-smart-gray-100 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-smart-gray-200">
           <thead className="bg-smart-gray-50">
@@ -209,7 +341,7 @@ const UsersTable: React.FC<UsersTableProps> = ({
                       title="Alterar senha"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z" />
                       </svg>
                     </button>
                   </div>
@@ -221,6 +353,15 @@ const UsersTable: React.FC<UsersTableProps> = ({
       </div>
     </div>
   );
+
+  /**
+   * Renderiza a visualização adequada conforme o dispositivo
+   */
+  if (isMobile) {
+    return renderMobileView();
+  }
+  
+  return renderDesktopTable();
 };
 
 export { UsersTable };

@@ -274,6 +274,15 @@ public class StoreService {
             throw new RuntimeException("Erro ao buscar lojas não cadastradas: " + e.getMessage(), e);
         }
     }
+
+    //Criar metodo para trazer todas as lojas ativas
+    public List<StoreResponseDto> getAllActiveStores() {
+        log.info("Buscando todas as lojas ativas");
+        List<Store> stores = storeRepository.findAllActiveStores();
+        return stores.stream()
+                .map(this::mapToResponseDto)
+                .collect(Collectors.toList());
+    }
     
     /**
      * Extrai os códigos das lojas cadastradas em um Set para comparação eficiente.
@@ -320,6 +329,22 @@ public class StoreService {
                 .status(store.isStatus())
                 .createdAt(store.getCreatedAt())
                 .updatedAt(store.getUpdatedAt())
+                .build();
+    }
+    
+    /**
+     * Mapeia uma entidade Store para StoreResponseDto.
+     * 
+     * @param store Entidade Store
+     * @return DTO StoreResponseDto
+     */
+    private StoreResponseDto mapToResponseDto(Store store) {
+        return StoreResponseDto.builder()
+                .id(store.getId().toString())
+                .code(store.getCode())
+                .name(store.getName())
+                .city(store.getCity())
+                .status(store.isStatus())
                 .build();
     }
 }

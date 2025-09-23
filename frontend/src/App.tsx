@@ -1,5 +1,6 @@
 import React from 'react';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { LayoutProvider } from '@/contexts/LayoutContext';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import Dashboard from '@/pages/Dashboard';
 import Settings from '@/pages/Settings';
@@ -8,6 +9,7 @@ import PermissionManagement from '@/pages/settings/PermissionManagement';
 import OperationManagement from '@/pages/settings/OperationManagement';
 import EventOriginManagement from '@/pages/settings/EventOriginManagement';
 import StoreManagement from '@/pages/settings/StoreManagement';
+import VendasPage from '@/pages/vendas/VendasPage';
 import Login from '@/pages/Login';
 
 /**
@@ -17,7 +19,9 @@ import Login from '@/pages/Login';
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <LayoutProvider>
+        <AppContent />
+      </LayoutProvider>
     </AuthProvider>
   );
 };
@@ -81,6 +85,14 @@ const AppContent: React.FC = () => {
     return (
       <ProtectedRoute>
         <StoreManagement />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/vendas') {
+    return (
+      <ProtectedRoute>
+        <VendasPage />
       </ProtectedRoute>
     );
   }

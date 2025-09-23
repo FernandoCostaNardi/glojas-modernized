@@ -103,3 +103,17 @@ legacy-api:
   base-url: http://localhost:8081
   context-path: /api/legacy
   timeout: 30
+
+# Configurações para sincronização de vendas diárias
+sync:
+  daily-sales:
+    enabled: true
+    batch-size: 1000
+    retry-attempts: 3
+    timeout: 30s
+    schedule:
+      enabled: true
+      cron: "0 0 1 * * *"  # Todo dia às 01:00 AM
+    weekly:
+      enabled: false
+      cron: "0 0 2 * * SUN"  # Todo domingo às 02:00 AM

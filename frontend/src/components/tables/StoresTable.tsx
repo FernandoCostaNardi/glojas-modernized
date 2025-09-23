@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import { ApiStore } from '@/types';
 
 /**
@@ -15,7 +16,7 @@ interface StoresTableProps {
 }
 
 /**
- * Componente de tabela de lojas
+ * Componente de tabela de lojas mobile-first
  * Seguindo princípios de Clean Code com responsabilidade única
  */
 const StoresTable: React.FC<StoresTableProps> = ({
@@ -26,181 +27,256 @@ const StoresTable: React.FC<StoresTableProps> = ({
   sortDir = 'asc',
   onSort
 }) => {
+  const { isMobile } = useLayout();
+  
   // Garantir que stores seja sempre um array
   const safeStores = Array.isArray(stores) ? stores : [];
 
   /**
-   * Formata a data retornada pela API (array de números) para string legível
-   * @param dateArray Array de números [ano, mês, dia, hora, minuto, segundo, nanosegundo]
-   * @returns String formatada da data
+   * Renderiza o ícone de ordenação
    */
-  const formatApiDate = (dateArray: number[]): string => {
-    if (!dateArray || dateArray.length < 6) return 'Data não disponível';
+  const renderSortIcon = (field: string) => {
+    if (sortBy !== field || !onSort) return null;
     
-    const [year, month, day, hour, minute, second] = dateArray;
-    
-    // Validação de valores
-    if (year === undefined || month === undefined || day === undefined || 
-        hour === undefined || minute === undefined || second === undefined) {
-      return 'Data não disponível';
-    }
-    
-    const date = new Date(year, month - 1, day, hour, minute, second);
-    
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    return (
+      <svg 
+        className={`w-3 h-3 ml-1 ${sortDir === 'asc' ? 'rotate-180' : ''}`} 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+      </svg>
+    );
   };
 
   /**
-   * Renderiza cabeçalho clicável para ordenação
-   * @param field Campo para ordenação
-   * @param label Texto do cabeçalho
-   * @returns Elemento JSX do cabeçalho
+   * Renderiza um card de loja para mobile
    */
-  const renderSortableHeader = (field: string, label: string): React.ReactNode => {
-    const isActive = sortBy === field;
-    const isAsc = sortDir === 'asc';
-    
-    return (
-      <th 
-        className={`px-6 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider ${
-          onSort ? 'cursor-pointer hover:bg-smart-gray-100 select-none' : ''
-        }`}
-        onClick={() => onSort?.(field)}
-      >
-        <div className="flex items-center space-x-1">
-          <span>{label}</span>
-          {onSort && (
-            <div className="flex flex-col">
-              <svg 
-                className={`w-3 h-3 ${isActive && isAsc ? 'text-smart-red-600' : 'text-smart-gray-400'}`}
-                fill="currentColor" 
-                viewBox="0 0 20 20"
-              >
-                <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
-              </svg>
-              <svg 
-                className={`w-3 h-3 ${isActive && !isAsc ? 'text-smart-red-600' : 'text-smart-gray-400'}`}
-                fill="currentColor" 
-                viewBox="0 0 20 20"
-              >
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </div>
-          )}
+  const renderStoreCard = (store: ApiStore): React.ReactNode => (
+    <div key={store.id} className="bg-white rounded-lg shadow-sm border border-smart-gray-200 p-4 mb-3">
+      {/* Header do card */}
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <div className="text-sm font-semibold text-smart-gray-900">
+            {store.name}
+          </div>
+          <div className="text-xs text-smart-gray-500 mt-1">
+            Código: {store.code}
+          </div>
         </div>
-      </th>
-    );
-  };
-
-  if (isLoading) {
-    return (
-      <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-smart-red-600 mx-auto"></div>
-        <p className="mt-2 text-smart-gray-600">Carregando lojas...</p>
+        
+        {/* Status badge */}
+        <span
+          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+            store.active
+              ? 'bg-green-100 text-green-800'
+              : 'bg-red-100 text-red-800'
+          }`}
+        >
+          {store.active ? 'Ativa' : 'Inativa'}
+        </span>
       </div>
-    );
-  }
-
-  // Se não há lojas para exibir
-  if (safeStores.length === 0) {
-    return (
-      <div className="text-center py-8">
-        <div className="text-6xl mb-4">🏪</div>
-        <h3 className="text-lg font-medium text-smart-gray-900 mb-2">
-          Nenhuma loja encontrada
-        </h3>
-        <p className="text-smart-gray-500">
-          Não há lojas cadastradas no sistema ainda.
-        </p>
+      
+      {/* Detalhes */}
+      <div className="space-y-2 mb-4">
+        {store.cnpj && (
+          <div>
+            <div className="text-xs text-smart-gray-500">CNPJ</div>
+            <div className="text-sm text-smart-gray-800">{store.cnpj}</div>
+          </div>
+        )}
+        {store.address && (
+          <div>
+            <div className="text-xs text-smart-gray-500">Endereço</div>
+            <div className="text-sm text-smart-gray-800">{store.address}</div>
+          </div>
+        )}
+        {store.phone && (
+          <div>
+            <div className="text-xs text-smart-gray-500">Telefone</div>
+            <div className="text-sm text-smart-gray-800">{store.phone}</div>
+          </div>
+        )}
       </div>
-    );
-  }
+      
+      {/* Ações */}
+      <div className="flex justify-end pt-3 border-t border-smart-gray-100">
+        <button
+          onClick={() => onEditStore(store)}
+          className="flex items-center px-3 py-1.5 text-xs font-medium text-smart-blue-600 hover:text-smart-blue-800 hover:bg-smart-blue-50 rounded-md transition-colors duration-200"
+        >
+          <svg className="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Editar
+        </button>
+      </div>
+    </div>
+  );
 
-  return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full divide-y divide-smart-gray-200">
-        <thead className="bg-smart-gray-50">
-          <tr>
-            {renderSortableHeader('code', 'Código')}
-            {renderSortableHeader('name', 'Nome')}
-            {renderSortableHeader('city', 'Cidade')}
-            {renderSortableHeader('createdAt', 'Data de Criação')}
-            <th className="px-6 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
-              Status
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
-              Ações
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-smart-gray-200">
-          {safeStores.map((store) => (
-            <tr key={store.id} className="hover:bg-smart-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap">
+  /**
+   * Renderiza visualização mobile com cards
+   */
+  const renderMobileView = (): React.ReactNode => (
+    <div className="mx-2">
+      {safeStores.map(renderStoreCard)}
+    </div>
+  );
+
+  /**
+   * Renderiza tabela desktop
+   */
+  const renderDesktopTable = (): React.ReactNode => (
+    <div className="bg-white rounded-lg shadow-smart-md border border-smart-gray-100 overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-smart-gray-200">
+          <thead className="bg-smart-gray-50">
+            <tr>
+              <th 
+                className={`px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider ${
+                  onSort ? 'cursor-pointer hover:bg-smart-gray-100' : ''
+                }`}
+                onClick={() => onSort?.('code')}
+              >
                 <div className="flex items-center">
-                  <div className="w-8 h-8 bg-smart-red-100 rounded-full flex items-center justify-center">
-                    <span className="text-smart-red-600 font-medium text-xs">
-                      🏪
-                    </span>
-                  </div>
-                  <div className="ml-3">
-                    <div className="text-sm font-medium text-smart-gray-900">
-                      {store.code}
-                    </div>
-                  </div>
+                  Código
+                  {renderSortIcon('code')}
                 </div>
-              </td>
-              <td className="px-6 py-4">
-                <div className="text-sm font-medium text-smart-gray-900">
+              </th>
+              <th 
+                className={`px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider ${
+                  onSort ? 'cursor-pointer hover:bg-smart-gray-100' : ''
+                }`}
+                onClick={() => onSort?.('name')}
+              >
+                <div className="flex items-center">
+                  Nome
+                  {renderSortIcon('name')}
+                </div>
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+                CNPJ
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+                Endereço
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+                Telefone
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+                Status
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+                Ações
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-smart-gray-200">
+            {safeStores.map((store) => (
+              <tr key={store.id} className="hover:bg-smart-gray-50 transition-colors duration-200">
+                <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-smart-gray-900">
+                  {store.code}
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-smart-gray-900">
                   {store.name}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-smart-gray-900">
-                  {store.city || 'Não informado'}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-smart-gray-900">
-                  {formatApiDate(store.createdAt)}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                  store.status
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {store.status ? 'Ativa' : 'Inativa'}
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <div className="flex items-center space-x-2">
-                  {/* Botão Editar */}
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-smart-gray-900">
+                  {store.cnpj || '-'}
+                </td>
+                <td className="px-4 py-3 text-sm text-smart-gray-900 max-w-xs truncate">
+                  {store.address || '-'}
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm text-smart-gray-900">
+                  {store.phone || '-'}
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <span
+                    className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      store.active
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {store.active ? 'Ativa' : 'Inativa'}
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => onEditStore(store)}
                     className="text-smart-blue-600 hover:text-smart-blue-900 transition-colors duration-200 p-1"
                     title="Editar loja"
-                    aria-label={`Editar loja ${store.name}`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                   </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
+
+  // Estados de loading
+  if (isLoading) {
+    return (
+      <div className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
+        isMobile ? 'p-6 mx-2' : 'p-8 mx-4'
+      }`}>
+        <div className="flex items-center justify-center">
+          <div className={`flex items-center ${isMobile ? 'space-x-2' : 'space-x-3'}`}>
+            <svg className={`animate-spin text-smart-red-600 ${
+              isMobile ? 'h-6 w-6' : 'h-8 w-8'
+            }`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span className={`font-medium text-smart-gray-600 ${
+              isMobile ? 'text-sm' : 'text-lg'
+            }`}>
+              {isMobile ? 'Carregando...' : 'Carregando lojas...'}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Estado vazio
+  if (safeStores.length === 0) {
+    return (
+      <div className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
+        isMobile ? 'p-6 mx-2' : 'p-8 mx-4'
+      }`}>
+        <div className="text-center">
+          <div className={`text-smart-gray-400 mb-4 ${isMobile ? 'text-4xl' : 'text-6xl'}`}>🏪</div>
+          <h3 className={`font-semibold text-smart-gray-800 mb-2 ${
+            isMobile ? 'text-base' : 'text-lg'
+          }`}>
+            Nenhuma loja encontrada
+          </h3>
+          <p className={`text-smart-gray-600 ${isMobile ? 'text-sm' : 'text-base'}`}>
+            {isMobile 
+              ? 'Sem lojas cadastradas.' 
+              : 'Não há lojas cadastradas no sistema.'
+            }
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Renderiza a visualização adequada conforme o dispositivo
+   */
+  if (isMobile) {
+    return renderMobileView();
+  }
+  
+  return renderDesktopTable();
 };
 
 export { StoresTable };

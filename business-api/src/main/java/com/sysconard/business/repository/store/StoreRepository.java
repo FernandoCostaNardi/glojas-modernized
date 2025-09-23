@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sysconard.business.entity.store.Store;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -102,4 +103,12 @@ public interface StoreRepository extends JpaRepository<Store, UUID> {
      */
     @Query(value = "SELECT COUNT(*) FROM stores", nativeQuery = true)
     long countTotalStores();
+    
+    /**
+     * Busca todas as lojas ativas no sistema.
+     * 
+     * @return Lista de lojas ativas (status = true)
+     */
+    @Query("SELECT s FROM Store s WHERE s.status = true ORDER BY s.code")
+    List<Store> findAllActiveStores();
 }

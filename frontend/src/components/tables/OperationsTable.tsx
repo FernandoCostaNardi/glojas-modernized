@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import { Operation } from '@/types';
 import { formatDateToBrazilian } from '@/utils/dateUtils';
 

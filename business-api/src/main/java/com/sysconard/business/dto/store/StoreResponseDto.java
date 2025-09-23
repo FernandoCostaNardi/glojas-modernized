@@ -23,6 +23,12 @@ public class StoreResponseDto {
     private String id;
     
     /**
+     * Código da loja.
+     * Utilizado para identificação rápida e referência externa.
+     */
+    private String code;
+    
+    /**
      * Nome da loja.
      * Representa o nome comercial ou fantasia da loja.
      */
@@ -33,4 +39,10 @@ public class StoreResponseDto {
      * Utilizado para organização geográfica e relatórios.
      */
     private String city;
+    
+    /**
+     * Status da loja.
+     * Utilizado para indicar se a loja está ativa ou inativa.
+     */
+    private boolean status;
 }

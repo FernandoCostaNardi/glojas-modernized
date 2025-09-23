@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLayout } from '@/contexts/LayoutContext';
 
 /**
  * Interface para as propriedades do Header
  */
 interface HeaderProps {
   readonly className?: string;
-  readonly isSidebarCollapsed?: boolean;
 }
 
 /**
  * Componente Header
- * Cabeçalho da aplicação com logo, ícones de usuário e configuração
+ * Cabeçalho da aplicação mobile-first com hamburger menu, logo responsivo e menu de usuário
  * Seguindo princípios de Clean Code com responsabilidade única
  */
-const Header: React.FC<HeaderProps> = ({ className = '', isSidebarCollapsed = false }) => {
+const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   const { user, logout, hasPermission } = useAuth();
+  const { isMobile, isDesktop, isSidebarCollapsed, toggleSidebar } = useLayout();
   const [showUserMenu, setShowUserMenu] = useState<boolean>(false);
 
   /**
@@ -47,6 +48,26 @@ const Header: React.FC<HeaderProps> = ({ className = '', isSidebarCollapsed = fa
     closeUserMenu();
     // Navega para a página de configurações
     window.location.href = '/settings';
+  };
+
+  /**
+   * Renderiza o botão hamburger (apenas mobile)
+   */
+  const renderHamburgerButton = (): React.ReactNode => {
+    if (!isMobile) return null;
+
+    return (
+      <button
+        onClick={toggleSidebar}
+        className="p-2 rounded-lg text-white hover:bg-smart-red-700 transition-colors duration-200 mr-3"
+        title="Abrir menu"
+        aria-label="Abrir menu de navegação"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    );
   };
 
   /**
@@ -91,18 +112,21 @@ const Header: React.FC<HeaderProps> = ({ className = '', isSidebarCollapsed = fa
         onClick={toggleUserMenu}
         className="flex items-center space-x-2 p-2 rounded-lg text-white hover:bg-smart-red-700 transition-colors duration-200"
         title={`Usuário: ${user?.name || user?.username}`}
+        aria-label="Menu do usuário"
       >
         <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-smart-red-600 text-sm font-medium">
           {user?.name?.charAt(0).toUpperCase() || user?.username?.charAt(0).toUpperCase() || 'U'}
         </div>
-        <div className="hidden md:block text-left">
-          <div className="text-sm font-medium text-white">
-            {user?.name || user?.username}
+        {!isMobile && (
+          <div className="text-left">
+            <div className="text-sm font-medium text-white">
+              {user?.name || user?.username}
+            </div>
+            <div className="text-xs text-smart-red-100">
+              {user?.roles?.join(', ')}
+            </div>
           </div>
-          <div className="text-xs text-smart-red-100">
-            {user?.roles?.join(', ')}
-          </div>
-        </div>
+        )}
         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
@@ -118,7 +142,7 @@ const Header: React.FC<HeaderProps> = ({ className = '', isSidebarCollapsed = fa
           />
           
           {/* Menu */}
-          <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-smart-lg border border-smart-gray-200 z-20">
+          <div className={`absolute right-0 mt-2 ${isMobile ? 'w-56' : 'w-48'} bg-white rounded-lg shadow-smart-lg border border-smart-gray-200 z-20`}>
             <div className="py-1">
               {/* Informações do usuário */}
               <div className="px-4 py-2 border-b border-smart-gray-100">
@@ -150,29 +174,38 @@ const Header: React.FC<HeaderProps> = ({ className = '', isSidebarCollapsed = fa
   );
 
   /**
-   * Classes CSS do header
+   * Classes CSS do header responsivo
    */
   const headerClasses = `
-    bg-smart-red-600 border-b border-smart-red-700 px-6 h-16
+    bg-smart-red-600 border-b border-smart-red-700 h-16
     flex items-center justify-between
     sticky top-0 z-40 relative
+    ${isMobile ? 'px-4' : 'px-6'}
     ${className}
   `.trim();
 
   return (
     <header className={headerClasses}>
-      {/* Logo à esquerda - se estende no header e sidebar */}
-      <div className="flex items-center h-16">
-        <img 
-          src="/logoheader.png" 
-          alt="Smart Eletron" 
-          className={`absolute top-0 left-6 w-auto object-contain z-50 ${
-            isSidebarCollapsed ? 'h-16' : 'h-40'
-          }`}
-        />
+      {/* Lado esquerdo: Hamburger + Logo */}
+      <div className="flex items-center">
+        {renderHamburgerButton()}
+        
+        <div className="flex items-center">
+          <img 
+            src="/logoheader.png" 
+            alt="Smart Eletron" 
+            className={`w-auto object-contain ${
+              isMobile 
+                ? 'h-10' 
+                : isDesktop && !isSidebarCollapsed 
+                  ? 'h-12' 
+                  : 'h-10'
+            }`}
+          />
+        </div>
       </div>
 
-      {/* Ícones à direita */}
+      {/* Lado direito: Configurações + Menu usuário */}
       <div className="flex items-center space-x-2">
         {renderSettingsIcon()}
         {renderUserMenu()}
