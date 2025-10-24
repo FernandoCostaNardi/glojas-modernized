@@ -3,11 +3,12 @@ package com.sysconard.legacy.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Configuração web para registrar interceptors
+ * Configuração web para registrar interceptors e CORS
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -21,5 +22,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(readOnlyInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/actuator/**"); // Permite endpoints de monitoramento
+    }
+
+    @Override
+    public void addCorsMappings(@NonNull CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
 }

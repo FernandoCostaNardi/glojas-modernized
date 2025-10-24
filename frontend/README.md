@@ -14,7 +14,7 @@ Frontend React simples para consumir a API de produtos do sistema Glojas.
 
 - Node.js 18+ 
 - npm ou yarn
-- Business API rodando em `http://localhost:8081`
+- Business API rodando em `http://localhost:8087`
 
 ## 🛠️ Instalação
 
@@ -68,7 +68,7 @@ npm test                     # Executa testes
 
 O frontend consome o endpoint:
 ```
-GET http://localhost:8081/api/business/products/registered
+GET http://localhost:8089/api/business/products/registered
 ```
 
 ### Parâmetros esperados:
@@ -95,7 +95,7 @@ GET http://localhost:8081/api/business/products/registered
 
 ## 🚀 Como Testar
 
-1. Certifique-se que a Business API está rodando na porta 8081
+1. Certifique-se que a Business API está rodando na porta 8089
 2. Execute `npm install && npm start`
 3. Abra http://localhost:3000
 4. Verifique se a tabela carrega os produtos da API

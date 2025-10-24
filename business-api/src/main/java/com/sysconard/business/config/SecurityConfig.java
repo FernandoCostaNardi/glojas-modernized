@@ -77,6 +77,7 @@ public class SecurityConfig {
                 .requestMatchers("/operation-kinds/health").permitAll()
                 .requestMatchers("/operation-kinds/test-connection").permitAll()
                 .requestMatchers("/sales/**").permitAll() // Temporário para teste
+                .requestMatchers("/legacy/stores/**").permitAll() // Liberar acesso para legacy/stores
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
@@ -88,7 +89,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3000",
+                                                                  "https://gestaosmarteletron.com.br",
+    "http://gestaosmarteletron.com.br"
+                                                             ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

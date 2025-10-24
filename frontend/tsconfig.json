@@ -24,6 +24,7 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
+    "types": ["vite/client"],
     
     /* Path mapping for Clean Code organization */
     "baseUrl": ".",

@@ -172,8 +172,8 @@ echo        PRÓXIMOS PASSOS
 echo ========================================
 echo.
 echo 🔄 Agora você pode:
-echo    • Iniciar Legacy API (porta 8081)
-echo    • Iniciar Business API (porta 8081)  
+echo    • Iniciar Legacy API (porta 8087)
+echo    • Iniciar Business API (porta 8089)  
 echo    • Iniciar Frontend React (porta 3000)
 echo.
 echo 📝 Scripts disponíveis:

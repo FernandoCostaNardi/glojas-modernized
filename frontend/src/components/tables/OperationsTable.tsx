@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLayout } from '@/contexts/LayoutContext';
 import { Operation } from '@/types';
 import { formatDateToBrazilian } from '@/utils/dateUtils';
 
@@ -11,8 +10,6 @@ interface OperationsTableProps {
   readonly operations: readonly Operation[];
   readonly isLoading: boolean;
   readonly onEditOperation: (operation: Operation) => void;
-  readonly onDeleteOperation: (operation: Operation) => void;
-  readonly onToggleOperationStatus: (operation: Operation) => void;
   readonly sortBy?: string;
   readonly sortDir?: string;
   readonly onSort?: (field: string) => void;
@@ -26,8 +23,6 @@ const OperationsTable: React.FC<OperationsTableProps> = ({
   operations,
   isLoading,
   onEditOperation,
-  onDeleteOperation,
-  onToggleOperationStatus,
   sortBy,
   sortDir,
   onSort

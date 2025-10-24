@@ -37,7 +37,7 @@ interface VendasState {
  */
 const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
   const { isMobile } = useLayout();
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split('T')[0] || '';
   
   const [startDate, setStartDate] = useState<string>(today);
   const [endDate, setEndDate] = useState<string>(today);

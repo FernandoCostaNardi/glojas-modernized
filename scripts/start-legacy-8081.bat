@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo INICIANDO LEGACY API NA PORTA 8081
+echo INICIANDO LEGACY API NA PORTA 8087
 echo ========================================
 
 echo Configurando Java 8...
@@ -23,7 +23,7 @@ echo Limpando e compilando...
 mvn clean compile
 
 echo.
-echo Iniciando Legacy API na porta 8081...
-mvn spring-boot:run "-Dspring-boot.run.jvmArguments=-Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dserver.port=8081"
+echo Iniciando Legacy API na porta 8087...
+mvn spring-boot:run "-Dspring-boot.run.jvmArguments=-Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dserver.port=8087"
 
 pause

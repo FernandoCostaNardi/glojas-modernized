@@ -185,7 +185,7 @@ Esta API atua como um proxy para a Legacy API, realizando as seguintes operaçõ
 
 1. **Validação**: Valida os parâmetros de entrada
 2. **Transformação**: Converte as datas para o formato esperado pela Legacy API
-3. **Comunicação**: Faz chamada HTTP POST para `http://localhost:8081/api/legacy/api/sales/store-report`
+3. **Comunicação**: Faz chamada HTTP POST para `http://localhost:8087/api/legacy/api/sales/store-report`
 4. **Mapeamento**: Converte a resposta da Legacy API para nosso formato
 5. **Tratamento de Erro**: Gerencia timeouts e erros HTTP
 
@@ -195,7 +195,7 @@ As seguintes propriedades podem ser configuradas no `application.yml`:
 
 ```yaml
 legacy-api:
-  base-url: http://localhost:8081
+  base-url: http://localhost:8087
   context-path: /api/legacy
   timeout: 30
 ```

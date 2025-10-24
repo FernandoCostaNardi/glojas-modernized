@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLayout } from '@/contexts/LayoutContext';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
@@ -17,8 +16,7 @@ interface VendasPageProps {
  * Layout responsivo com sidebar, header e sistema de abas para relatórios de vendas
  * Seguindo princípios de Clean Code com responsabilidade única
  */
-const VendasPage: React.FC<VendasPageProps> = ({ className = '' }) => {
-  const { user } = useAuth();
+const VendasPage: React.FC<VendasPageProps> = () => {
   const { isMobile } = useLayout();
 
   /**

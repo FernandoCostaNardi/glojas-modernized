@@ -45,19 +45,19 @@ Write-Host "🚀 COMO TESTAR AGORA:" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
 
 Write-Host "1. TESTE DE LOGIN VÁLIDO:" -ForegroundColor Green
-Write-Host "curl -X POST http://localhost:8082/api/business/auth/login \`" -ForegroundColor Gray
+Write-Host "curl -X POST http://localhost:8089/api/business/auth/login \`" -ForegroundColor Gray
 Write-Host "  -H \"Content-Type: application/json\" \`" -ForegroundColor Gray
 Write-Host "  -d '{ \"email\": \"admin@example.com\", \"password\": \"admin123\" }'" -ForegroundColor Gray
 Write-Host ""
 
 Write-Host "2. TESTE DE VALIDAÇÃO DE EMAIL:" -ForegroundColor Green
-Write-Host "curl -X POST http://localhost:8082/api/business/auth/login \`" -ForegroundColor Gray
+Write-Host "curl -X POST http://localhost:8089/api/business/auth/login \`" -ForegroundColor Gray
 Write-Host "  -H \"Content-Type: application/json\" \`" -ForegroundColor Gray
 Write-Host "  -d '{ \"email\": \"email-invalido\", \"password\": \"senha123\" }'" -ForegroundColor Gray
 Write-Host ""
 
 Write-Host "3. TESTE DE CAMPO OBRIGATÓRIO:" -ForegroundColor Green
-Write-Host "curl -X POST http://localhost:8082/api/business/auth/login \`" -ForegroundColor Gray
+Write-Host "curl -X POST http://localhost:8089/api/business/auth/login \`" -ForegroundColor Gray
 Write-Host "  -H \"Content-Type: application/json\" \`" -ForegroundColor Gray
 Write-Host "  -d '{ \"email\": \"\", \"password\": \"senha123\" }'" -ForegroundColor Gray
 Write-Host ""
@@ -112,7 +112,7 @@ Write-Host "4. Contatar backend com logs de erro" -ForegroundColor White
 Write-Host ""
 
 Write-Host "INFORMAÇÕES TÉCNICAS:" -ForegroundColor Yellow
-Write-Host "- Backend: http://localhost:8082/api/business" -ForegroundColor White
+Write-Host "- Backend: http://localhost:8089/api/business" -ForegroundColor White
 Write-Host "- Endpoint: POST /auth/login" -ForegroundColor White
 Write-Host "- Content-Type: application/json" -ForegroundColor White
 Write-Host "- Encoding: UTF-8" -ForegroundColor White

@@ -7,6 +7,7 @@ import { useLayout } from '@/contexts/LayoutContext';
  */
 interface HeaderProps {
   readonly className?: string;
+  readonly isSidebarCollapsed?: boolean;
 }
 
 /**
@@ -17,6 +18,9 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   const { user, logout, hasPermission } = useAuth();
   const { isMobile, isDesktop, isSidebarCollapsed, toggleSidebar } = useLayout();
+  
+  // Usar a prop se fornecida, senão usar do contexto
+  // const finalIsSidebarCollapsed = propIsSidebarCollapsed !== undefined ? propIsSidebarCollapsed : isSidebarCollapsed;
   const [showUserMenu, setShowUserMenu] = useState<boolean>(false);
 
   /**

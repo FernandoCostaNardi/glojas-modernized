@@ -116,7 +116,6 @@ export const useEventOriginManagement = (): EventOriginManagementState & EventOr
   
   // Estados de operações
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   /**
    * Carrega códigos de origem com filtros e paginação atuais
@@ -127,7 +126,7 @@ export const useEventOriginManagement = (): EventOriginManagementState & EventOr
       setError(null);
       
       const params: EventOriginSearchParams = {
-        eventSource: filters.eventSource,
+        ...(filters.eventSource && { eventSource: filters.eventSource }),
         page: currentPage,
         size: pageSize,
         sortBy,
@@ -320,7 +319,7 @@ export const useEventOriginManagement = (): EventOriginManagementState & EventOr
     editingEventOrigin,
     modalMode,
     isSubmitting,
-    isDeleting,
+    isDeleting: false,
     
     // Ações
     loadEventOrigins,

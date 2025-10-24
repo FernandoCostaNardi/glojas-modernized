@@ -45,19 +45,19 @@ echo ===========================================================================
 echo.
 
 echo 1. TESTE DE LOGIN VÁLIDO:
-echo curl -X POST http://localhost:8082/api/business/auth/login ^
+echo curl -X POST http://localhost:8089/api/business/auth/login ^
 echo   -H "Content-Type: application/json" ^
 echo   -d "{ \"email\": \"admin@example.com\", \"password\": \"admin123\" }"
 echo.
 
 echo 2. TESTE DE VALIDAÇÃO DE EMAIL:
-echo curl -X POST http://localhost:8082/api/business/auth/login ^
+echo curl -X POST http://localhost:8089/api/business/auth/login ^
 echo   -H "Content-Type: application/json" ^
 echo   -d "{ \"email\": \"email-invalido\", \"password\": \"senha123\" }"
 echo.
 
 echo 3. TESTE DE CAMPO OBRIGATÓRIO:
-echo curl -X POST http://localhost:8082/api/business/auth/login ^
+echo curl -X POST http://localhost:8089/api/business/auth/login ^
 echo   -H "Content-Type: application/json" ^
 echo   -d "{ \"email\": \"\", \"password\": \"senha123\" }"
 echo.
@@ -115,7 +115,7 @@ echo 4. Contatar backend com logs de erro
 echo.
 
 echo INFORMAÇÕES TÉCNICAS:
-echo - Backend: http://localhost:8082/api/business
+echo - Backend: http://localhost:8089/api/business
 echo - Endpoint: POST /auth/login
 echo - Content-Type: application/json
 echo - Encoding: UTF-8

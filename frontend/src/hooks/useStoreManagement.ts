@@ -134,7 +134,35 @@ export const useStoreManagement = () => {
    */
   const getStoreById = useCallback(async (storeId: string): Promise<ApiStore> => {
     try {
-      return await storeService.getStoreById(storeId);
+      const response = await storeService.getStoreById(storeId);
+      // Converter CreateStoreResponse para ApiStore se necessário
+      if ('message' in response) {
+        // É CreateStoreResponse, converter para ApiStore
+        const dateObj = new Date(response.createdAt);
+        const apiStore: ApiStore = {
+          id: response.id,
+          code: response.code,
+          name: response.name,
+          status: response.status,
+          createdAt: [
+            dateObj.getFullYear(), 
+            dateObj.getMonth() + 1, 
+            dateObj.getDate(),
+            dateObj.getHours(),
+            dateObj.getMinutes(),
+            dateObj.getSeconds()
+          ]
+        };
+        
+        // Adicionar city apenas se existir
+        if (response.city) {
+          (apiStore as any).city = response.city;
+        }
+        
+        return apiStore;
+      }
+      // Converter CreateStoreResponse para ApiStore forçadamente
+      return response as unknown as ApiStore;
     } catch (error) {
       console.error('❌ Erro ao buscar loja por ID:', error);
       throw error;

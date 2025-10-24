@@ -134,18 +134,18 @@ if !javacount! gtr 0 (
     echo Aplicações Java: ✅ !javacount! processo(s) rodando
     
     :: Tentar identificar quais APIs estão rodando
-    curl -s http://localhost:8081/api/business/health >nul 2>&1
+    curl -s http://localhost:8089/api/business/health >nul 2>&1
     if not errorlevel 1 (
-        echo   • Business API: ✅ Rodando (porta 8081)
+        echo   • Business API: ✅ Rodando (porta 8089)
     ) else (
-        echo   • Business API: ❌ Não responde (porta 8081)
+        echo   • Business API: ❌ Não responde (porta 8087)
     )
     
-    curl -s http://localhost:8081/api/legacy/health >nul 2>&1
+    curl -s http://localhost:8087/api/legacy/health >nul 2>&1
     if not errorlevel 1 (
-        echo   • Legacy API: ✅ Rodando (porta 8081)
+        echo   • Legacy API: ✅ Rodando (porta 8087)
     ) else (
-        echo   • Legacy API: ❌ Não responde (porta 8081)
+        echo   • Legacy API: ❌ Não responde (porta 8087)
     )
     
 ) else (

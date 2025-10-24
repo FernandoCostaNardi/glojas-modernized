@@ -7,10 +7,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Aplicação Legacy API - Sistema Glojas
- * 
  * Esta API é responsável por expor dados do SQL Server existente
  * como endpoints REST para serem consumidos pela Business API.
- * 
  * Características:
  * - Read-only access ao SQL Server
  * - Queries otimizadas para performance
@@ -27,14 +25,14 @@ public class LegacyApiApplication {
 
     public static void main(String[] args) {
         System.out.println("=== Iniciando Legacy API - Sistema Glojas ===");
-        System.out.println("Porta: 8082");
+        System.out.println("Porta: 8087");
         System.out.println("Context Path: /api/legacy");
         System.out.println("Conectando com SQL Server...");
         
         SpringApplication.run(LegacyApiApplication.class, args);
         
         System.out.println("✅ Legacy API iniciada com sucesso!");
-        System.out.println("🌐 URL Base: http://localhost:8082/api/legacy");
-        System.out.println("📊 Health Check: http://localhost:8082/api/legacy/actuator/health");
+        System.out.println("🌐 URL Base: http://localhost:8087/api/legacy");
+        System.out.println("📊 Health Check: http://localhost:8087/api/legacy/actuator/health");
     }
 }

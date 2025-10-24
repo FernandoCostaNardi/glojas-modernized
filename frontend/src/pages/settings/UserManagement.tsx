@@ -9,7 +9,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useLayout } from '@/contexts/LayoutContext';
 import { useUserManagement } from '@/hooks/useUserManagement';
 import { ApiSystemUser } from '@/types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 
 /**

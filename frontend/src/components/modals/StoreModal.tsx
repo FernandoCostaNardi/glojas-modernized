@@ -10,11 +10,14 @@ import type {
 
 /**
  * Interface para loja legacy
+ * Mapeia os campos retornados pela API /legacy/stores
  */
 interface LegacyStore {
   readonly id: string;
+  readonly code: string;
   readonly name: string;
   readonly city: string;
+  readonly status: boolean;
 }
 
 /**
@@ -70,9 +73,12 @@ const StoreModal: React.FC<StoreModalProps> = ({
         try {
           setIsLoadingLegacyStores(true);
           const legacyData = await storeService.getLegacyStores();
-          setAvailableLegacyStores(legacyData);
+          // Garantir que sempre seja um array
+          setAvailableLegacyStores(Array.isArray(legacyData) ? legacyData : []);
         } catch (error) {
           console.error('❌ Erro ao carregar lojas legacy:', error);
+          // Em caso de erro, definir como array vazio
+          setAvailableLegacyStores([]);
         } finally {
           setIsLoadingLegacyStores(false);
         }
@@ -144,7 +150,7 @@ const StoreModal: React.FC<StoreModalProps> = ({
       if (legacyStore) {
         setFormData(prev => ({
           ...prev,
-          code: legacyStore.id,
+          code: legacyStore.code || legacyStore.id,
           name: legacyStore.name,
           city: legacyStore.city
         }));
@@ -312,7 +318,7 @@ const StoreModal: React.FC<StoreModalProps> = ({
             <option value="">
               {isLoadingLegacyStores ? 'Carregando lojas...' : 'Selecione uma loja'}
             </option>
-            {availableLegacyStores.map((legacyStore) => (
+            {Array.isArray(availableLegacyStores) && availableLegacyStores.map((legacyStore) => (
               <option key={legacyStore.id} value={legacyStore.id}>
                 {legacyStore.id} - {legacyStore.name}
               </option>

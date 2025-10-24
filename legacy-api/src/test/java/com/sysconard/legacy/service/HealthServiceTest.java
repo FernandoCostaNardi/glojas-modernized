@@ -52,7 +52,7 @@ class HealthServiceTest {
         assertThat(response.getApplication()).isEqualTo("Legacy API - Sistema Glojas");
         assertThat(response.getVersion()).isEqualTo("1.0.0");
         assertThat(response.getStatus()).isEqualTo("RUNNING");
-        assertThat(response.getPort()).isEqualTo(8082);
+        assertThat(response.getPort()).isEqualTo(8087);
         assertThat(response.getContextPath()).isEqualTo("/api/legacy");
         assertThat(response.getDescription()).isEqualTo("API para integração com SQL Server existente");
         assertThat(response.getTimestamp()).isNotNull();

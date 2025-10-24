@@ -1,10 +1,9 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { Role } from '@/types';
 import { roleService } from '@/services/api';
 import { 
   RoleToggleState, 
   UseRoleToggleReturn, 
-  RoleToggleResult, 
   RoleToggleConfig,
   RoleToggleEvent 
 } from '@/types/roleToggle';
@@ -23,9 +22,6 @@ import {
 export const useRoleToggle = (config: RoleToggleConfig = {}): UseRoleToggleReturn => {
   // Configurações padrão
   const {
-    enableRetry = true,
-    maxRetries = 3,
-    retryDelay = 1000,
     enableLogging = true
   } = config;
 
@@ -91,6 +87,13 @@ export const useRoleToggle = (config: RoleToggleConfig = {}): UseRoleToggleRetur
       return;
     }
 
+    // Log inicio da operação
+    logToggleEvent({ 
+      type: 'TOGGLE_STARTED', 
+      roleId: role.id, 
+      roleName: role.name 
+    });
+
     // Iniciar operação
     setState(prev => ({
       ...prev,
@@ -103,6 +106,14 @@ export const useRoleToggle = (config: RoleToggleConfig = {}): UseRoleToggleRetur
       // Executar toggle diretamente
       const updatedRole = await roleService.updateRoleStatus(role.id, !role.active);
       
+      // Log sucesso
+      logToggleEvent({ 
+        type: 'TOGGLE_SUCCESS', 
+        roleId: role.id, 
+        roleName: role.name,
+        newStatus: !role.active
+      });
+
       // Sucesso - atualizar estado
       setState(prev => ({
         ...prev,

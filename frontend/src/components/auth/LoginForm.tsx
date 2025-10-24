@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { businessApi } from '@/services/api';
+import { BUSINESS_API_ROUTES } from '@/constants/apiRoutes';
 import { LoginResponse, LoginError, LoginCredentials, FormEventHandler } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import Button from '../ui/Button';
@@ -86,13 +87,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
    */
   const processLogin = async (loginData: LoginCredentials): Promise<LoginResponse> => {
     try {
-      // Endpoint da Business API (proxy reescreve para /api/business/auth/login)
-      const response = await axios.post('/api/auth/login', loginData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        timeout: 10000, // 10 segundos de timeout
-      });
+      const response = await businessApi.post(BUSINESS_API_ROUTES.LOGIN, loginData, { timeout: 10000 });
       
       return response.data;
     } catch (error: any) {

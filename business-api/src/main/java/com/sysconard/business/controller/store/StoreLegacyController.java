@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/stores-legacy")
+@RequestMapping("/legacy/stores")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class StoreLegacyController {

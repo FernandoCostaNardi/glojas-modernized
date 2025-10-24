@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8087
   servlet:
     context-path: /api/legacy
 
@@ -56,10 +56,18 @@ management:
 
 logging:
   level:
-    com.sysconard.legacy: DEBUG
-    com.sysconard.legacy.config.ReadOnlyInterceptor: DEBUG
+    com.sysconard.legacy: INFO
+    com.sysconard.legacy.config.ReadOnlyInterceptor: INFO
+    com.sysconard.legacy.config.HttpErrorHandler: INFO
     org.springframework.web: INFO
     org.hibernate.SQL: WARN
-    com.zaxxer.hikari: DEBUG
+    com.zaxxer.hikari: WARN
+    # Suprimir logs de parsing HTTP específicos
+    org.apache.coyote.http11.Http11Processor: WARN
+    org.apache.coyote.http11.Http11InputBuffer: WARN
+    org.apache.coyote.http11: WARN
     # Log de operações de escrita para auditoria
-    org.hibernate.engine.jdbc.batch: DEBUG 
+    org.hibernate.engine.jdbc.batch: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" 

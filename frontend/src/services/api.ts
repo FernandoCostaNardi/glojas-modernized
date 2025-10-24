@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_CONFIG } from '@/config/api.config';
 import { getToken } from '@/utils/token';
 import {
   CreateUserRequest,
@@ -14,55 +15,64 @@ import {
   EventOriginSearchParams,
   Operation,
   OperationKind,
-  OperationFormData,
+  OperationSearchResponse,
   ApiStore,
   CreateStoreRequest,
   CreateStoreResponse,
   UpdateStoreRequest,
-  UpdateStoreResponse,
-  StoreSearchFilters,
-  StorePageResponse
+  UpdateStoreResponse
 } from '@/types';
 
 /**
- * Configuração base do axios para comunicação com a API
+ * Clientes Axios centralizados
  */
-const api = axios.create({
-  baseURL: 'http://localhost:8082/api/business',
-  timeout: 10000,
+export const businessApi = axios.create({
+  baseURL: API_CONFIG.BUSINESS_API_BASE_URL,
+  timeout: 30000
 });
+
+export const legacyApi = axios.create({
+  baseURL: API_CONFIG.LEGACY_API_BASE_URL,
+  timeout: 30000
+});
+
+// Alias para compatibilidade retroativa com código existente
+const api = businessApi;
 
 /**
  * Interceptor para adicionar token de autenticação em todas as requisições
  */
-api.interceptors.request.use(
-  (config) => {
-    const token = getToken();
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// Interceptor de autenticação aplicado aos dois clientes
+[businessApi, legacyApi].forEach((client) => {
+  client.interceptors.request.use(
+    (config) => {
+      const token = getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => Promise.reject(error)
+  );
+});
 
 /**
  * Interceptor para tratamento de erros de resposta
  */
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Token expirado ou inválido
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
-      window.location.href = '/login';
+// Interceptor de resposta padronizado (401) em ambos os clientes
+[businessApi, legacyApi].forEach((client) => {
+  client.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = '/login';
+      }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
+  );
+});
 
 /**
  * Serviço para gerenciamento de roles
@@ -463,7 +473,7 @@ export const operationService = {
   getAllOperations: async (): Promise<Operation[]> => {
     try {
       const response = await operationService.getOperationsWithFilters(undefined, 0, 1000);
-      return response.operations;
+      return [...response.operations];
     } catch (error) {
       console.error('❌ Erro ao buscar operações:', error);
       throw error;
@@ -665,7 +675,7 @@ export const storeService = {
    */
   getLegacyStores: async (): Promise<any[]> => {
     try {
-      const response = await api.get('/stores-legacy');
+      const response = await api.get('/legacy/stores');
       return response.data;
     } catch (error) {
       console.error('❌ Erro ao buscar lojas legacy:', error);

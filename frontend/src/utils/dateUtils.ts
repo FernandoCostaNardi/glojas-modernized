@@ -36,7 +36,14 @@ export const formatDateToBrazilian = (dateInput: string | number[] | number | nu
         const [year, month, day, hour, minute, second] = dateInput;
         
         // Mês no array é 0-based, então subtrai 1
-        date = new Date(year, month - 1, day, hour, minute, second);
+        // Validar se todos os valores são números
+        if (typeof year === 'number' && typeof month === 'number' && typeof day === 'number' &&
+            typeof hour === 'number' && typeof minute === 'number' && typeof second === 'number') {
+          date = new Date(year, month - 1, day, hour, minute, second);
+        } else {
+          console.warn('Valores do array não são números válidos:', dateInput);
+          return 'Data inválida';
+        }
         
         console.log('formatDateToBrazilian: data criada a partir do array:', date);
       } else {
@@ -98,7 +105,14 @@ export const formatDateTimeToBrazilian = (dateInput: string | number[] | number 
         const [year, month, day, hour, minute, second] = dateInput;
         
         // Mês no array é 0-based, então subtrai 1
-        date = new Date(year, month - 1, day, hour, minute, second);
+        // Validar se todos os valores são números
+        if (typeof year === 'number' && typeof month === 'number' && typeof day === 'number' &&
+            typeof hour === 'number' && typeof minute === 'number' && typeof second === 'number') {
+          date = new Date(year, month - 1, day, hour, minute, second);
+        } else {
+          console.warn('Valores do array não são números válidos:', dateInput);
+          return 'Data inválida';
+        }
       } else {
         return 'Data inválida';
       }
@@ -148,7 +162,14 @@ export const isValidDate = (dateInput: string | number[] | number | null | undef
     if (Array.isArray(dateInput)) {
       if (dateInput.length >= 6) {
         const [year, month, day, hour, minute, second] = dateInput;
-        date = new Date(year, month - 1, day, hour, minute, second);
+        // Validar se todos os valores são números
+        if (typeof year === 'number' && typeof month === 'number' && typeof day === 'number' &&
+            typeof hour === 'number' && typeof minute === 'number' && typeof second === 'number') {
+          date = new Date(year, month - 1, day, hour, minute, second);
+        } else {
+          console.warn('Valores do array não são números válidos:', dateInput);
+          return false; // isValidDate retorna boolean
+        }
       } else {
         return false;
       }
@@ -182,7 +203,14 @@ export const parseDate = (dateInput: string | number[] | number | null | undefin
     if (Array.isArray(dateInput)) {
       if (dateInput.length >= 6) {
         const [year, month, day, hour, minute, second] = dateInput;
-        date = new Date(year, month - 1, day, hour, minute, second);
+        // Validar se todos os valores são números
+        if (typeof year === 'number' && typeof month === 'number' && typeof day === 'number' &&
+            typeof hour === 'number' && typeof minute === 'number' && typeof second === 'number') {
+          date = new Date(year, month - 1, day, hour, minute, second);
+        } else {
+          console.warn('Valores do array não são números válidos:', dateInput);
+          return null; // parseDate retorna Date | null
+        }
       } else {
         return null;
       }

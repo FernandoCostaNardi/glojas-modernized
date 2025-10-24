@@ -112,7 +112,7 @@ public class LegacyApiClient {
         try {
             return legacyApiWebClient
                     .get()
-                    .uri("/operations")
+                    .uri("/api/legacy/operations")
                     .retrieve()
                     .bodyToFlux(OperationKindDto.class)
                     .collectList()
@@ -143,14 +143,15 @@ public class LegacyApiClient {
         try {
             return legacyApiWebClient
                     .get()
-                    .uri("/stores")
+                    .uri("/api/legacy/stores")
                     .retrieve()
                     .bodyToFlux(StoreResponseDto.class)
                     .collectList()
-                    .timeout(Duration.ofSeconds(timeoutSeconds))
+                    .timeout(Duration.ofSeconds(60)) // Aumentado para 60 segundos
                     .doOnSuccess(response -> log.info("Sucesso ao buscar lojas. Total encontrado: {}", 
                             response != null ? response.size() : "N/A"))
                     .doOnError(error -> log.error("Erro ao buscar lojas na Legacy API", error))
+                    .onErrorReturn(List.of()) // Fallback para lista vazia em caso de erro
                     .block();
                     
         } catch (WebClientResponseException e) {

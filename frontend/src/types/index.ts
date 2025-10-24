@@ -525,3 +525,35 @@ export type {
   RoleToggleService,
   RoleToggleNotification
 } from './roleToggle';
+
+// =====================================================
+// TIPOS DE OPERAÇÕES
+// =====================================================
+
+
+/**
+ * Interface para tipo de operação
+ */
+export interface OperationKind {
+  readonly id: string;
+  readonly code: string;
+  readonly description: string;
+  readonly isActive: boolean;
+  readonly createdAt: string;
+  readonly updatedAt?: string;
+}
+
+/**
+ * Interface para resposta de busca de operações com paginação
+ */
+export interface OperationSearchResponse {
+  readonly operations: readonly Operation[];
+  readonly pagination: {
+    readonly currentPage: number;
+    readonly totalPages: number;
+    readonly totalElements: number;
+    readonly pageSize: number;
+    readonly hasNext: boolean;
+    readonly hasPrevious: boolean;
+  };
+}

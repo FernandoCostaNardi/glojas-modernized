@@ -11,7 +11,7 @@ import Sidebar from '@/components/layout/Sidebar';
  */
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
-  const { isMobile, isDesktop } = useLayout();
+  const { isMobile } = useLayout();
 
   /**
    * Renderiza estatísticas rápidas (placeholder)

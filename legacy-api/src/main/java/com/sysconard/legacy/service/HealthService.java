@@ -37,7 +37,7 @@ public class HealthService {
                 .version("1.0.0")
                 .status("RUNNING")
                 .timestamp(LocalDateTime.now())
-                .port(8082)
+                .port(8087)
                 .contextPath("/api/legacy")
                 .description("API para integração com SQL Server existente")
                 .build();
@@ -56,7 +56,7 @@ public class HealthService {
                 .version("1.0.0")
                 .status("RUNNING")
                 .timestamp(LocalDateTime.now())
-                .port(8082)
+                .port(8087)
                 .contextPath("/api/legacy")
                 .description("API para acesso read-only ao SQL Server existente")
                 .database(databaseInfo)

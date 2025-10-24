@@ -58,9 +58,11 @@ export const useMediaQuery = (): MediaQueryResult => {
     /**
      * Função debounced para otimizar performance
      */
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
     const debouncedHandleResize = (): void => {
-      clearTimeout(timeoutId);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       timeoutId = setTimeout(handleResize, 150);
     };
 
@@ -71,9 +73,14 @@ export const useMediaQuery = (): MediaQueryResult => {
       // Cleanup
       return () => {
         window.removeEventListener('resize', debouncedHandleResize);
-        clearTimeout(timeoutId);
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
       };
     }
+    
+    // Retorno vazio para SSR
+    return () => {};
   }, []);
 
   /**

@@ -13,7 +13,7 @@ export const useOperationManagement = () => {
   
   // Estado para paginação
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(5); // Padrão: 5 itens por página
+  const [pageSize] = useState<number>(5); // Padrão: 5 itens por página
   const [totalElements, setTotalElements] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [sortBy, setSortBy] = useState<string>('code');
@@ -24,7 +24,6 @@ export const useOperationManagement = () => {
   const [isLoadingOperationKinds, setIsLoadingOperationKinds] = useState<boolean>(false);
   
   // Refs para controlar carregamento único
-  const hasLoadedOperations = useRef<boolean>(false);
   const hasLoadedOperationKinds = useRef<boolean>(false);
 
   /**
@@ -50,7 +49,7 @@ export const useOperationManagement = () => {
         sortDir
       );
       
-      setOperations(response.operations);
+      setOperations([...response.operations]);
       setTotalElements(response.totalElements);
       setTotalPages(response.totalPages);
       

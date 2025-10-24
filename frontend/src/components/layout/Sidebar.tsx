@@ -6,6 +6,7 @@ import { useLayout } from '@/contexts/LayoutContext';
  */
 interface SidebarProps {
   readonly className?: string;
+  readonly onCollapseChange?: (collapsed: boolean) => void;
 }
 
 /**

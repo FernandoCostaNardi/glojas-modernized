@@ -17,8 +17,17 @@ export default defineConfig({
     open: true,
     host: true,
     proxy: {
+      '/api/business': {
+        target: 'http://localhost:8089',
+        changeOrigin: true
+      },
+      '/api/legacy': {
+        target: 'http://localhost:8087',
+        changeOrigin: true
+      },
+      // Compatibilidade temporária: manter '/api' apontando para business
       '/api': {
-        target: 'http://localhost:8082',
+        target: 'http://localhost:8089',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api/business'),
       },

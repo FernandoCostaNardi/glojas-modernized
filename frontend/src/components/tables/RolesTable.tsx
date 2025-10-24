@@ -21,7 +21,6 @@ interface RolesTableProps {
  */
 const RolesTable: React.FC<RolesTableProps> = ({
   roles,
-  isLoading,
   onEditRole,
   onToggleRoleStatus
 }) => {
@@ -36,9 +35,8 @@ const RolesTable: React.FC<RolesTableProps> = ({
 
   // Estado padrão seguro para evitar erros
   const safeToggleState = {
-    loadingRoles: [],
-    error: null,
-    ...toggleState
+    ...toggleState,
+    error: toggleState.error || null
   };
 
   /**
@@ -66,8 +64,8 @@ const RolesTable: React.FC<RolesTableProps> = ({
   /**
    * Verifica se uma role específica está sendo alterada
    */
-  const isRoleToggling = (roleId: number): boolean => {
-    return safeToggleState.loadingRoles.includes(roleId);
+  const isRoleToggling = (roleId: string): boolean => {
+    return safeToggleState.isToggling && safeToggleState.togglingRoleId === roleId;
   };
 
   /**

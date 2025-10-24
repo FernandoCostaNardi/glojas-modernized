@@ -44,7 +44,7 @@ class HealthControllerIntegrationTest {
                 .version("1.0.0")
                 .status("RUNNING")
                 .timestamp(LocalDateTime.now())
-                .port(8082)
+                .port(8087)
                 .contextPath("/api/legacy")
                 .description("API para integração com SQL Server existente")
                 .build();
@@ -59,7 +59,7 @@ class HealthControllerIntegrationTest {
                 .andExpect(jsonPath("$.application").value("Legacy API - Sistema Glojas"))
                 .andExpect(jsonPath("$.version").value("1.0.0"))
                 .andExpect(jsonPath("$.status").value("RUNNING"))
-                .andExpect(jsonPath("$.port").value(8082))
+                .andExpect(jsonPath("$.port").value(8087))
                 .andExpect(jsonPath("$.contextPath").value("/api/legacy"))
                 .andExpect(jsonPath("$.description").value("API para integração com SQL Server existente"))
                 .andExpect(jsonPath("$.timestamp").exists());
@@ -80,7 +80,7 @@ class HealthControllerIntegrationTest {
                 .version("1.0.0")
                 .status("RUNNING")
                 .timestamp(LocalDateTime.now())
-                .port(8082)
+                .port(8087)
                 .contextPath("/api/legacy")
                 .description("API para acesso read-only ao SQL Server existente")
                 .database(databaseInfo)

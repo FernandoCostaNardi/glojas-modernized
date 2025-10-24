@@ -69,33 +69,21 @@ const StoresTable: React.FC<StoresTableProps> = ({
         {/* Status badge */}
         <span
           className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
-            store.active
+            store.status
               ? 'bg-green-100 text-green-800'
               : 'bg-red-100 text-red-800'
           }`}
         >
-          {store.active ? 'Ativa' : 'Inativa'}
+          {store.status ? 'Ativa' : 'Inativa'}
         </span>
       </div>
       
       {/* Detalhes */}
       <div className="space-y-2 mb-4">
-        {store.cnpj && (
+        {store.city && (
           <div>
-            <div className="text-xs text-smart-gray-500">CNPJ</div>
-            <div className="text-sm text-smart-gray-800">{store.cnpj}</div>
-          </div>
-        )}
-        {store.address && (
-          <div>
-            <div className="text-xs text-smart-gray-500">Endereço</div>
-            <div className="text-sm text-smart-gray-800">{store.address}</div>
-          </div>
-        )}
-        {store.phone && (
-          <div>
-            <div className="text-xs text-smart-gray-500">Telefone</div>
-            <div className="text-sm text-smart-gray-800">{store.phone}</div>
+            <div className="text-xs text-smart-gray-500">Cidade</div>
+            <div className="text-sm text-smart-gray-800">{store.city}</div>
           </div>
         )}
       </div>
@@ -156,15 +144,6 @@ const StoresTable: React.FC<StoresTableProps> = ({
                 </div>
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
-                CNPJ
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
-                Endereço
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
-                Telefone
-              </th>
-              <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
                 Status
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
@@ -181,24 +160,15 @@ const StoresTable: React.FC<StoresTableProps> = ({
                 <td className="px-4 py-3 whitespace-nowrap text-sm text-smart-gray-900">
                   {store.name}
                 </td>
-                <td className="px-4 py-3 whitespace-nowrap text-sm text-smart-gray-900">
-                  {store.cnpj || '-'}
-                </td>
-                <td className="px-4 py-3 text-sm text-smart-gray-900 max-w-xs truncate">
-                  {store.address || '-'}
-                </td>
-                <td className="px-4 py-3 whitespace-nowrap text-sm text-smart-gray-900">
-                  {store.phone || '-'}
-                </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <span
                     className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      store.active
+                      store.status
                         ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
                     }`}
                   >
-                    {store.active ? 'Ativa' : 'Inativa'}
+                    {store.status ? 'Ativa' : 'Inativa'}
                   </span>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-sm font-medium">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
@@ -27,10 +27,7 @@ const OperationManagement: React.FC = () => {
     totalPages,
     sortBy,
     sortDir,
-    loadOperations,
     refreshOperations,
-    createOperation,
-    updateOperation,
     getOperationById,
     changePage,
     handleSort
@@ -103,11 +100,11 @@ const OperationManagement: React.FC = () => {
   /**
    * Confirma exclusão de operação
    */
-  const handleDeleteOperation = (operation: Operation): void => {
-    setConfirmingItem(operation);
-    setConfirmationAction('deleteOperation');
-    setShowConfirmation(true);
-  };
+  // const handleDeleteOperation = (operation: Operation): void => {
+  //   setConfirmingItem(operation);
+  //   setConfirmationAction('deleteOperation');
+  //   setShowConfirmation(true);
+  // };
 
 
   /**
@@ -187,8 +184,6 @@ const OperationManagement: React.FC = () => {
         operations={operations}
         isLoading={isLoadingOperations}
         onEditOperation={handleEditOperation}
-        onDeleteOperation={handleDeleteOperation}
-        onToggleOperationStatus={() => {}} // Função vazia já que não usamos mais
         sortBy={sortBy}
         sortDir={sortDir}
         onSort={handleSort}
