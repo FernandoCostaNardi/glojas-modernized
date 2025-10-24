@@ -1,0 +1,38 @@
+ Describing process with id 2 - name business-api 
+┌───────────────────┬────────────────────────────────────────────────────────────────────────────────┐
+│ status            │ stopped                                                                        │
+│ name              │ business-api                                                                   │
+│ namespace         │ default                                                                        │
+│ version           │ N/A                                                                            │
+│ restarts          │ 661                                                                            │
+│ uptime            │ 0                                                                              │
+│ entire log path   │ /opt/glojas-modernized/logs/business-api-combined-2.log                        │
+│ script path       │ /usr/lib/jvm/java-17-openjdk-amd64/bin/java                                    │
+│ script args       │ -jar -Xmx2g -Xms1g -Dspring.profiles.active=prod target/business-api-1.0.0.jar │
+│ error log path    │ /opt/glojas-modernized/logs/business-api-error-2.log                           │
+│ out log path      │ /opt/glojas-modernized/logs/business-api-out-2.log                             │
+│ pid path          │ /home/glojas/.pm2/pids/business-api-2.pid                                      │
+│ interpreter       │ none                                                                           │
+│ interpreter args  │ N/A                                                                            │
+│ script id         │ 2                                                                              │
+│ exec cwd          │ /opt/glojas-modernized/business-api                                            │
+│ exec mode         │ fork_mode                                                                      │
+│ node.js version   │ N/A                                                                            │
+│ node env          │ production                                                                     │
+│ watch & reload    │ ✘                                                                              │
+│ unstable restarts │ 0                                                                              │
+│ created at        │ 2025-10-17T00:33:24.226Z                                                       │
+└───────────────────┴────────────────────────────────────────────────────────────────────────────────┘
+ Divergent env variables from local env 
+┌────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ PWD            │ /opt/glojas-modernized/business-api                                                                                                       │
+│ SSH_CONNECTION │ 177.37.198.244 64447 212.85.12.228 22                                                                                                     │
+│ XDG_SESSION_ID │ 23273                                                                                                                                     │
+│ SSH_CLIENT     │ 177.37.198.244 64447 22                                                                                                                   │
+│ PATH           │ /usr/lib/jvm/java-17-openjdk-amd64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin │
+└────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+ Add your own code metrics: http://bit.ly/code-metrics
+ Use `pm2 logs business-api [--lines 1000]` to display logs
+ Use `pm2 env 2` to display environment variables
+ Use `pm2 monit` to monitor CPU and Memory usage business-api

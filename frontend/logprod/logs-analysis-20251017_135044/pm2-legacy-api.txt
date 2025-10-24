@@ -1,0 +1,38 @@
+ Describing process with id 3 - name legacy-api 
+┌───────────────────┬────────────────────────────────────────────────────────────────────────────────┐
+│ status            │ stopped                                                                        │
+│ name              │ legacy-api                                                                     │
+│ namespace         │ default                                                                        │
+│ version           │ N/A                                                                            │
+│ restarts          │ 2102                                                                           │
+│ uptime            │ 0                                                                              │
+│ entire log path   │ /opt/glojas-modernized/logs/legacy-api-combined-3.log                          │
+│ script path       │ /usr/lib/jvm/java-8-openjdk-amd64/bin/java                                     │
+│ script args       │ -jar -Xmx1g -Xms512m -Dspring.profiles.active=prod target/legacy-api-1.0.0.jar │
+│ error log path    │ /opt/glojas-modernized/logs/legacy-api-error-3.log                             │
+│ out log path      │ /opt/glojas-modernized/logs/legacy-api-out-3.log                               │
+│ pid path          │ /home/glojas/.pm2/pids/legacy-api-3.pid                                        │
+│ interpreter       │ none                                                                           │
+│ interpreter args  │ N/A                                                                            │
+│ script id         │ 3                                                                              │
+│ exec cwd          │ /opt/glojas-modernized/legacy-api                                              │
+│ exec mode         │ fork_mode                                                                      │
+│ node.js version   │ N/A                                                                            │
+│ node env          │ production                                                                     │
+│ watch & reload    │ ✘                                                                              │
+│ unstable restarts │ 0                                                                              │
+│ created at        │ 2025-10-17T00:33:24.228Z                                                       │
+└───────────────────┴────────────────────────────────────────────────────────────────────────────────┘
+ Divergent env variables from local env 
+┌────────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ PWD            │ /opt/glojas-modernized/legacy-api                                                                                                        │
+│ SSH_CONNECTION │ 177.37.198.244 64447 212.85.12.228 22                                                                                                    │
+│ XDG_SESSION_ID │ 23273                                                                                                                                    │
+│ SSH_CLIENT     │ 177.37.198.244 64447 22                                                                                                                  │
+│ PATH           │ /usr/lib/jvm/java-8-openjdk-amd64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin │
+└────────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+ Add your own code metrics: http://bit.ly/code-metrics
+ Use `pm2 logs legacy-api [--lines 1000]` to display logs
+ Use `pm2 env 3` to display environment variables
+ Use `pm2 monit` to monitor CPU and Memory usage legacy-api

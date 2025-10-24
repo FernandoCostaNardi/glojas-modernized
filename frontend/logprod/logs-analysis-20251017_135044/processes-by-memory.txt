@@ -1,0 +1,20 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root      688485  0.3 17.3 4610680 1407700 ?     Ssl  Aug19 300:41 /opt/java/openjdk/bin/java -Djava.util.logging.config.file=/usr/local/tomcat/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.client.protocols=TLSv1,TLSv1.1,TLSv1.2 -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2 -Djava.security.properties=/tmp/java.security -Djdk.tls.ephemeralDHKeySize=2048 -Djava.protocol.handler.pkgs=org.apache.catalina.webresources -Dorg.apache.catalina.security.SecurityListener.UMASK=0027 -Dignore.endorsed.dirs= -classpath /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar -Dcatalina.base=/usr/local/tomcat -Dcatalina.home=/usr/local/tomcat -Djava.io.tmpdir=/usr/local/tomcat/temp org.apache.catalina.startup.Bootstrap start
+mysql    1102552  0.7  6.1 2054948 501364 ?      Ssl  Oct02 172:51 /usr/sbin/mysqld
+root     1102460  0.0  1.3 174696 107800 ?       S<s  Oct02   2:06 /usr/lib/systemd/systemd-journald
+root        1141  0.0  1.0 2211148 83548 ?       Ssl  Jun05  24:05 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+glojas   1333451  0.2  0.9 1320948 77956 ?       Ssl  00:28   1:50 PM2 v6.0.13: God Daemon (/home/glojas/.pm2)
+root     1284877  0.1  0.9 1320976 77660 ?       Ssl  Oct16   1:57 PM2 v6.0.13: God Daemon (/root/.pm2)
+root      962946  0.1  0.6 1802496 52384 ?       Ssl  Sep23  49:23 /usr/bin/containerd
+root     1102453  0.0  0.5 485548 43696 ?        Ssl  Oct02   1:02 /usr/libexec/fwupd/fwupd
+postgres 1102501  0.0  0.3 222144 30732 ?        Ss   Oct02   3:17 /usr/lib/postgresql/17/bin/postgres -D /var/lib/postgresql/17/main -c config_file=/etc/postgresql/17/main/postgresql.conf
+root         841  0.0  0.3 121376 29644 ?        Ssl  Jun05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+root      998110  0.0  0.3 287972 26064 ?        SLsl Sep26   3:07 /sbin/multipathd -d -s
+root           1  0.0  0.1  24400 15472 ?        Ss   Jun05   9:20 /usr/lib/systemd/systemd --system --deserialize=80
+systemd+ 1102451  0.0  0.1  23332 14780 ?        Ss   Oct02   0:02 /usr/lib/systemd/systemd-resolved
+root     1102446  0.0  0.1 470740 14596 ?        Ssl  Oct02   0:21 /usr/libexec/udisks2/udisksd
+www-data 1335639  0.0  0.1  28880 13212 ?        S    00:37   0:01 nginx: worker process
+root      998162  0.0  0.1 391392 12784 ?        Ssl  Sep26   0:00 /usr/sbin/ModemManager
+www-data 1335638  0.0  0.1  28564 12712 ?        S    00:37   0:03 nginx: worker process
+root     1275542  0.0  0.1  21972 12548 ?        Ss   Oct16   0:00 /usr/lib/systemd/systemd --user
+glojas   1332864  0.0  0.1  21980 12276 ?        Ss   00:24   0:00 /usr/lib/systemd/systemd --user

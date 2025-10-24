@@ -1,0 +1,12 @@
+ total_connections 
+-------------------
+                 6
+(1 row)
+
+ datname  | usename  | count 
+----------+----------+-------
+          |          |     4
+ postgres | postgres |     1
+          | postgres |     1
+(3 rows)
+

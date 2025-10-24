@@ -1,0 +1,1509 @@
+[TAILING] Tailing last 500 lines for [all] processes (change the value with --lines option)
+/home/glojas/.pm2/pm2.log last 500 lines:
+PM2        | 2025-10-17T06:47:37: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:47:37: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:48:34: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:48:34: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:48:34: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:48:40: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:48:40: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:48:40: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:49:41: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:49:41: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:49:41: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:50:09: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:50:09: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:50:09: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:50:27: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:50:27: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:50:27: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:51:29: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:51:29: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:51:29: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:51:42: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:51:42: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:51:43: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:52:36: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:52:36: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:52:36: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:53:15: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:53:15: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:53:15: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:53:34: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:53:34: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:53:34: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:54:37: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:54:37: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:54:37: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:54:39: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:54:39: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:54:39: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:55:48: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:55:48: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:55:48: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:56:10: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:56:10: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:56:10: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:56:23: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:56:23: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:56:23: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:57:22: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:57:22: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:57:22: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:57:37: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:57:37: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:57:37: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:58:26: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:58:26: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:58:26: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T06:59:03: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:59:03: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T06:59:03: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T06:59:26: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T06:59:26: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T06:59:26: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:00:26: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:00:26: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:00:26: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:00:30: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:00:30: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:00:30: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:01:38: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:01:38: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:01:38: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:02:02: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:02:02: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:02:02: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:02:14: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:02:14: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:02:14: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:05:25: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:05:25: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:05:25: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:05:29: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:05:29: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:05:29: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:09:09: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:09:09: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:09:09: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:09:14: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:09:14: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:09:14: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:12:40: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:12:40: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:12:40: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:13:07: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:13:07: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:13:07: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:16:23: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:16:24: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:16:24: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:16:57: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:16:57: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:16:57: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:19:45: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:19:45: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:19:45: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:20:41: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:20:41: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:20:41: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:23:06: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:23:06: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:23:07: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:24:35: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:24:35: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:24:35: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:26:31: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:26:31: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:26:32: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:28:33: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:28:33: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:28:33: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:30:09: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:30:09: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:30:09: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:32:38: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:32:38: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:32:38: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:33:35: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:33:35: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:33:35: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:36:24: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:36:24: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:36:25: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:37:17: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:37:17: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:37:17: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:40:19: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:40:19: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:40:20: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:40:50: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:40:50: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:40:51: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:44:05: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:44:05: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:44:05: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:44:09: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:44:09: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:44:09: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:47:44: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:47:44: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:47:44: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:48:07: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:48:07: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:48:07: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:51:23: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:51:23: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:51:23: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:51:56: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:51:56: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:51:57: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:54:39: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:54:39: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:54:39: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:55:41: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:55:41: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:55:41: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T07:58:07: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:58:07: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T07:58:07: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T07:59:30: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T07:59:30: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T07:59:30: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:01:47: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:01:47: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:01:47: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:03:21: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:03:21: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:03:22: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:05:23: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:05:23: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:05:24: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:07:24: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:07:24: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:07:25: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:09:07: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:09:07: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:09:07: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:10:58: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:10:58: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:10:58: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:12:33: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:12:33: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:12:33: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:14:56: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:14:56: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:14:56: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:15:58: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:15:59: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:15:59: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:18:38: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:18:38: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:18:38: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:19:16: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:19:16: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:19:16: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:22:25: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:22:25: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:22:25: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:22:55: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:22:55: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:22:55: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:26:18: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:26:18: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:26:18: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:26:24: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:26:24: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:26:24: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:29:53: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:29:53: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:29:53: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:30:01: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:30:01: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:30:01: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:33:41: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:33:41: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:33:41: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:33:59: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:33:59: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:33:59: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:37:10: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:37:10: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:37:10: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:37:40: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:37:40: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:37:40: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:40:35: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:40:35: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:40:36: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:41:35: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:41:35: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:41:35: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:44:13: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:44:13: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:44:13: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:45:19: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:45:19: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:45:19: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:47:51: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:47:51: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:47:51: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:48:59: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:48:59: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:49:00: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:51:30: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:51:30: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:51:30: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:52:48: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:52:48: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:52:49: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:55:11: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:55:11: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:55:11: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T08:56:37: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:56:37: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T08:56:37: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T08:58:37: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T08:58:37: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T08:58:37: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:00:24: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:00:24: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:00:24: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:02:22: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:02:22: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:02:22: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:04:19: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:04:19: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:04:19: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:06:09: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:06:09: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:06:10: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:08:14: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:08:14: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:08:14: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:09:37: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:09:37: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:09:37: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:12:09: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:12:09: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:12:09: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:13:15: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:13:15: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:13:15: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:15:52: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:15:52: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:15:53: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:16:52: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:16:52: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:16:53: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:19:36: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:19:36: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:19:36: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:20:12: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:20:12: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:20:12: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:23:22: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:23:22: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:23:22: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:23:32: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:23:32: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:23:32: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:27:04: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:27:04: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:27:04: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:27:07: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:27:07: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:27:08: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:30:43: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:30:43: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:30:43: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:31:06: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:31:06: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:31:06: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:34:02: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:34:03: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:34:03: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:35:01: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:35:01: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:35:01: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:37:35: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:37:35: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:37:35: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:38:56: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:38:56: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:38:56: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:41:07: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:41:07: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:41:08: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:42:38: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:42:38: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:42:39: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:44:41: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:44:41: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:44:41: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:46:30: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:46:30: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:46:31: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:47:59: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:47:59: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:47:59: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:50:07: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:50:07: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:50:08: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:51:39: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:51:39: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:51:39: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:54:11: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:54:11: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:54:12: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:55:01: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:55:01: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:55:01: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T09:58:00: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:58:00: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T09:58:00: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T09:58:41: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T09:58:41: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T09:58:41: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:02:07: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:02:07: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:02:07: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:02:39: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:02:39: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:02:39: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:06:00: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:06:00: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:06:00: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:06:04: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:06:04: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:06:04: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:09:50: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:09:50: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:09:50: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:09:56: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:09:56: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:09:56: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:13:31: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:13:31: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:13:31: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:13:51: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:13:51: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:13:51: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:19:08: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:19:08: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:19:08: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:19:48: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:19:48: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:19:48: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:22:58: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:22:58: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:22:59: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:23:41: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:23:41: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:23:41: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:26:25: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:26:25: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:26:26: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:27:38: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:27:38: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:27:38: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:30:13: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:30:13: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:30:13: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:31:34: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:31:34: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:31:34: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:34:03: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:34:03: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:34:04: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:35:54: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:35:54: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:35:55: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:38:49: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:38:49: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:38:49: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:40:11: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:40:11: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:40:11: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:42:27: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:42:27: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:42:27: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:44:09: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:44:09: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:44:09: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:45:43: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:45:43: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:45:43: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:48:04: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:48:04: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:48:04: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:49:27: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:49:27: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:49:28: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:52:02: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:52:02: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:52:03: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:53:26: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:53:26: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:53:27: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T10:56:15: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:56:15: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T10:56:15: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T10:57:05: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T10:57:05: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T10:57:05: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T11:00:30: PM2 log: App [business-api:2] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T11:00:30: PM2 log: App [business-api:2] starting in -fork mode-
+PM2        | 2025-10-17T11:00:30: PM2 log: App [business-api:2] online
+PM2        | 2025-10-17T11:01:11: PM2 log: App [legacy-api:3] exited with code [1] via signal [SIGINT]
+PM2        | 2025-10-17T11:01:11: PM2 log: App [legacy-api:3] starting in -fork mode-
+PM2        | 2025-10-17T11:01:11: PM2 log: App [legacy-api:3] online
+PM2        | 2025-10-17T11:04:34: PM2 log: Stopping app:business-api id:2
+PM2        | 2025-10-17T11:04:39: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:39: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:39: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:40: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:40: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:40: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:40: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:40: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:40: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:41: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:41: PM2 log: Process with pid 1445046 still alive after 1600ms, sending it SIGKILL now...
+PM2        | 2025-10-17T11:04:42: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:42: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:42: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:43: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:43: PM2 log: pid=1445046 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:43: PM2 log: App [business-api:2] exited with code [0] via signal [SIGKILL]
+PM2        | 2025-10-17T11:04:43: PM2 log: pid=1445046 msg=process killed
+PM2        | 2025-10-17T11:04:43: PM2 log: Stopping app:legacy-api id:3
+PM2        | 2025-10-17T11:04:44: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:44: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:44: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:44: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:44: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:44: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:45: PM2 log: Process with pid 1445072 still alive after 1600ms, sending it SIGKILL now...
+PM2        | 2025-10-17T11:04:46: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:46: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:46: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:46: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:47: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:47: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:47: PM2 log: pid=1445072 msg=failed to kill - retrying in 100ms
+PM2        | 2025-10-17T11:04:47: PM2 log: App [legacy-api:3] exited with code [0] via signal [SIGKILL]
+PM2        | 2025-10-17T11:04:47: PM2 log: pid=1445072 msg=process killed
+
+/opt/glojas-modernized/logs/business-api-error-2.log last 500 lines:
+/opt/glojas-modernized/logs/legacy-api-error-3.log last 500 lines:
+/opt/glojas-modernized/logs/business-api-out-2.log last 500 lines:
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:271)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:245)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4464)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+2|business | 2025-10-17T10:56:14: 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+2|business | 2025-10-17T10:56:14: 	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+2|business | 2025-10-17T10:56:14: 	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+2|business | 2025-10-17T10:56:14: 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+2|business | 2025-10-17T10:56:14: 	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+2|business | 2025-10-17T10:56:14: 	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:412)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:870)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T10:56:14: 	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:438)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128)
+2|business | 2025-10-17T10:56:14: 	... 20 common frames omitted
+2|business | 2025-10-17T10:56:14: Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.sysconard.business.repository.security.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+2|business | 2025-10-17T10:56:14: 	... 61 common frames omitted
+2|business | 2025-10-17T10:56:14: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userRepository' defined in com.sysconard.business.repository.security.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1705)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1454)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+2|business | 2025-10-17T10:56:14: 	... 76 common frames omitted
+2|business | 2025-10-17T10:56:14: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:682)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+2|business | 2025-10-17T10:56:14: 	... 89 common frames omitted
+2|business | 2025-10-17T10:56:14: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Unable to obtain connection from database: FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T10:56:14: -------------------------------------------------------------------------------------------------------
+2|business | 2025-10-17T10:56:14: SQL State  : 28P01
+2|business | 2025-10-17T10:56:14: Error Code : 0
+2|business | 2025-10-17T10:56:14: Message    : FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T10:56:14: 
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+2|business | 2025-10-17T10:56:14: 	... 101 common frames omitted
+2|business | 2025-10-17T10:56:14: Caused by: org.flywaydb.core.internal.exception.FlywaySqlException: Unable to obtain connection from database: FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T10:56:14: -------------------------------------------------------------------------------------------------------
+2|business | 2025-10-17T10:56:14: SQL State  : 28P01
+2|business | 2025-10-17T10:56:14: Error Code : 0
+2|business | 2025-10-17T10:56:14: Message    : FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T10:56:14: 
+2|business | 2025-10-17T10:56:14: 	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:60)
+2|business | 2025-10-17T10:56:14: 	at org.flywaydb.core.internal.jdbc.JdbcConnectionFactory.<init>(JdbcConnectionFactory.java:72)
+2|business | 2025-10-17T10:56:14: 	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:134)
+2|business | 2025-10-17T10:56:14: 	at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+2|business | 2025-10-17T10:56:14: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+2|business | 2025-10-17T10:56:14: 	... 110 common frames omitted
+2|business | 2025-10-17T10:56:14: Caused by: org.postgresql.util.PSQLException: FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:704)
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:213)
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:268)
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.Driver.makeConnection(Driver.java:446)
+2|business | 2025-10-17T10:56:14: 	at org.postgresql.Driver.connect(Driver.java:298)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
+2|business | 2025-10-17T10:56:14: 	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+2|business | 2025-10-17T10:56:14: 	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:48)
+2|business | 2025-10-17T10:56:14: 	... 116 common frames omitted
+2|business | 2025-10-17T10:56:51: 
+2|business | 2025-10-17T10:56:51:   .   ____          _            __ _ _
+2|business | 2025-10-17T10:56:51:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2|business | 2025-10-17T10:56:51: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2|business | 2025-10-17T10:56:51:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2|business | 2025-10-17T10:56:51:   '  |____| .__|_| |_|_| |_\__, | / / / /
+2|business | 2025-10-17T10:56:51:  =========|_|==============|___/=/_/_/_/
+2|business | 2025-10-17T10:56:51: 
+2|business | 2025-10-17T10:56:51:  :: Spring Boot ::               (v3.3.11)
+2|business | 2025-10-17T10:56:51: 
+2|business | 2025-10-17T10:56:57: 10:56:57.674 [main] INFO  c.s.business.BusinessApiApplication - Starting BusinessApiApplication v1.0.0 using Java 17.0.16 with PID 1444848 (/opt/glojas-modernized/business-api/target/business-api-1.0.0.jar started by glojas in /opt/glojas-modernized/business-api)
+2|business | 2025-10-17T10:56:57: 10:56:57.677 [main] DEBUG c.s.business.BusinessApiApplication - Running with Spring Boot v3.3.11, Spring v6.1.19
+2|business | 2025-10-17T10:56:57: 10:56:57.677 [main] INFO  c.s.business.BusinessApiApplication - The following 1 profile is active: "prod"
+2|business | 2025-10-17T10:58:12: 10:58:12.877 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2|business | 2025-10-17T10:58:24: 10:58:23.985 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10904 ms. Found 7 JPA repository interfaces.
+2|business | 2025-10-17T10:59:13: 10:59:13.874 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2|business | 2025-10-17T10:59:14: 10:59:14.177 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2|business | 2025-10-17T10:59:14: 10:59:14.177 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2|business | 2025-10-17T10:59:15: 10:59:15.881 [main] INFO  o.a.c.c.C.[.[.[/api/business] - Initializing Spring embedded WebApplicationContext
+2|business | 2025-10-17T10:59:15: 10:59:15.976 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 135606 ms
+2|business | 2025-10-17T10:59:31: 10:59:31.780 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning for classpath resources at 'classpath:db/callback' ...
+2|business | 2025-10-17T10:59:31: 10:59:31.780 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Determining location urls for classpath:db/callback using ClassLoader TomcatEmbeddedWebappClassLoader
+2|business | 2025-10-17T10:59:31:   context: api#business
+2|business | 2025-10-17T10:59:31:   delegate: true
+2|business | 2025-10-17T10:59:31: ----------> Parent Classloader:
+2|business | 2025-10-17T10:59:31: org.springframework.boot.loader.launch.LaunchedClassLoader@28a418fc
+2|business | 2025-10-17T10:59:31:  ...
+2|business | 2025-10-17T10:59:31: 10:59:31.780 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Unable to resolve location classpath:db/callback.
+2|business | 2025-10-17T10:59:31: 10:59:31.780 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning for classpath resources at 'classpath:db/migration' ...
+2|business | 2025-10-17T10:59:31: 10:59:31.780 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Determining location urls for classpath:db/migration using ClassLoader TomcatEmbeddedWebappClassLoader
+2|business | 2025-10-17T10:59:31:   context: api#business
+2|business | 2025-10-17T10:59:31:   delegate: true
+2|business | 2025-10-17T10:59:31: ----------> Parent Classloader:
+2|business | 2025-10-17T10:59:31: org.springframework.boot.loader.launch.LaunchedClassLoader@28a418fc
+2|business | 2025-10-17T10:59:31:  ...
+2|business | 2025-10-17T10:59:31: 10:59:31.874 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning URL: jar:nested:/opt/glojas-modernized/business-api/target/business-api-1.0.0.jar/!BOOT-INF/classes/!/db/migration
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V10__Create_update_triggers.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V14__Create_admin_user.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V15__Insert_test_data.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V16__Insert_simple_admin_data.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V17__Insert_test_user_data.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V18__Create_operations_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V19__Insert_operations_test_data.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V1__Create_users_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V20__Insert_store_permissions.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V21__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V22__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V2__Create_roles_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V3__Create_permissions_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V4__Create_user_roles_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V5__Create_role_permissions_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V6__Create_password_reset_tokens_table.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V7__Insert_default_roles.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.878 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V8__Insert_default_permissions.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.879 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V9__Assign_permissions_to_roles.sql
+2|business | 2025-10-17T10:59:31: 10:59:31.879 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning for classes at classpath:db/migration
+2|business | 2025-10-17T10:59:32: 10:59:31.985 [main] DEBUG o.f.core.internal.scanner.Scanner - Filtering out resource: db/migration/ (filename: )
+2|business | 2025-10-17T10:59:32: 10:59:31.985 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V16__Insert_simple_admin_data.sql
+2|business | 2025-10-17T10:59:32: 10:59:32.179 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:43: 10:59:43.475 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V17__Insert_test_user_data.sql
+2|business | 2025-10-17T10:59:43: 10:59:43.476 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:47: 10:59:47.174 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V7__Insert_default_roles.sql
+2|business | 2025-10-17T10:59:47: 10:59:47.175 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:49: 10:59:49.775 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V9__Assign_permissions_to_roles.sql
+2|business | 2025-10-17T10:59:49: 10:59:49.775 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:52: 10:59:52.483 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V22__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T10:59:52: 10:59:52.483 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:55: 10:59:54.783 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V10__Create_update_triggers.sql
+2|business | 2025-10-17T10:59:55: 10:59:54.874 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:57: 10:59:57.074 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V14__Create_admin_user.sql
+2|business | 2025-10-17T10:59:57: 10:59:57.075 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T10:59:58: 10:59:58.680 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V21__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T10:59:58: 10:59:58.680 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:01: 11:00:01.180 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V5__Create_role_permissions_table.sql
+2|business | 2025-10-17T11:00:01: 11:00:01.180 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:03: 11:00:03.181 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V6__Create_password_reset_tokens_table.sql
+2|business | 2025-10-17T11:00:03: 11:00:03.181 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:05: 11:00:05.574 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V20__Insert_store_permissions.sql
+2|business | 2025-10-17T11:00:05: 11:00:05.575 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:07: 11:00:07.774 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V1__Create_users_table.sql
+2|business | 2025-10-17T11:00:07: 11:00:07.775 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:09: 11:00:09.674 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V3__Create_permissions_table.sql
+2|business | 2025-10-17T11:00:09: 11:00:09.675 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:11: 11:00:11.380 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V15__Insert_test_data.sql
+2|business | 2025-10-17T11:00:11: 11:00:11.380 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:13: 11:00:13.174 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V2__Create_roles_table.sql
+2|business | 2025-10-17T11:00:13: 11:00:13.174 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:15: 11:00:15.084 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V4__Create_user_roles_table.sql
+2|business | 2025-10-17T11:00:15: 11:00:15.085 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:17: 11:00:17.176 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V8__Insert_default_permissions.sql
+2|business | 2025-10-17T11:00:17: 11:00:17.177 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:18: 11:00:18.774 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V18__Create_operations_table.sql
+2|business | 2025-10-17T11:00:18: 11:00:18.774 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:20: 11:00:20.182 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V19__Insert_operations_test_data.sql
+2|business | 2025-10-17T11:00:20: 11:00:20.183 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:22: 11:00:22.377 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:00:24: 11:00:24.381 [main] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtAuthenticationFilter' defined in URL [jar:nested:/opt/glojas-modernized/business-api/target/business-api-1.0.0.jar/!BOOT-INF/classes/!/com/sysconard/business/config/JwtAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.sysconard.business.repository.security.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2|business | 2025-10-17T11:00:26: 11:00:25.680 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2|business | 2025-10-17T11:00:27: 11:00:27.077 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2|business | 2025-10-17T11:00:27: 11:00:27.576 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+2|business | 2025-10-17T11:00:27: 
+2|business | 2025-10-17T11:00:27: Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2|business | 2025-10-17T11:00:29: 11:00:29.274 [main] ERROR o.s.boot.SpringApplication - Application run failed
+2|business | 2025-10-17T11:00:29: org.springframework.context.ApplicationContextException: Unable to start web server
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:170)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:619)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:755)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1364)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1353)
+2|business | 2025-10-17T11:00:29: 	at com.sysconard.business.BusinessApiApplication.main(BusinessApiApplication.java:12)
+2|business | 2025-10-17T11:00:29: 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+2|business | 2025-10-17T11:00:29: 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+2|business | 2025-10-17T11:00:29: 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+2|business | 2025-10-17T11:00:29: 	at java.base/java.lang.reflect.Method.invoke(Method.java:569)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40)
+2|business | 2025-10-17T11:00:29: Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:147)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:107)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:520)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:222)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:193)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:167)
+2|business | 2025-10-17T11:00:29: 	... 15 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtAuthenticationFilter' defined in URL [jar:nested:/opt/glojas-modernized/business-api/target/business-api-1.0.0.jar/!BOOT-INF/classes/!/com/sysconard/business/config/JwtAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.sysconard.business.repository.security.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:211)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:174)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:169)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:154)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:87)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:271)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:245)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4464)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+2|business | 2025-10-17T11:00:29: 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+2|business | 2025-10-17T11:00:29: 	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+2|business | 2025-10-17T11:00:29: 	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:772)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1203)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1193)
+2|business | 2025-10-17T11:00:29: 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+2|business | 2025-10-17T11:00:29: 	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+2|business | 2025-10-17T11:00:29: 	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:749)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:203)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:412)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:870)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:164)
+2|business | 2025-10-17T11:00:29: 	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:438)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:128)
+2|business | 2025-10-17T11:00:29: 	... 20 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'customUserDetailsService': Unsatisfied dependency expressed through field 'userRepository': Error creating bean with name 'userRepository' defined in com.sysconard.business.repository.security.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:788)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:768)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:145)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:509)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1439)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782)
+2|business | 2025-10-17T11:00:29: 	... 61 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'userRepository' defined in com.sysconard.business.repository.security.UserRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1705)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1454)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:599)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.resolveFieldValue(AutowiredAnnotationBeanPostProcessor.java:785)
+2|business | 2025-10-17T11:00:29: 	... 76 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:682)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:509)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+2|business | 2025-10-17T11:00:29: 	... 89 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Unable to obtain connection from database: FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T11:00:29: -------------------------------------------------------------------------------------------------------
+2|business | 2025-10-17T11:00:29: SQL State  : 28P01
+2|business | 2025-10-17T11:00:29: Error Code : 0
+2|business | 2025-10-17T11:00:29: Message    : FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T11:00:29: 
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1806)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:313)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+2|business | 2025-10-17T11:00:29: 	... 101 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.flywaydb.core.internal.exception.FlywaySqlException: Unable to obtain connection from database: FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T11:00:29: -------------------------------------------------------------------------------------------------------
+2|business | 2025-10-17T11:00:29: SQL State  : 28P01
+2|business | 2025-10-17T11:00:29: Error Code : 0
+2|business | 2025-10-17T11:00:29: Message    : FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T11:00:29: 
+2|business | 2025-10-17T11:00:29: 	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:60)
+2|business | 2025-10-17T11:00:29: 	at org.flywaydb.core.internal.jdbc.JdbcConnectionFactory.<init>(JdbcConnectionFactory.java:72)
+2|business | 2025-10-17T11:00:29: 	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:134)
+2|business | 2025-10-17T11:00:29: 	at org.flywaydb.core.Flyway.migrate(Flyway.java:147)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1853)
+2|business | 2025-10-17T11:00:29: 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802)
+2|business | 2025-10-17T11:00:29: 	... 110 common frames omitted
+2|business | 2025-10-17T11:00:29: Caused by: org.postgresql.util.PSQLException: FATAL: password authentication failed for user "glojas_user"
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:704)
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:213)
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:268)
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54)
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:273)
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.Driver.makeConnection(Driver.java:446)
+2|business | 2025-10-17T11:00:29: 	at org.postgresql.Driver.connect(Driver.java:298)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98)
+2|business | 2025-10-17T11:00:29: 	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111)
+2|business | 2025-10-17T11:00:29: 	at org.flywaydb.core.internal.jdbc.JdbcUtils.openConnection(JdbcUtils.java:48)
+2|business | 2025-10-17T11:00:29: 	... 116 common frames omitted
+2|business | 2025-10-17T11:01:17: 
+2|business | 2025-10-17T11:01:17:   .   ____          _            __ _ _
+2|business | 2025-10-17T11:01:17:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2|business | 2025-10-17T11:01:17: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2|business | 2025-10-17T11:01:17:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2|business | 2025-10-17T11:01:17:   '  |____| .__|_| |_|_| |_\__, | / / / /
+2|business | 2025-10-17T11:01:17:  =========|_|==============|___/=/_/_/_/
+2|business | 2025-10-17T11:01:17: 
+2|business | 2025-10-17T11:01:17:  :: Spring Boot ::               (v3.3.11)
+2|business | 2025-10-17T11:01:17: 
+2|business | 2025-10-17T11:01:20: 11:01:20.078 [main] INFO  c.s.business.BusinessApiApplication - Starting BusinessApiApplication v1.0.0 using Java 17.0.16 with PID 1445046 (/opt/glojas-modernized/business-api/target/business-api-1.0.0.jar started by glojas in /opt/glojas-modernized/business-api)
+2|business | 2025-10-17T11:01:20: 11:01:20.080 [main] DEBUG c.s.business.BusinessApiApplication - Running with Spring Boot v3.3.11, Spring v6.1.19
+2|business | 2025-10-17T11:01:20: 11:01:20.081 [main] INFO  c.s.business.BusinessApiApplication - The following 1 profile is active: "prod"
+2|business | 2025-10-17T11:02:27: 11:02:27.877 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2|business | 2025-10-17T11:02:34: 11:02:34.279 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6100 ms. Found 7 JPA repository interfaces.
+2|business | 2025-10-17T11:03:22: 11:03:22.181 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8089 (http)
+2|business | 2025-10-17T11:03:23: 11:03:22.879 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2|business | 2025-10-17T11:03:23: 11:03:22.879 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2|business | 2025-10-17T11:03:25: 11:03:25.575 [main] INFO  o.a.c.c.C.[.[.[/api/business] - Initializing Spring embedded WebApplicationContext
+2|business | 2025-10-17T11:03:25: 11:03:25.579 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 121897 ms
+2|business | 2025-10-17T11:03:48: 11:03:48.678 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning for classpath resources at 'classpath:db/callback' ...
+2|business | 2025-10-17T11:03:48: 11:03:48.678 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Determining location urls for classpath:db/callback using ClassLoader TomcatEmbeddedWebappClassLoader
+2|business | 2025-10-17T11:03:48:   context: api#business
+2|business | 2025-10-17T11:03:48:   delegate: true
+2|business | 2025-10-17T11:03:48: ----------> Parent Classloader:
+2|business | 2025-10-17T11:03:48: org.springframework.boot.loader.launch.LaunchedClassLoader@28a418fc
+2|business | 2025-10-17T11:03:48:  ...
+2|business | 2025-10-17T11:03:48: 11:03:48.678 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Unable to resolve location classpath:db/callback.
+2|business | 2025-10-17T11:03:48: 11:03:48.678 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning for classpath resources at 'classpath:db/migration' ...
+2|business | 2025-10-17T11:03:48: 11:03:48.678 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Determining location urls for classpath:db/migration using ClassLoader TomcatEmbeddedWebappClassLoader
+2|business | 2025-10-17T11:03:48:   context: api#business
+2|business | 2025-10-17T11:03:48:   delegate: true
+2|business | 2025-10-17T11:03:48: ----------> Parent Classloader:
+2|business | 2025-10-17T11:03:48: org.springframework.boot.loader.launch.LaunchedClassLoader@28a418fc
+2|business | 2025-10-17T11:03:48:  ...
+2|business | 2025-10-17T11:03:48: 11:03:48.679 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning URL: jar:nested:/opt/glojas-modernized/business-api/target/business-api-1.0.0.jar/!BOOT-INF/classes/!/db/migration
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V10__Create_update_triggers.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V14__Create_admin_user.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V15__Insert_test_data.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V16__Insert_simple_admin_data.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V17__Insert_test_user_data.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V18__Create_operations_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V19__Insert_operations_test_data.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V1__Create_users_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V20__Insert_store_permissions.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V21__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V22__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V2__Create_roles_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V3__Create_permissions_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V4__Create_user_roles_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V5__Create_role_permissions_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V6__Create_password_reset_tokens_table.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V7__Insert_default_roles.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V8__Insert_default_permissions.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Found resource: db/migration/V9__Assign_permissions_to_roles.sql
+2|business | 2025-10-17T11:03:48: 11:03:48.683 [main] DEBUG o.f.c.i.s.classpath.ClassPathScanner - Scanning for classes at classpath:db/migration
+2|business | 2025-10-17T11:03:49: 11:03:49.177 [main] DEBUG o.f.core.internal.scanner.Scanner - Filtering out resource: db/migration/ (filename: )
+2|business | 2025-10-17T11:03:49: 11:03:49.178 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V16__Insert_simple_admin_data.sql
+2|business | 2025-10-17T11:03:49: 11:03:49.280 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:04: 11:04:04.574 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V17__Insert_test_user_data.sql
+2|business | 2025-10-17T11:04:04: 11:04:04.574 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:07: 11:04:07.679 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V7__Insert_default_roles.sql
+2|business | 2025-10-17T11:04:07: 11:04:07.679 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:10: 11:04:10.880 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V9__Assign_permissions_to_roles.sql
+2|business | 2025-10-17T11:04:10: 11:04:10.880 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:14: 11:04:14.174 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V22__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T11:04:14: 11:04:14.174 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:16: 11:04:16.275 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V10__Create_update_triggers.sql
+2|business | 2025-10-17T11:04:16: 11:04:16.276 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:18: 11:04:18.274 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V14__Create_admin_user.sql
+2|business | 2025-10-17T11:04:18: 11:04:18.274 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:20: 11:04:20.481 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V21__Associate_sell_permissions_to_admin.sql
+2|business | 2025-10-17T11:04:20: 11:04:20.481 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:23: 11:04:23.382 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V5__Create_role_permissions_table.sql
+2|business | 2025-10-17T11:04:23: 11:04:23.383 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:25: 11:04:25.283 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V6__Create_password_reset_tokens_table.sql
+2|business | 2025-10-17T11:04:25: 11:04:25.283 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:26: 11:04:26.976 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V20__Insert_store_permissions.sql
+2|business | 2025-10-17T11:04:26: 11:04:26.976 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:29: 11:04:29.075 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V1__Create_users_table.sql
+2|business | 2025-10-17T11:04:29: 11:04:29.075 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:31: 11:04:31.074 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V3__Create_permissions_table.sql
+2|business | 2025-10-17T11:04:31: 11:04:31.074 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:35: 11:04:33.776 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V15__Insert_test_data.sql
+2|business | 2025-10-17T11:04:35: 11:04:33.776 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:35: 11:04:35.776 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V2__Create_roles_table.sql
+2|business | 2025-10-17T11:04:35: 11:04:35.776 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:37: 11:04:37.477 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V4__Create_user_roles_table.sql
+2|business | 2025-10-17T11:04:37: 11:04:37.478 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:39: 11:04:39.873 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V8__Insert_default_permissions.sql
+2|business | 2025-10-17T11:04:39: 11:04:39.874 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+2|business | 2025-10-17T11:04:42: 11:04:41.974 [main] DEBUG o.f.c.i.r.ResourceNameValidator - Validating V18__Create_operations_table.sql
+2|business | 2025-10-17T11:04:42: 11:04:41.974 [main] INFO  com.zaxxer.hikari.HikariDataSource - BusinessHikariPool - Starting...
+
+/opt/glojas-modernized/logs/legacy-api-out-3.log last 500 lines:
+3|legacy-a | 2025-10-17T10:25:21: 2025-10-17 10:25:21.872 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:25:29: 2025-10-17 10:25:29.877 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:25:33: 2025-10-17 10:25:33.972 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:25:55: 2025-10-17 10:25:55.173 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:25:55: 2025-10-17 10:25:55.380 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:26:22: 2025-10-17 10:26:22.176 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:26:22: 2025-10-17 10:26:22.177 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:26:22: 2025-10-17 10:26:22.375 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:26:23: 2025-10-17 10:26:23.070 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:23: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:26:23: 2025-10-17 10:26:23.475 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:23: ***************************
+3|legacy-a | 2025-10-17T10:26:23: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:26:23: ***************************
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:23: Description:
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:23: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:23: Action:
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:23: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:26:23: 
+3|legacy-a | 2025-10-17T10:26:33: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:26:33: Porta: 8087
+3|legacy-a | 2025-10-17T10:26:33: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:26:33: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:27:13: 
+3|legacy-a | 2025-10-17T10:27:13:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:27:13:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:27:13: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:27:13:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:27:13:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:27:13:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:27:13:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:27:13: 
+3|legacy-a | 2025-10-17T10:27:16: 2025-10-17 10:27:16.773 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:27:19: 2025-10-17 10:27:18.580 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1443486 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:27:19: 2025-10-17 10:27:19.073 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:27:57: 2025-10-17 10:27:57.580 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:28:00: 2025-10-17 10:28:00.281 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2203 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:28:32: 2025-10-17 10:28:31.976 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:28:32: 2025-10-17 10:28:32.475 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:28:32: 2025-10-17 10:28:32.475 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:28:34: 2025-10-17 10:28:33.973 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:28:34: 2025-10-17 10:28:33.973 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 71799 ms
+3|legacy-a | 2025-10-17T10:28:47: 2025-10-17 10:28:47.576 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:28:49: 2025-10-17 10:28:49.771 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:28:55: 2025-10-17 10:28:55.676 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:29:01: 2025-10-17 10:29:01.474 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:29:38: 2025-10-17 10:29:37.574 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:29:38: 2025-10-17 10:29:37.679 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:30:07: 2025-10-17 10:30:07.273 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:30:07: 2025-10-17 10:30:07.274 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:30:07: 2025-10-17 10:30:07.280 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:30:08: 2025-10-17 10:30:08.577 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:30:08: 
+3|legacy-a | 2025-10-17T10:30:08: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:30:09: 2025-10-17 10:30:09.281 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:30:09: 
+3|legacy-a | 2025-10-17T10:30:09: ***************************
+3|legacy-a | 2025-10-17T10:30:09: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:30:09: ***************************
+3|legacy-a | 2025-10-17T10:30:09: 
+3|legacy-a | 2025-10-17T10:30:09: Description:
+3|legacy-a | 2025-10-17T10:30:09: 
+3|legacy-a | 2025-10-17T10:30:09: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:30:09: 
+3|legacy-a | 2025-10-17T10:30:09: Action:
+3|legacy-a | 2025-10-17T10:30:09: 
+3|legacy-a | 2025-10-17T10:30:09: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:30:09: 
+3|legacy-a | 2025-10-17T10:30:24: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:30:24: Porta: 8087
+3|legacy-a | 2025-10-17T10:30:24: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:30:24: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:31:00: 
+3|legacy-a | 2025-10-17T10:31:00:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:31:00:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:31:00: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:31:00:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:31:00:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:31:00:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:31:00:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:31:00: 
+3|legacy-a | 2025-10-17T10:31:04: 2025-10-17 10:31:04.576 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1443631 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:31:04: 2025-10-17 10:31:04.674 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:31:06: 2025-10-17 10:31:06.572 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:31:37: 2025-10-17 10:31:36.978 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:31:39: 2025-10-17 10:31:39.181 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1501 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:32:27: 2025-10-17 10:32:27.483 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:32:27: 2025-10-17 10:32:27.873 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:32:27: 2025-10-17 10:32:27.874 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:32:29: 2025-10-17 10:32:29.880 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:32:29: 2025-10-17 10:32:29.881 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 82709 ms
+3|legacy-a | 2025-10-17T10:32:42: 2025-10-17 10:32:41.878 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:32:44: 2025-10-17 10:32:44.381 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:32:50: 2025-10-17 10:32:50.483 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:32:55: 2025-10-17 10:32:55.981 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:33:40: 2025-10-17 10:33:40.476 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:33:40: 2025-10-17 10:33:40.874 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:34:00: 2025-10-17 10:34:00.276 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:34:00: 2025-10-17 10:34:00.277 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:34:00: 2025-10-17 10:34:00.474 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:34:00: 2025-10-17 10:34:00.682 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:34:00: 
+3|legacy-a | 2025-10-17T10:34:00: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:34:01: 2025-10-17 10:34:01.176 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:34:01: 
+3|legacy-a | 2025-10-17T10:34:01: ***************************
+3|legacy-a | 2025-10-17T10:34:01: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:34:01: ***************************
+3|legacy-a | 2025-10-17T10:34:01: 
+3|legacy-a | 2025-10-17T10:34:01: Description:
+3|legacy-a | 2025-10-17T10:34:01: 
+3|legacy-a | 2025-10-17T10:34:01: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:34:01: 
+3|legacy-a | 2025-10-17T10:34:01: Action:
+3|legacy-a | 2025-10-17T10:34:01: 
+3|legacy-a | 2025-10-17T10:34:01: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:34:01: 
+3|legacy-a | 2025-10-17T10:34:11: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:34:11: Porta: 8087
+3|legacy-a | 2025-10-17T10:34:11: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:34:11: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:34:53: 
+3|legacy-a | 2025-10-17T10:34:53:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:34:53: 
+3|legacy-a | 2025-10-17T10:34:54:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:34:54: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:34:54:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:34:54:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:34:54:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:34:54:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:34:54: 
+3|legacy-a | 2025-10-17T10:34:58: 2025-10-17 10:34:57.974 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1443802 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:34:58: 2025-10-17 10:34:57.976 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:35:02: 2025-10-17 10:35:01.682 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:35:44: 2025-10-17 10:35:44.981 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:35:50: 2025-10-17 10:35:49.873 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 3999 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:36:51: 2025-10-17 10:36:51.875 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:36:52: 2025-10-17 10:36:52.574 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:36:52: 2025-10-17 10:36:52.574 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:36:56: 2025-10-17 10:36:56.479 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:36:56: 2025-10-17 10:36:56.479 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 114806 ms
+3|legacy-a | 2025-10-17T10:37:07: 2025-10-17 10:37:07.380 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:37:09: 2025-10-17 10:37:09.580 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:37:22: 2025-10-17 10:37:22.281 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:37:28: 2025-10-17 10:37:28.683 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:38:14: 2025-10-17 10:38:14.774 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:38:14: 2025-10-17 10:38:14.980 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:38:45: 2025-10-17 10:38:45.679 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:38:45: 2025-10-17 10:38:45.680 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:38:45: 2025-10-17 10:38:45.877 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:38:46: 2025-10-17 10:38:46.180 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:46: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:38:46: 2025-10-17 10:38:46.781 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:46: ***************************
+3|legacy-a | 2025-10-17T10:38:46: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:38:46: ***************************
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:46: Description:
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:46: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:46: Action:
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:46: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:38:46: 
+3|legacy-a | 2025-10-17T10:38:57: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:38:57: 
+3|legacy-a | 2025-10-17T10:38:57: Porta: 8087
+3|legacy-a | 2025-10-17T10:38:57: 
+3|legacy-a | 2025-10-17T10:38:57: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:38:57: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:39:36: 
+3|legacy-a | 2025-10-17T10:39:36:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:39:36:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:39:36: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:39:36:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:39:36: 
+3|legacy-a | 2025-10-17T10:39:36:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:39:36:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:39:36: 
+3|legacy-a | 2025-10-17T10:39:40: 2025-10-17 10:39:39.682 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1443981 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:39:40: 2025-10-17 10:39:40.074 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:39:40: 2025-10-17 10:39:40.078 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:40:06: 2025-10-17 10:40:06.584 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:40:07: 2025-10-17 10:40:07.681 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 998 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:40:42: 2025-10-17 10:40:42.377 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:40:43: 2025-10-17 10:40:43.179 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:40:43: 2025-10-17 10:40:43.180 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:40:45: 2025-10-17 10:40:45.579 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:40:45: 2025-10-17 10:40:45.580 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 62701 ms
+3|legacy-a | 2025-10-17T10:41:00: 2025-10-17 10:41:00.077 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:41:01: 2025-10-17 10:41:01.581 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:41:11: 2025-10-17 10:41:11.174 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:41:16: 2025-10-17 10:41:15.978 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:41:57: 2025-10-17 10:41:57.381 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:41:58: 2025-10-17 10:41:58.075 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:42:23: 2025-10-17 10:42:23.580 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:42:23: 2025-10-17 10:42:23.882 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:42:24: 2025-10-17 10:42:24.280 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:42:25: 2025-10-17 10:42:25.374 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:25: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:42:25: 2025-10-17 10:42:25.482 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:25: ***************************
+3|legacy-a | 2025-10-17T10:42:25: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:42:25: ***************************
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:25: Description:
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:25: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:25: Action:
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:25: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:42:25: 
+3|legacy-a | 2025-10-17T10:42:33: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:42:34: 
+3|legacy-a | 2025-10-17T10:42:34: Porta: 8087
+3|legacy-a | 2025-10-17T10:42:34: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:42:34: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:43:00: 
+3|legacy-a | 2025-10-17T10:43:00:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:43:00:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:43:00: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:43:00:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:43:00:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:43:00:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:43:01:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:43:01: 
+3|legacy-a | 2025-10-17T10:43:05: 2025-10-17 10:43:05.875 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1444139 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:43:05: 2025-10-17 10:43:05.877 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:43:07: 2025-10-17 10:43:07.181 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:43:43: 2025-10-17 10:43:43.478 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:43:45: 2025-10-17 10:43:45.377 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1295 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:44:20: 2025-10-17 10:44:20.281 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:44:21: 2025-10-17 10:44:21.379 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:44:21: 2025-10-17 10:44:21.379 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:44:23: 2025-10-17 10:44:23.778 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:44:23: 2025-10-17 10:44:23.779 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 74997 ms
+3|legacy-a | 2025-10-17T10:44:35: 2025-10-17 10:44:35.779 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:44:37: 2025-10-17 10:44:37.279 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:44:42: 2025-10-17 10:44:42.081 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:44:45: 2025-10-17 10:44:44.984 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:45:19: 2025-10-17 10:45:19.576 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:45:20: 2025-10-17 10:45:19.976 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:45:39: 2025-10-17 10:45:39.178 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:45:39: 2025-10-17 10:45:39.179 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:45:39: 2025-10-17 10:45:39.678 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:45:40: 2025-10-17 10:45:40.585 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:45:40: 
+3|legacy-a | 2025-10-17T10:45:40: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:45:41: 2025-10-17 10:45:41.575 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:45:41: 
+3|legacy-a | 2025-10-17T10:45:41: ***************************
+3|legacy-a | 2025-10-17T10:45:41: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:45:41: ***************************
+3|legacy-a | 2025-10-17T10:45:41: 
+3|legacy-a | 2025-10-17T10:45:41: Description:
+3|legacy-a | 2025-10-17T10:45:41: 
+3|legacy-a | 2025-10-17T10:45:41: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:45:41: 
+3|legacy-a | 2025-10-17T10:45:41: Action:
+3|legacy-a | 2025-10-17T10:45:41: 
+3|legacy-a | 2025-10-17T10:45:41: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:45:41: 
+3|legacy-a | 2025-10-17T10:45:51: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:45:51: 
+3|legacy-a | 2025-10-17T10:45:51: Porta: 8087
+3|legacy-a | 2025-10-17T10:45:51: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:45:51: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:46:31: 
+3|legacy-a | 2025-10-17T10:46:31:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:46:31:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:46:31: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:46:31:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:46:31:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:46:31:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:46:31:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:46:31: 
+3|legacy-a | 2025-10-17T10:46:35: 2025-10-17 10:46:35.479 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1444320 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:46:35: 2025-10-17 10:46:35.481 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:46:38: 2025-10-17 10:46:37.483 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:47:19: 2025-10-17 10:47:19.281 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:47:22: 2025-10-17 10:47:22.378 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2896 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:47:58: 2025-10-17 10:47:58.181 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:47:58: 2025-10-17 10:47:58.677 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:47:58: 2025-10-17 10:47:58.677 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:48:00: 2025-10-17 10:48:00.285 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:48:00: 2025-10-17 10:48:00.286 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 82208 ms
+3|legacy-a | 2025-10-17T10:48:09: 2025-10-17 10:48:09.679 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:48:11: 2025-10-17 10:48:11.084 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:48:15: 2025-10-17 10:48:15.178 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:48:18: 2025-10-17 10:48:18.082 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:48:52: 2025-10-17 10:48:52.183 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:48:52: 2025-10-17 10:48:52.579 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:49:23: 2025-10-17 10:49:23.578 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:49:23: 2025-10-17 10:49:23.579 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:49:23: 2025-10-17 10:49:23.781 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:49:24: 2025-10-17 10:49:24.185 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:49:24: 
+3|legacy-a | 2025-10-17T10:49:24: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:49:25: 2025-10-17 10:49:25.176 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:49:25: 
+3|legacy-a | 2025-10-17T10:49:25: ***************************
+3|legacy-a | 2025-10-17T10:49:25: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:49:25: ***************************
+3|legacy-a | 2025-10-17T10:49:25: 
+3|legacy-a | 2025-10-17T10:49:25: Description:
+3|legacy-a | 2025-10-17T10:49:25: 
+3|legacy-a | 2025-10-17T10:49:25: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:49:25: 
+3|legacy-a | 2025-10-17T10:49:25: Action:
+3|legacy-a | 2025-10-17T10:49:25: 
+3|legacy-a | 2025-10-17T10:49:25: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:49:25: 
+3|legacy-a | 2025-10-17T10:49:35: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:49:35: Porta: 8087
+3|legacy-a | 2025-10-17T10:49:35: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:49:35: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:50:15: 
+3|legacy-a | 2025-10-17T10:50:15:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:50:15:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:50:15: 
+3|legacy-a | 2025-10-17T10:50:15:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:50:15:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:50:15:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:50:15:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:50:15: 
+3|legacy-a | 2025-10-17T10:50:20: 2025-10-17 10:50:18.474 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:50:22: 2025-10-17 10:50:21.179 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1444465 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:50:22: 2025-10-17 10:50:21.778 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:51:07: 2025-10-17 10:51:07.174 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:51:09: 2025-10-17 10:51:09.180 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1802 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:51:43: 2025-10-17 10:51:43.976 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:51:44: 2025-10-17 10:51:44.280 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:51:44: 2025-10-17 10:51:44.280 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:51:46: 2025-10-17 10:51:46.279 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:51:46: 2025-10-17 10:51:46.279 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 79605 ms
+3|legacy-a | 2025-10-17T10:51:54: 2025-10-17 10:51:54.976 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:51:57: 2025-10-17 10:51:57.882 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:52:04: 2025-10-17 10:52:03.984 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:52:08: 2025-10-17 10:52:08.075 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:52:46: 2025-10-17 10:52:46.975 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:52:47: 2025-10-17 10:52:47.577 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:53:19: 2025-10-17 10:53:19.283 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:53:19: 2025-10-17 10:53:19.376 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:53:19: 2025-10-17 10:53:19.780 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:53:21: 2025-10-17 10:53:21.380 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:53:21: 
+3|legacy-a | 2025-10-17T10:53:21: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:53:22: 2025-10-17 10:53:22.775 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:53:22: 
+3|legacy-a | 2025-10-17T10:53:22: ***************************
+3|legacy-a | 2025-10-17T10:53:22: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:53:22: ***************************
+3|legacy-a | 2025-10-17T10:53:22: 
+3|legacy-a | 2025-10-17T10:53:22: Description:
+3|legacy-a | 2025-10-17T10:53:22: 
+3|legacy-a | 2025-10-17T10:53:22: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:53:22: 
+3|legacy-a | 2025-10-17T10:53:22: Action:
+3|legacy-a | 2025-10-17T10:53:22: 
+3|legacy-a | 2025-10-17T10:53:22: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:53:22: 
+3|legacy-a | 2025-10-17T10:53:36: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:53:36: Porta: 8087
+3|legacy-a | 2025-10-17T10:53:36: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:53:36: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:54:04: 
+3|legacy-a | 2025-10-17T10:54:04:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:54:04:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:54:04: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:54:04:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:54:04:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:54:04:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:54:04:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:54:04: 
+3|legacy-a | 2025-10-17T10:54:08: 2025-10-17 10:54:08.378 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1444735 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:54:08: 2025-10-17 10:54:08.576 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:54:11: 2025-10-17 10:54:11.383 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:54:51: 2025-10-17 10:54:51.283 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:54:53: 2025-10-17 10:54:53.480 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1898 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:55:42: 2025-10-17 10:55:42.385 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:55:43: 2025-10-17 10:55:43.175 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:55:43: 2025-10-17 10:55:43.176 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:55:46: 2025-10-17 10:55:45.876 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:55:46: 2025-10-17 10:55:45.876 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 95693 ms
+3|legacy-a | 2025-10-17T10:55:54: 2025-10-17 10:55:54.885 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:55:56: 2025-10-17 10:55:56.081 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:56:04: 2025-10-17 10:56:04.077 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:56:06: 2025-10-17 10:56:06.483 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T10:56:35: 2025-10-17 10:56:35.979 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T10:56:36: 2025-10-17 10:56:36.475 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:56:57: 2025-10-17 10:56:57.681 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T10:56:57: 2025-10-17 10:56:57.975 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T10:56:58: 2025-10-17 10:56:58.477 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T10:57:00: 2025-10-17 10:57:00.375 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T10:57:00: 
+3|legacy-a | 2025-10-17T10:57:00: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T10:57:01: 2025-10-17 10:57:01.976 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T10:57:01: 
+3|legacy-a | 2025-10-17T10:57:01: ***************************
+3|legacy-a | 2025-10-17T10:57:01: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T10:57:01: ***************************
+3|legacy-a | 2025-10-17T10:57:01: 
+3|legacy-a | 2025-10-17T10:57:01: Description:
+3|legacy-a | 2025-10-17T10:57:01: 
+3|legacy-a | 2025-10-17T10:57:01: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T10:57:01: 
+3|legacy-a | 2025-10-17T10:57:01: Action:
+3|legacy-a | 2025-10-17T10:57:01: 
+3|legacy-a | 2025-10-17T10:57:01: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T10:57:01: 
+3|legacy-a | 2025-10-17T10:57:16: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T10:57:16: Porta: 8087
+3|legacy-a | 2025-10-17T10:57:16: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T10:57:16: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T10:57:56: 
+3|legacy-a | 2025-10-17T10:57:56:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T10:57:56:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T10:57:56: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T10:57:56:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T10:57:56:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T10:57:56:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T10:57:56:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T10:57:56: 
+3|legacy-a | 2025-10-17T10:57:58: 2025-10-17 10:57:58.779 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1444920 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T10:57:58: 2025-10-17 10:57:58.784 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T10:58:01: 2025-10-17 10:58:01.180 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T10:58:48: 2025-10-17 10:58:48.477 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T10:58:50: 2025-10-17 10:58:50.881 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2101 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T10:59:33: 2025-10-17 10:59:33.380 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T10:59:33: 2025-10-17 10:59:33.482 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T10:59:33: 2025-10-17 10:59:33.574 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T10:59:34: 2025-10-17 10:59:34.776 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T10:59:34: 2025-10-17 10:59:34.776 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 93294 ms
+3|legacy-a | 2025-10-17T10:59:44: 2025-10-17 10:59:44.576 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T10:59:46: 2025-10-17 10:59:46.179 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T10:59:52: 2025-10-17 10:59:52.076 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T10:59:56: 2025-10-17 10:59:56.783 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T11:00:35: 2025-10-17 11:00:35.081 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T11:00:35: 2025-10-17 11:00:35.679 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T11:01:06: 2025-10-17 11:01:06.274 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8087 is already in use
+3|legacy-a | 2025-10-17T11:01:06: 2025-10-17 11:01:06.276 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+3|legacy-a | 2025-10-17T11:01:06: 2025-10-17 11:01:06.674 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+3|legacy-a | 2025-10-17T11:01:07: 2025-10-17 11:01:07.479 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
+3|legacy-a | 2025-10-17T11:01:07: 
+3|legacy-a | 2025-10-17T11:01:07: Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+3|legacy-a | 2025-10-17T11:01:08: 2025-10-17 11:01:08.085 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+3|legacy-a | 2025-10-17T11:01:08: 
+3|legacy-a | 2025-10-17T11:01:08: ***************************
+3|legacy-a | 2025-10-17T11:01:08: APPLICATION FAILED TO START
+3|legacy-a | 2025-10-17T11:01:08: ***************************
+3|legacy-a | 2025-10-17T11:01:08: 
+3|legacy-a | 2025-10-17T11:01:08: Description:
+3|legacy-a | 2025-10-17T11:01:08: 
+3|legacy-a | 2025-10-17T11:01:08: Web server failed to start. Port 8087 was already in use.
+3|legacy-a | 2025-10-17T11:01:08: 
+3|legacy-a | 2025-10-17T11:01:08: Action:
+3|legacy-a | 2025-10-17T11:01:08: 
+3|legacy-a | 2025-10-17T11:01:08: Identify and stop the process that's listening on port 8087 or configure this application to listen on another port.
+3|legacy-a | 2025-10-17T11:01:08: 
+3|legacy-a | 2025-10-17T11:01:20: === Iniciando Legacy API - Sistema Glojas ===
+3|legacy-a | 2025-10-17T11:01:20: Porta: 8087
+3|legacy-a | 2025-10-17T11:01:20: Context Path: /api/legacy
+3|legacy-a | 2025-10-17T11:01:20: Conectando com SQL Server...
+3|legacy-a | 2025-10-17T11:02:07: 
+3|legacy-a | 2025-10-17T11:02:07:   .   ____          _            __ _ _
+3|legacy-a | 2025-10-17T11:02:07:  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+3|legacy-a | 2025-10-17T11:02:07: ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+3|legacy-a | 2025-10-17T11:02:07:  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+3|legacy-a | 2025-10-17T11:02:07:   '  |____| .__|_| |_|_| |_\__, | / / / /
+3|legacy-a | 2025-10-17T11:02:07:  =========|_|==============|___/=/_/_/_/
+3|legacy-a | 2025-10-17T11:02:07:  :: Spring Boot ::               (v2.7.18)
+3|legacy-a | 2025-10-17T11:02:07: 
+3|legacy-a | 2025-10-17T11:02:09: 2025-10-17 11:02:09.676 [main] INFO  c.s.legacy.LegacyApiApplication - Starting LegacyApiApplication v1.0.0 using Java 1.8.0_462 on ubuntu-25.localhost with PID 1445072 (/opt/glojas-modernized/legacy-api/target/legacy-api-1.0.0.jar started by glojas in /opt/glojas-modernized/legacy-api)
+3|legacy-a | 2025-10-17T11:02:09: 2025-10-17 11:02:09.679 [main] INFO  c.s.legacy.LegacyApiApplication - The following 1 profile is active: "prod"
+3|legacy-a | 2025-10-17T11:02:11: 2025-10-17 11:02:11.882 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 6.2.5.Final
+3|legacy-a | 2025-10-17T11:02:39: 2025-10-17 11:02:39.181 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+3|legacy-a | 2025-10-17T11:02:42: 2025-10-17 11:02:42.378 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2893 ms. Found 4 JPA repository interfaces.
+3|legacy-a | 2025-10-17T11:03:29: 2025-10-17 11:03:29.477 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8087 (http)
+3|legacy-a | 2025-10-17T11:03:30: 2025-10-17 11:03:30.179 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+3|legacy-a | 2025-10-17T11:03:30: 2025-10-17 11:03:30.179 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+3|legacy-a | 2025-10-17T11:03:33: 2025-10-17 11:03:33.182 [main] INFO  o.a.c.c.C.[.[.[/api/legacy] - Initializing Spring embedded WebApplicationContext
+3|legacy-a | 2025-10-17T11:03:33: 2025-10-17 11:03:33.183 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 81406 ms
+3|legacy-a | 2025-10-17T11:03:46: 2025-10-17 11:03:46.475 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+3|legacy-a | 2025-10-17T11:03:48: 2025-10-17 11:03:48.674 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.15.Final
+3|legacy-a | 2025-10-17T11:03:57: 2025-10-17 11:03:57.376 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+3|legacy-a | 2025-10-17T11:04:02: 2025-10-17 11:04:02.481 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2012Dialect
+3|legacy-a | 2025-10-17T11:04:45: 2025-10-17 11:04:45.273 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+3|legacy-a | 2025-10-17T11:04:45: 2025-10-17 11:04:45.284 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+

@@ -1,0 +1,7 @@
+4.0K	/opt/glojas-modernized/backups
+64M	/opt/glojas-modernized/business-api
+4.0K	/opt/glojas-modernized/ecosystem.config.js
+3.8M	/opt/glojas-modernized/frontend
+49M	/opt/glojas-modernized/legacy-api
+118M	/opt/glojas-modernized/logs
+4.0K	/opt/glojas-modernized/scripts
