@@ -211,11 +211,11 @@ class EventOriginServiceTest {
     @DisplayName("Deve buscar EventOrigins com filtros e paginação com sucesso")
     void shouldFindEventOriginsWithFiltersSuccessfully() {
         // Given
-        EventOriginSearchRequest request = new EventOriginSearchRequest(EventSource.PDV, 0, 20, "sourceCode", "asc");
+        EventOriginSearchRequest request = new EventOriginSearchRequest(EventSource.PDV, null, 0, 20, "sourceCode", "asc");
         Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.ASC, "sourceCode"));
         Page<EventOrigin> eventOriginsPage = new PageImpl<>(List.of(testEventOrigin), pageable, 1);
         
-        when(eventOriginRepository.findByFilters(EventSource.PDV, pageable)).thenReturn(eventOriginsPage);
+        when(eventOriginRepository.findByFilters(EventSource.PDV, null, pageable)).thenReturn(eventOriginsPage);
         when(eventOriginRepository.countPdvEventOrigins()).thenReturn(1L);
         when(eventOriginRepository.countExchangeEventOrigins()).thenReturn(0L);
         when(eventOriginRepository.countDanfeEventOrigins()).thenReturn(0L);
@@ -233,7 +233,7 @@ class EventOriginServiceTest {
         assertThat(response.getCounts().getTotalPdv()).isEqualTo(1);
         assertThat(response.getCounts().getTotalEventOrigins()).isEqualTo(1);
         
-        verify(eventOriginRepository).findByFilters(EventSource.PDV, pageable);
+        verify(eventOriginRepository).findByFilters(EventSource.PDV, null, pageable);
         verify(eventOriginRepository).countPdvEventOrigins();
         verify(eventOriginRepository).countExchangeEventOrigins();
         verify(eventOriginRepository).countDanfeEventOrigins();
@@ -244,11 +244,11 @@ class EventOriginServiceTest {
     @DisplayName("Deve buscar EventOrigins sem filtros com sucesso")
     void shouldFindEventOriginsWithoutFiltersSuccessfully() {
         // Given
-        EventOriginSearchRequest request = new EventOriginSearchRequest(null, 0, 20, "sourceCode", "asc");
+        EventOriginSearchRequest request = new EventOriginSearchRequest(null, null, 0, 20, "sourceCode", "asc");
         Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.ASC, "sourceCode"));
         Page<EventOrigin> eventOriginsPage = new PageImpl<>(List.of(testEventOrigin), pageable, 1);
         
-        when(eventOriginRepository.findByFilters(null, pageable)).thenReturn(eventOriginsPage);
+        when(eventOriginRepository.findByFilters(null, null, pageable)).thenReturn(eventOriginsPage);
         when(eventOriginRepository.countPdvEventOrigins()).thenReturn(1L);
         when(eventOriginRepository.countExchangeEventOrigins()).thenReturn(0L);
         when(eventOriginRepository.countDanfeEventOrigins()).thenReturn(0L);
@@ -262,7 +262,7 @@ class EventOriginServiceTest {
         assertThat(response.getEventOrigins()).hasSize(1);
         assertThat(response.getCounts().getTotalEventOrigins()).isEqualTo(1);
         
-        verify(eventOriginRepository).findByFilters(null, pageable);
+        verify(eventOriginRepository).findByFilters(null, null, pageable);
     }
     
     @Test
@@ -273,7 +273,7 @@ class EventOriginServiceTest {
         Pageable pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.ASC, "sourceCode"));
         Page<EventOrigin> eventOriginsPage = new PageImpl<>(List.of(testEventOrigin), pageable, 1);
         
-        when(eventOriginRepository.findByFilters(null, pageable)).thenReturn(eventOriginsPage);
+        when(eventOriginRepository.findByFilters(null, null, pageable)).thenReturn(eventOriginsPage);
         when(eventOriginRepository.countPdvEventOrigins()).thenReturn(1L);
         when(eventOriginRepository.countExchangeEventOrigins()).thenReturn(0L);
         when(eventOriginRepository.countDanfeEventOrigins()).thenReturn(0L);
@@ -286,6 +286,6 @@ class EventOriginServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getEventOrigins()).hasSize(1);
         
-        verify(eventOriginRepository).findByFilters(null, pageable);
+        verify(eventOriginRepository).findByFilters(null, null, pageable);
     }
 }

@@ -84,6 +84,7 @@ export interface EventOriginFilters {
  */
 export interface EventOriginSearchParams {
   readonly eventSource?: EventSource;
+  readonly sourceCode?: string;
   readonly page?: number;
   readonly size?: number;
   readonly sortBy?: string;

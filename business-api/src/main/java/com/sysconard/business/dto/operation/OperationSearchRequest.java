@@ -1,5 +1,6 @@
 package com.sysconard.business.dto.operation;
 
+import com.sysconard.business.enums.OperationSource;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,13 @@ public class OperationSearchRequest {
      * Se fornecido, retorna apenas operações cujo código contenha este valor.
      */
     private String code;
+    
+    /**
+     * Filtro por fonte da operação.
+     * Se fornecido, retorna apenas operações com a fonte especificada.
+     * Valores válidos: SELL, EXCHANGE.
+     */
+    private OperationSource operationSource;
     
     /**
      * Número da página (baseado em 0).

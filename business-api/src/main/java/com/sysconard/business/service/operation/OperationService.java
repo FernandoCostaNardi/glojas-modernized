@@ -150,12 +150,12 @@ public class OperationService {
      * Busca operações com filtros e paginação.
      * 
      * @param request Requisição com filtros e parâmetros de paginação
-     * @return Resposta com operações encontradas e informações de paginação
+     * @return Resposta com operações encontradas, informações de paginação e totalizadores
      */
     @Transactional(readOnly = true)
     public OperationSearchResponse findOperationsWithFilters(OperationSearchRequest request) {
-        log.info("Buscando operações com filtros: code={}, page={}, size={}, sortBy={}, sortDir={}",
-                request.getCode(), request.getPage(), request.getSize(), request.getSortBy(), request.getSortDir());
+        log.info("Buscando operações com filtros: code={}, operationSource={}, page={}, size={}, sortBy={}, sortDir={}",
+                request.getCode(), request.getOperationSource(), request.getPage(), request.getSize(), request.getSortBy(), request.getSortDir());
         
         try {
             // Criar Pageable com ordenação
@@ -164,12 +164,26 @@ public class OperationService {
             
             // Buscar operações com filtros
             Page<Operation> operationsPage = operationRepository.findOperationsWithFilters(
-                    request.getCode(), pageable);
+                    request.getCode(), 
+                    request.getOperationSource() != null ? request.getOperationSource().name() : null,
+                    pageable);
             
             // Mapear para DTOs
             List<OperationResponse> operations = operationsPage.getContent().stream()
                     .map(this::mapToResponse)
                     .collect(Collectors.toList());
+            
+            // Buscar totalizadores
+            long totalSell = operationRepository.countSellOperations();
+            long totalExchange = operationRepository.countExchangeOperations();
+            long totalOperations = operationRepository.countTotalOperations();
+            
+            // Criar contadores
+            OperationSearchResponse.OperationCounts counts = OperationSearchResponse.OperationCounts.builder()
+                    .totalSell(totalSell)
+                    .totalExchange(totalExchange)
+                    .totalOperations(totalOperations)
+                    .build();
             
             // Criar informações de paginação
             OperationSearchResponse.PaginationInfo paginationInfo = OperationSearchResponse.PaginationInfo.builder()
@@ -185,6 +199,7 @@ public class OperationService {
             OperationSearchResponse response = OperationSearchResponse.builder()
                     .operations(operations)
                     .pagination(paginationInfo)
+                    .counts(counts)
                     .totalElements(operationsPage.getTotalElements())
                     .totalPages(operationsPage.getTotalPages())
                     .currentPage(operationsPage.getNumber())
@@ -196,6 +211,8 @@ public class OperationService {
             log.info("Encontradas {} operações de {} total, página {} de {}",
                     operations.size(), operationsPage.getTotalElements(),
                     operationsPage.getNumber() + 1, operationsPage.getTotalPages());
+            
+            log.debug("Totalizadores: Venda={}, Troca={}, Total={}", totalSell, totalExchange, totalOperations);
             
             return response;
             
@@ -234,5 +251,19 @@ public class OperationService {
         return operationRepository.findByOperationSource(OperationSource.EXCHANGE).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
+    }
+    
+    /**
+     * Busca todos os códigos de operações cadastradas no sistema.
+     * Utilizado pelo OperationKindService para filtrar tipos de operação disponíveis.
+     * 
+     * @return Lista com todos os códigos de operações cadastradas
+     */
+    @Transactional(readOnly = true)
+    public List<String> getAllOperationCodes() {
+        log.debug("Buscando todos os códigos de operações cadastradas");
+        List<String> codes = operationRepository.findAllOperationCodes();
+        log.debug("Total de códigos encontrados: {}", codes.size());
+        return codes;
     }
 }

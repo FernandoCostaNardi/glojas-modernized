@@ -5,6 +5,7 @@ import Sidebar from '@/components/layout/Sidebar';
 import { ConfirmationModal, OperationModal } from '@/components/modals';
 import { Pagination } from '@/components/pagination';
 import { OperationsTable } from '@/components/tables';
+import OperationFilters from '@/components/filters/OperationFilters';
 import { useOperationManagement } from '@/hooks/useOperationManagement';
 import { Operation } from '@/types';
 
@@ -27,10 +28,18 @@ const OperationManagement: React.FC = () => {
     totalPages,
     sortBy,
     sortDir,
+    filters,
+    pendingFilters,
+    totalSell,
+    totalExchange,
+    totalOperations,
     refreshOperations,
     getOperationById,
     changePage,
-    handleSort
+    handleSort,
+    updatePendingFilters,
+    applyFilters,
+    clearFilters
   } = useOperationManagement();
   
   // Estado para modais
@@ -166,6 +175,98 @@ const OperationManagement: React.FC = () => {
   );
 
   /**
+   * Renderiza os cards de totalizadores
+   */
+  const renderStatisticsCards = (): React.ReactNode => (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="p-5">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-8 h-8 bg-green-500 rounded-md flex items-center justify-center">
+                <span className="text-white text-sm font-medium">V</span>
+              </div>
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-smart-gray-500 truncate">
+                  Operações de Venda
+                </dt>
+                <dd className="text-lg font-medium text-smart-gray-900">
+                  {totalSell}
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="p-5">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-8 h-8 bg-blue-500 rounded-md flex items-center justify-center">
+                <span className="text-white text-sm font-medium">T</span>
+              </div>
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-smart-gray-500 truncate">
+                  Operações de Troca
+                </dt>
+                <dd className="text-lg font-medium text-smart-gray-900">
+                  {totalExchange}
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white overflow-hidden shadow rounded-lg">
+        <div className="p-5">
+          <div className="flex items-center">
+            <div className="flex-shrink-0">
+              <div className="w-8 h-8 bg-smart-gray-500 rounded-md flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            </div>
+            <div className="ml-5 w-0 flex-1">
+              <dl>
+                <dt className="text-sm font-medium text-smart-gray-500 truncate">
+                  Total de Operações
+                </dt>
+                <dd className="text-lg font-medium text-smart-gray-900">
+                  {totalOperations}
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  /**
+   * Renderiza a seção de filtros
+   */
+  const renderFiltersSection = (): React.ReactNode => (
+    <div className="mb-6">
+      <OperationFilters
+        filters={filters}
+        pendingFilters={pendingFilters}
+        onPendingFiltersChange={updatePendingFilters}
+        onApplyFilters={applyFilters}
+        onClearFilters={clearFilters}
+        isLoading={isLoadingOperations}
+        totalElements={totalElements}
+      />
+    </div>
+  );
+
+  /**
    * Renderiza a seção de operações
    */
   const renderOperationsSection = (): React.ReactNode => (
@@ -207,6 +308,8 @@ const OperationManagement: React.FC = () => {
   const renderMainContent = (): React.ReactNode => (
     <main className="flex-1 p-6 bg-smart-gray-50 overflow-auto">
       {renderPageHeader()}
+      {renderStatisticsCards()}
+      {renderFiltersSection()}
       {renderOperationsSection()}
     </main>
   );

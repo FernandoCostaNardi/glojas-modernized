@@ -19,9 +19,6 @@ spring:
     console:
       enabled: false
   
-  # Desabilitar Flyway para testes
-  flyway:
-    enabled: false
 
 # Configurações de logging para testes
 logging:

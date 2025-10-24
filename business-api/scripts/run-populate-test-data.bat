@@ -70,7 +70,7 @@ if %errorlevel% equ 0 (
     echo Possíveis causas:
     echo - Banco de dados não existe
     echo - Usuário ou senha incorretos
-    echo - Migrações Flyway não foram executadas
+    echo - Tabelas não foram criadas pelo Hibernate
     echo - PostgreSQL não está rodando
     echo.
 )

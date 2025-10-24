@@ -12,11 +12,10 @@ Fornecer um conjunto completo de dados de teste para:
 
 ## 📁 Arquivos Criados
 
-### 1. Migração Flyway
-- **`V11__Insert_test_data.sql`**: Migração automática do Flyway
-
-### 2. Scripts Manuais
+### 1. Scripts de Dados
 - **`populate-test-data.sql`**: Script SQL para execução manual
+
+### 2. Scripts de Execução
 - **`run-populate-test-data.bat`**: Script batch para Windows
 - **`run-populate-test-data.ps1`**: Script PowerShell para Windows
 
@@ -66,15 +65,7 @@ Fornecer um conjunto completo de dados de teste para:
 
 ## 🚀 Como Executar
 
-### Opção 1: Migração Flyway Automática
-1. Ative o Flyway no `application.yml`:
-   ```yaml
-   flyway:
-     enabled: true
-   ```
-2. Execute a aplicação - a migração V11 será executada automaticamente
-
-### Opção 2: Script Manual (Recomendado)
+### Opção 1: Script Manual (Recomendado)
 1. Navegue para o diretório `scripts/`
 2. Execute um dos scripts:
    ```bash
@@ -88,7 +79,7 @@ Fornecer um conjunto completo de dados de teste para:
    psql -U glojas_user -d glojas_business -f populate-test-data.sql
    ```
 
-### Opção 3: Execução Manual
+### Opção 2: Execução Manual
 ```bash
 psql -U glojas_user -d glojas_business -f populate-test-data.sql
 ```
@@ -166,7 +157,7 @@ curl -X GET http://localhost:8082/api/business/users/{USER_ID} \
 1. **Senha Padrão**: Todos os usuários usam a senha `admin123`
 2. **UUID**: Todos os IDs são UUIDs gerados automaticamente
 3. **Conflitos**: Os scripts usam `ON CONFLICT DO NOTHING` para evitar duplicatas
-4. **Dependências**: Execute as migrações Flyway antes dos dados de teste
+4. **Dependências**: Execute a aplicação para criar as tabelas antes dos dados de teste
 5. **Ambiente**: Use apenas em ambiente de desenvolvimento/teste
 
 ## 🆘 Solução de Problemas
@@ -182,10 +173,9 @@ CREATE USER glojas_user WITH PASSWORD 'F1e0r8n0#1';
 GRANT ALL PRIVILEGES ON DATABASE glojas_business TO glojas_user;
 ```
 
-### Erro: "Migrações não executadas"
-1. Ative o Flyway no `application.yml`
-2. Execute a aplicação para rodar as migrações
-3. Execute o script de dados de teste
+### Erro: "Tabelas não existem"
+1. Execute a aplicação para criar as tabelas via Hibernate
+2. Execute o script de dados de teste
 
 ### Erro: "PostgreSQL não está rodando"
 ```bash
@@ -205,4 +195,4 @@ Para dúvidas ou problemas:
 1. Verifique os logs da aplicação
 2. Consulte a documentação do Spring Boot
 3. Verifique a conectividade com o PostgreSQL
-4. Confirme se as migrações foram executadas corretamente
+4. Confirme se as tabelas foram criadas corretamente pelo Hibernate

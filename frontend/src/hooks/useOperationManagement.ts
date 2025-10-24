@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Operation, OperationKind, OperationSearchResponse } from '@/types';
+import { Operation, OperationKind, OperationSearchResponse, OperationFilters } from '@/types';
 import { operationService, operationKindService } from '@/services/api';
 
 /**
@@ -19,6 +19,15 @@ export const useOperationManagement = () => {
   const [sortBy, setSortBy] = useState<string>('code');
   const [sortDir, setSortDir] = useState<string>('asc');
   
+  // Estado para filtros
+  const [filters, setFilters] = useState<OperationFilters>({});
+  const [pendingFilters, setPendingFilters] = useState<OperationFilters>({});
+  
+  // Estado para totalizadores
+  const [totalSell, setTotalSell] = useState<number>(0);
+  const [totalExchange, setTotalExchange] = useState<number>(0);
+  const [totalOperations, setTotalOperations] = useState<number>(0);
+  
   // Estado para tipos de operação
   const [operationKinds, setOperationKinds] = useState<OperationKind[]>([]);
   const [isLoadingOperationKinds, setIsLoadingOperationKinds] = useState<boolean>(false);
@@ -27,22 +36,24 @@ export const useOperationManagement = () => {
   const hasLoadedOperationKinds = useRef<boolean>(false);
 
   /**
-   * Carrega as operações do sistema com paginação
+   * Carrega as operações do sistema com paginação e filtros
    * Seguindo princípios de Clean Code com responsabilidade única
    */
   const loadOperations = useCallback(async () => {
-    console.log('🔄 Carregando operações com paginação...', { 
+    console.log('🔄 Carregando operações com paginação e filtros...', { 
       currentPage, 
       pageSize, 
       sortBy, 
-      sortDir 
+      sortDir,
+      filters
     });
     
     try {
       setIsLoadingOperations(true);
       
       const response: OperationSearchResponse = await operationService.getOperationsWithFilters(
-        undefined, // code filter
+        filters.code,
+        filters.operationSource,
         currentPage,
         pageSize,
         sortBy,
@@ -53,18 +64,28 @@ export const useOperationManagement = () => {
       setTotalElements(response.totalElements);
       setTotalPages(response.totalPages);
       
+      // Atualizar totalizadores
+      if (response.counts) {
+        setTotalSell(response.counts.totalSell);
+        setTotalExchange(response.counts.totalExchange);
+        setTotalOperations(response.counts.totalOperations);
+      }
+      
       console.log('✅ Operações carregadas com sucesso:', {
         operations: response.operations.length,
         totalElements: response.totalElements,
         totalPages: response.totalPages,
-        currentPage: response.currentPage
+        currentPage: response.currentPage,
+        totalSell: response.counts?.totalSell,
+        totalExchange: response.counts?.totalExchange,
+        totalOperations: response.counts?.totalOperations
       });
     } catch (error) {
       console.error('❌ Erro ao carregar operações:', error);
     } finally {
       setIsLoadingOperations(false);
     }
-  }, [currentPage, pageSize, sortBy, sortDir]); // Dependências para recarregar quando mudarem
+  }, [currentPage, pageSize, sortBy, sortDir, filters]); // Dependências para recarregar quando mudarem
 
   /**
    * Carrega operações automaticamente quando parâmetros de paginação mudam
@@ -89,6 +110,36 @@ export const useOperationManagement = () => {
     console.log('🔄 refreshOperations: Forçando atualização das operações...');
     await loadOperations();
   }, [loadOperations]);
+
+  /**
+   * Atualiza os filtros pendentes (não aplicados ainda)
+   * Seguindo princípios de Clean Code com responsabilidade única
+   */
+  const updatePendingFilters = useCallback((newFilters: OperationFilters): void => {
+    console.log('🔍 Atualizando filtros pendentes:', newFilters);
+    setPendingFilters(newFilters);
+  }, []);
+
+  /**
+   * Aplica os filtros pendentes
+   * Seguindo princípios de Clean Code com responsabilidade única
+   */
+  const applyFilters = useCallback((): void => {
+    console.log('🔍 Aplicando filtros pendentes:', pendingFilters);
+    setFilters(pendingFilters);
+    setCurrentPage(0); // Reset para primeira página ao aplicar filtros
+  }, [pendingFilters]);
+
+  /**
+   * Limpa todos os filtros
+   * Seguindo princípios de Clean Code com responsabilidade única
+   */
+  const clearFilters = useCallback((): void => {
+    console.log('🧹 Limpando filtros');
+    setFilters({});
+    setPendingFilters({});
+    setCurrentPage(0); // Reset para primeira página
+  }, []);
 
   /**
    * Altera a página atual
@@ -196,6 +247,15 @@ export const useOperationManagement = () => {
     sortBy,
     sortDir,
     
+    // Estado de filtros
+    filters,
+    pendingFilters,
+    
+    // Estado de totalizadores
+    totalSell,
+    totalExchange,
+    totalOperations,
+    
     // Ações
     loadOperations,
     loadOperationKinds,
@@ -206,6 +266,11 @@ export const useOperationManagement = () => {
     
     // Ações de paginação
     changePage,
-    handleSort
+    handleSort,
+    
+    // Ações de filtros
+    updatePendingFilters,
+    applyFilters,
+    clearFilters
   };
 };

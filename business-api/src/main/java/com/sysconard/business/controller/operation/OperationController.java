@@ -123,6 +123,7 @@ public class OperationController {
      * Acesso permitido para usuários com permissão operation:read.
      * 
      * @param code Filtro por código (busca parcial)
+     * @param operationSource Filtro por fonte da operação (SELL, EXCHANGE)
      * @param page Número da página (baseado em 0)
      * @param size Tamanho da página
      * @param sortBy Campo para ordenação
@@ -133,18 +134,30 @@ public class OperationController {
     @PreAuthorize("hasAuthority('operation:read')")
     public ResponseEntity<OperationSearchResponse> getAllOperations(
             @RequestParam(required = false) String code,
+            @RequestParam(required = false) String operationSource,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "code") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         
-        log.info("Recebida requisição para buscar operações com filtros: code={}, page={}, size={}, sortBy={}, sortDir={}",
-                code, page, size, sortBy, sortDir);
+        log.info("Recebida requisição para buscar operações com filtros: code={}, operationSource={}, page={}, size={}, sortBy={}, sortDir={}",
+                code, operationSource, page, size, sortBy, sortDir);
         
         try {
+            // Converter string para enum se fornecido
+            com.sysconard.business.enums.OperationSource sourceEnum = null;
+            if (operationSource != null && !operationSource.trim().isEmpty()) {
+                try {
+                    sourceEnum = com.sysconard.business.enums.OperationSource.valueOf(operationSource.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    log.warn("Valor inválido para operationSource: {}", operationSource);
+                }
+            }
+            
             // Criar request de busca
             OperationSearchRequest searchRequest = OperationSearchRequest.builder()
                     .code(code)
+                    .operationSource(sourceEnum)
                     .page(page)
                     .size(size)
                     .sortBy(sortBy)

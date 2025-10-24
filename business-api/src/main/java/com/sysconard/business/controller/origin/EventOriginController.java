@@ -132,7 +132,7 @@ public class EventOriginController {
                 eventSource, page, size, sortBy, sortDir);
         
         EventOriginSearchRequest request = new EventOriginSearchRequest(
-                eventSource, page, size, sortBy, sortDir);
+                eventSource, null, page, size, sortBy, sortDir);
         
         EventOriginSearchResponse response = eventOriginService.findEventOriginsWithFilters(request);
         

@@ -427,6 +427,7 @@ export const operationService = {
   /**
    * Busca operações com filtros e paginação
    * @param code Filtro por código (opcional)
+   * @param operationSource Filtro por fonte da operação (opcional)
    * @param page Número da página (0-based)
    * @param size Tamanho da página
    * @param sortBy Campo para ordenação
@@ -435,6 +436,7 @@ export const operationService = {
    */
   getOperationsWithFilters: async (
     code?: string,
+    operationSource?: string,
     page: number = 0,
     size: number = 5,
     sortBy: string = 'code',
@@ -445,6 +447,7 @@ export const operationService = {
       
       const params = new URLSearchParams();
       if (code) params.append('code', code);
+      if (operationSource) params.append('operationSource', operationSource);
       params.append('page', page.toString());
       params.append('size', size.toString());
       params.append('sortBy', sortBy);
@@ -472,7 +475,7 @@ export const operationService = {
    */
   getAllOperations: async (): Promise<Operation[]> => {
     try {
-      const response = await operationService.getOperationsWithFilters(undefined, 0, 1000);
+      const response = await operationService.getOperationsWithFilters(undefined, undefined, 0, 1000);
       return [...response.operations];
     } catch (error) {
       console.error('❌ Erro ao buscar operações:', error);

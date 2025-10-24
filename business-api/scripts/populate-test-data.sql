@@ -1,7 +1,7 @@
 -- =====================================================
 -- SCRIPT PARA POPULAR DADOS DE TESTE - BUSINESS API
 -- =====================================================
--- Este script deve ser executado APÓS as migrações Flyway
+-- Este script deve ser executado após a criação das tabelas pelo Hibernate
 -- Execute: psql -U glojas_user -d glojas_business -f populate-test-data.sql
 -- =====================================================
 

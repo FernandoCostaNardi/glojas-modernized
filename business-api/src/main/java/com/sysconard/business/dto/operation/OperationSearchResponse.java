@@ -58,6 +58,11 @@ public class OperationSearchResponse {
     private boolean hasPrevious;
     
     /**
+     * Totalizadores de operações por tipo.
+     */
+    private OperationCounts counts;
+    
+    /**
      * Classe interna para informações de paginação.
      */
     @Data
@@ -71,5 +76,31 @@ public class OperationSearchResponse {
         private long totalElements;
         private boolean hasNext;
         private boolean hasPrevious;
+    }
+    
+    /**
+     * Classe interna para contadores de operações.
+     * Contém totalizadores por tipo de operação (SELL, EXCHANGE) e total geral.
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class OperationCounts {
+        
+        /**
+         * Total de operações de venda.
+         */
+        private long totalSell;
+        
+        /**
+         * Total de operações de troca.
+         */
+        private long totalExchange;
+        
+        /**
+         * Total geral de operações cadastradas.
+         */
+        private long totalOperations;
     }
 }

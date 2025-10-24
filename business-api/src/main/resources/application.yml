@@ -46,20 +46,6 @@ spring:
         format_sql: true
     open-in-view: false
 
-    # Configuração Flyway
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-    validate-on-migrate: false  # Temporariamente desabilitado para resolver checksum mismatch
-    locations: classpath:db/migration
-    schemas: public
-    baseline-version: 0
-    clean-disabled: false
-    out-of-order: true
-    ignore-missing-migrations: true
-    ignore-ignored-migrations: true
-    ignore-pending-migrations: false
-    ignore-future-migrations: true
   
   # Configurações JWT
   jwt:
@@ -88,12 +74,14 @@ management:
   endpoint:
     health:
       show-details: always
+  health:
+    mail:
+      enabled: false
 
 logging:
   level:
     com.sysconard.business: DEBUG
     org.springframework.security: DEBUG
-    org.flywaydb: DEBUG
     root: INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

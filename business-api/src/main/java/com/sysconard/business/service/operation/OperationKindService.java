@@ -6,9 +6,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Serviço de negócio para operações com tipos de operação (OperationKind).
@@ -22,30 +24,44 @@ import java.util.Map;
 public class OperationKindService {
     
     private final LegacyApiClient legacyApiClient;
+    private final OperationService operationService;
     
-    public OperationKindService(LegacyApiClient legacyApiClient) {
+    public OperationKindService(LegacyApiClient legacyApiClient, OperationService operationService) {
         this.legacyApiClient = legacyApiClient;
+        this.operationService = operationService;
     }
     
     /**
-     * Busca todos os tipos de operação disponíveis na Legacy API.
+     * Busca todos os tipos de operação disponíveis para cadastro.
+     * Retorna apenas os tipos de operação da Legacy API que ainda não foram cadastrados no sistema.
+     * A comparação é feita entre o campo 'id' do OperationKindDto e o campo 'code' da entidade Operation.
      * 
-     * @return Lista de tipos de operação
+     * @return Lista de tipos de operação disponíveis (não cadastrados)
      */
     public List<OperationKindDto> getAllOperationKinds() {
-        log.info("Iniciando busca de tipos de operação na Legacy API");
+        log.info("Iniciando busca de tipos de operação disponíveis (não cadastrados)");
         
         try {
-            // Buscar dados na Legacy API
-            List<OperationKindDto> operationKinds = legacyApiClient.getOperationKinds();
+            // 1. Buscar todos os OperationKinds da Legacy API
+            List<OperationKindDto> allOperationKinds = legacyApiClient.getOperationKinds();
             
-            log.info("Tipos de operação encontrados: {} itens", 
-                    operationKinds != null ? operationKinds.size() : 0);
+            // 2. Buscar todos os códigos de operações já cadastradas
+            List<String> registeredCodes = operationService.getAllOperationCodes();
+            Set<String> registeredCodesSet = new HashSet<>(registeredCodes);
             
-            return operationKinds != null ? operationKinds : Collections.emptyList();
+            // 3. Filtrar apenas os OperationKinds que NÃO foram cadastrados
+            List<OperationKindDto> availableOperationKinds = allOperationKinds.stream()
+                    .filter(kind -> !registeredCodesSet.contains(kind.id()))
+                    .collect(Collectors.toList());
+            
+            log.info("Total de tipos de operação na Legacy API: {}", allOperationKinds.size());
+            log.info("Total de operações já cadastradas: {}", registeredCodes.size());
+            log.info("Total de tipos de operação disponíveis: {}", availableOperationKinds.size());
+            
+            return availableOperationKinds;
             
         } catch (Exception e) {
-            log.error("Erro ao buscar tipos de operação na Legacy API", e);
+            log.error("Erro ao buscar tipos de operação disponíveis", e);
             throw new RuntimeException("Erro ao buscar tipos de operação: " + e.getMessage(), e);
         }
     }

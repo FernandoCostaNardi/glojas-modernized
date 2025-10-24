@@ -51,20 +51,24 @@ public interface OperationRepository extends JpaRepository<Operation, UUID> {
     
     /**
      * Busca operações com filtros e paginação.
-     * Permite filtrar por código (busca parcial) e aplicar paginação e ordenação.
+     * Permite filtrar por código (busca parcial) e fonte da operação, aplicando paginação e ordenação.
      * 
      * @param code Filtro por código (busca parcial, opcional)
+     * @param operationSource Filtro por fonte da operação (opcional)
      * @param pageable Configuração de paginação e ordenação
      * @return Página de operações com filtros aplicados
      */
     @Query(value = "SELECT o.* FROM operations o " +
                    "WHERE (:code IS NULL OR LOWER(o.code) LIKE LOWER(CONCAT('%', CAST(:code AS TEXT), '%'))) " +
+                   "AND (:operationSource IS NULL OR o.operation_source = :operationSource) " +
                    "ORDER BY o.code",
            countQuery = "SELECT COUNT(*) FROM operations o " +
-                       "WHERE (:code IS NULL OR LOWER(o.code) LIKE LOWER(CONCAT('%', CAST(:code AS TEXT), '%')))",
+                       "WHERE (:code IS NULL OR LOWER(o.code) LIKE LOWER(CONCAT('%', CAST(:code AS TEXT), '%'))) " +
+                       "AND (:operationSource IS NULL OR o.operation_source = :operationSource)",
            nativeQuery = true)
     Page<Operation> findOperationsWithFilters(
         @Param("code") String code,
+        @Param("operationSource") String operationSource,
         Pageable pageable
     );
     
@@ -102,4 +106,29 @@ public interface OperationRepository extends JpaRepository<Operation, UUID> {
      * @return Total de operações com a fonte especificada
      */
     long countByOperationSource(OperationSource operationSource);
+    
+    /**
+     * Conta total de operações do tipo SELL (venda).
+     * 
+     * @return Número total de operações de venda
+     */
+    @Query("SELECT COUNT(o) FROM Operation o WHERE o.operationSource = 'SELL'")
+    long countSellOperations();
+    
+    /**
+     * Conta total de operações do tipo EXCHANGE (troca).
+     * 
+     * @return Número total de operações de troca
+     */
+    @Query("SELECT COUNT(o) FROM Operation o WHERE o.operationSource = 'EXCHANGE'")
+    long countExchangeOperations();
+    
+    /**
+     * Busca todos os códigos de operações cadastradas no sistema.
+     * Utilizado para filtrar tipos de operação disponíveis na Legacy API.
+     * 
+     * @return Lista com todos os códigos de operações cadastradas
+     */
+    @Query("SELECT o.code FROM Operation o")
+    List<String> findAllOperationCodes();
 }

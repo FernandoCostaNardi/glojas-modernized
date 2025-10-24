@@ -29,10 +29,12 @@ public class OperationKindController {
     private final OperationKindService operationKindService;
     
     /**
-     * Busca todos os tipos de operação disponíveis.
+     * Busca todos os tipos de operação disponíveis para cadastro.
+     * Retorna apenas os tipos de operação da Legacy API que ainda não foram cadastrados no sistema.
+     * A comparação é feita entre o campo 'id' do OperationKindDto e o campo 'code' da entidade Operation.
      * Acesso permitido para usuários com permissão operation:read.
      * 
-     * @return Lista de tipos de operação
+     * @return Lista de tipos de operação disponíveis (não cadastrados)
      */
     @GetMapping
     @PreAuthorize("hasAuthority('operation:read')")

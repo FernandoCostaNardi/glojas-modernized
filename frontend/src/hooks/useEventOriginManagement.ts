@@ -127,6 +127,7 @@ export const useEventOriginManagement = (): EventOriginManagementState & EventOr
       
       const params: EventOriginSearchParams = {
         ...(filters.eventSource && { eventSource: filters.eventSource }),
+        ...(filters.sourceCode && { sourceCode: filters.sourceCode }),
         page: currentPage,
         size: pageSize,
         sortBy,

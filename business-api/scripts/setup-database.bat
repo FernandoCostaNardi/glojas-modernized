@@ -106,7 +106,7 @@ echo - Database: %DB_NAME%
 echo - Usuário: %DB_USER%
 echo - Senha: %DB_PASSWORD%
 echo.
-echo Agora você pode executar as migrações Flyway e os dados de teste.
+echo Agora você pode executar os dados de teste.
 echo.
 
 pause

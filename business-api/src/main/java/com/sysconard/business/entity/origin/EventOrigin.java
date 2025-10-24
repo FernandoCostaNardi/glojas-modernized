@@ -33,6 +33,6 @@ public class EventOrigin {
     @Column(nullable = false)
     private EventSource eventSource;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, columnDefinition = "VARCHAR(50)")
     private String sourceCode;
 }

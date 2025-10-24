@@ -476,6 +476,35 @@ export interface OperationFormData {
 }
 
 /**
+ * Interface para contadores de operações por tipo
+ */
+export interface OperationCounts {
+  readonly totalSell: number;
+  readonly totalExchange: number;
+  readonly totalOperations: number;
+}
+
+/**
+ * Interface para filtros de operações
+ */
+export interface OperationFilters {
+  readonly operationSource?: OperationSource | undefined;
+  readonly code?: string | undefined;
+}
+
+/**
+ * Interface para parâmetros de busca de operações
+ */
+export interface OperationSearchParams {
+  readonly operationSource?: OperationSource;
+  readonly code?: string;
+  readonly page: number;
+  readonly size: number;
+  readonly sortBy: string;
+  readonly sortDir: 'asc' | 'desc';
+}
+
+/**
  * Interface para resposta de operações da API com paginação
  */
 export interface OperationSearchResponse {
@@ -488,6 +517,7 @@ export interface OperationSearchResponse {
     readonly hasNext: boolean;
     readonly hasPrevious: boolean;
   };
+  readonly counts: OperationCounts;
   readonly totalElements: number;
   readonly totalPages: number;
   readonly currentPage: number;

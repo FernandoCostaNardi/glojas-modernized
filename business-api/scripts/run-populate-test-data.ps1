@@ -84,7 +84,7 @@ try {
     Write-Host "Possíveis causas:" -ForegroundColor Yellow
     Write-Host "- Banco de dados não existe" -ForegroundColor White
     Write-Host "- Usuário ou senha incorretos" -ForegroundColor White
-    Write-Host "- Migrações Flyway não foram executadas" -ForegroundColor White
+    Write-Host "- Tabelas não foram criadas pelo Hibernate" -ForegroundColor White
     Write-Host "- PostgreSQL não está rodando" -ForegroundColor White
     Write-Host ""
     Write-Host "Detalhes do erro:" -ForegroundColor Red

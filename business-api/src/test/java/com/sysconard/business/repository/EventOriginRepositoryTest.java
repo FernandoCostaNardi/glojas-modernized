@@ -164,10 +164,10 @@ class EventOriginRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "sourceCode"));
         
         // When - Busca com filtro PDV
-        Page<EventOrigin> pdvPage = eventOriginRepository.findByFilters(EventSource.PDV, pageable);
+        Page<EventOrigin> pdvPage = eventOriginRepository.findByFilters(EventSource.PDV, null, pageable);
         
         // When - Busca sem filtro
-        Page<EventOrigin> allPage = eventOriginRepository.findByFilters(null, pageable);
+        Page<EventOrigin> allPage = eventOriginRepository.findByFilters(null, null, pageable);
         
         // Then
         assertThat(pdvPage.getContent()).hasSize(1);
@@ -184,7 +184,7 @@ class EventOriginRepositoryTest {
         Pageable pageable = PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "sourceCode"));
         
         // When
-        Page<EventOrigin> page = eventOriginRepository.findByFilters(null, pageable);
+        Page<EventOrigin> page = eventOriginRepository.findByFilters(null, null, pageable);
         
         // Then
         assertThat(page.getContent()).hasSize(2);
@@ -201,7 +201,7 @@ class EventOriginRepositoryTest {
         Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "sourceCode"));
         
         // When
-        Page<EventOrigin> page = eventOriginRepository.findByFilters(null, pageable);
+        Page<EventOrigin> page = eventOriginRepository.findByFilters(null, null, pageable);
         
         // Then
         assertThat(page.getContent()).hasSize(3);

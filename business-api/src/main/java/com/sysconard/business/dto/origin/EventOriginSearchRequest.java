@@ -11,6 +11,7 @@ import jakarta.validation.constraints.Pattern;
  * Utiliza Record para DTOs simples (≤5 campos) seguindo padrões de Clean Code.
  * 
  * @param eventSource Filtro por fonte do evento (opcional)
+ * @param sourceCode Filtro por código da fonte (opcional)
  * @param page Número da página (padrão: 0)
  * @param size Tamanho da página (padrão: 20, máximo: 100)
  * @param sortBy Campo para ordenação (padrão: "sourceCode")
@@ -19,6 +20,8 @@ import jakarta.validation.constraints.Pattern;
 public record EventOriginSearchRequest(
     
     EventSource eventSource,
+    
+    String sourceCode,
     
     @Min(value = 0, message = "Número da página deve ser >= 0")
     int page,
@@ -48,13 +51,13 @@ public record EventOriginSearchRequest(
      * Construtor para busca sem filtros.
      */
     public EventOriginSearchRequest() {
-        this(null, 0, 20, "sourceCode", "asc");
+        this(null, null, 0, 20, "sourceCode", "asc");
     }
     
     /**
      * Construtor para busca com filtro de EventSource.
      */
     public EventOriginSearchRequest(EventSource eventSource) {
-        this(eventSource, 0, 20, "sourceCode", "asc");
+        this(eventSource, null, 0, 20, "sourceCode", "asc");
     }
 }
