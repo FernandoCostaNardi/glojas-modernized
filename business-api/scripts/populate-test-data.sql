@@ -197,6 +197,80 @@ INSERT INTO password_reset_tokens (id, user_id, token, expires_at, created_at) V
 ON CONFLICT DO NOTHING;
 
 -- =====================================================
+-- INSERÇÃO DE LOJAS DE TESTE
+-- =====================================================
+
+-- Loja 1: JAB MATRIZ (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000001', 'JAB MATRIZ', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 2: CD JANGURUSSU (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000002', 'CD JANGURUSSU', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 3: SMART ANT. SALES (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000003', 'SMART ANT. SALES', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 4: SMART MARACANAU (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000004', 'SMART MARACANAU', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 5: SMART IGUATEMI (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000005', 'SMART IGUATEMI', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 6: SMART MESSEJANA (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000006', 'SMART MESSEJANA', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 7: SMART IANDE (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000007', 'SMART IANDE', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 8: SMART VIA SUL (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000008', 'SMART VIA SUL', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 9: JAB CD 2 (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000009', 'JAB CD 2', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 10: SMART NORTH (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000010', 'SMART NORTH', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 11: SMART PARANGABA (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000011', 'SMART PARANGABA', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 12: SMART RIOMAR KENNEDY (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000012', 'SMART RIOMAR KENNEDY', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 13: SMART RIOMAR FORTALE (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000013', 'SMART RIOMAR FORTALE', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- Loja 14: SMART JOQUEI (código real da Legacy API)
+INSERT INTO stores (id, code, name, city, status, created_at, updated_at) VALUES
+    (gen_random_uuid(), '000014', 'SMART JOQUEI', 'Fortaleza', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+ON CONFLICT (code) DO NOTHING;
+
+-- =====================================================
 -- VERIFICAÇÃO DOS DADOS INSERIDOS
 -- =====================================================
 
@@ -208,6 +282,12 @@ SELECT 'Roles criadas:' as info, COUNT(*) as total FROM roles;
 
 -- Contar permissões
 SELECT 'Permissões criadas:' as info, COUNT(*) as total FROM permissions;
+
+-- Contar lojas
+SELECT 'Lojas criadas:' as info, COUNT(*) as total FROM stores;
+
+-- Contar lojas ativas
+SELECT 'Lojas ativas:' as info, COUNT(*) as total FROM stores WHERE status = TRUE;
 
 -- Listar usuários com suas roles
 SELECT 
@@ -230,4 +310,5 @@ ORDER BY u.username;
 SELECT '=== RESUMO DOS DADOS DE TESTE ===' as info;
 SELECT 'Senha padrão para todos os usuários: admin123' as credenciais;
 SELECT 'Usuário admin: admin/admin123' as admin_user;
-SELECT 'Usuários de teste criados com sucesso!' as status;
+SELECT 'Lojas criadas: 14 lojas (todas ativas) com códigos reais da Legacy API' as lojas_info;
+SELECT 'Usuários e lojas de teste criados com sucesso!' as status;

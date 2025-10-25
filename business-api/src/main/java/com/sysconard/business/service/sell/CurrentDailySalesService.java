@@ -45,13 +45,23 @@ public class CurrentDailySalesService {
         log.info("Buscando vendas do dia atual em tempo real: {}", today);
         
         try {
-            // Passo 1: Buscar dados frescos da Legacy API
+            // Passo 1: Verificar se há lojas ativas cadastradas
+            List<StoreResponseDto> activeStores = storeService.getAllActiveStores();
+            
+            if (activeStores.isEmpty()) {
+                log.warn("Nenhuma loja ativa encontrada no sistema. Retornando lista vazia.");
+                return List.of();
+            }
+            
+            log.debug("Encontradas {} lojas ativas para busca de vendas", activeStores.size());
+            
+            // Passo 2: Buscar dados frescos da Legacy API
             List<StoreReportByDayResponse> currentDayData = fetchCurrentDayData(today);
             
-            // Passo 2: Converter para formato de relatório
+            // Passo 3: Converter para formato de relatório
             List<DailySalesReportResponse> reportData = mapToReportResponse(currentDayData);
             
-            // Passo 3: Garantir que todas as lojas ativas estejam presentes
+            // Passo 4: Garantir que todas as lojas ativas estejam presentes
             List<DailySalesReportResponse> completeReport = ensureAllActiveStoresPresent(reportData);
             
             log.info("Vendas do dia atual obtidas com sucesso: {} lojas no resultado final", 
@@ -75,33 +85,43 @@ public class CurrentDailySalesService {
     private List<StoreReportByDayResponse> fetchCurrentDayData(LocalDate today) {
         log.debug("Buscando dados do dia atual da Legacy API: {}", today);
         
-        // Obter todas as lojas ativas
-        List<StoreResponseDto> activeStores = storeService.getAllActiveStores();
-        
-        if (activeStores.isEmpty()) {
-            log.warn("Nenhuma loja ativa encontrada para buscar vendas do dia atual");
+        try {
+            // Obter todas as lojas ativas
+            List<StoreResponseDto> activeStores = storeService.getAllActiveStores();
+            
+            if (activeStores.isEmpty()) {
+                log.warn("Nenhuma loja ativa encontrada para buscar vendas do dia atual");
+                return List.of();
+            }
+            
+            List<String> storeCodes = activeStores.stream()
+                    .map(StoreResponseDto::getCode)
+                    .collect(Collectors.toList());
+            
+            log.debug("Lojas ativas para busca: {} lojas", storeCodes.size());
+            
+            // Criar requisição para o dia atual
+            StoreReportRequest reportRequest = StoreReportRequest.builder()
+                    .startDate(today)
+                    .endDate(today)
+                    .storeCodes(storeCodes)
+                    .build();
+            
+            // Buscar dados da Legacy API
+            List<StoreReportByDayResponse> currentDayData = sellService.getStoreReportByDay(reportRequest);
+            
+            log.debug("Dados do dia atual obtidos da Legacy API: {} registros", currentDayData.size());
+            
+            return currentDayData;
+            
+        } catch (Exception e) {
+            log.error("Erro ao buscar dados da Legacy API para o dia {}: {}", today, e.getMessage(), e);
+            
+            // Se a Legacy API não estiver disponível, retornar lista vazia
+            // O método ensureAllActiveStoresPresent() criará registros zerados
+            log.warn("Legacy API indisponível. Retornando dados zerados para todas as lojas ativas.");
             return List.of();
         }
-        
-        List<String> storeCodes = activeStores.stream()
-                .map(StoreResponseDto::getCode)
-                .collect(Collectors.toList());
-        
-        log.debug("Lojas ativas para busca: {} lojas", storeCodes.size());
-        
-        // Criar requisição para o dia atual
-        StoreReportRequest reportRequest = StoreReportRequest.builder()
-                .startDate(today)
-                .endDate(today)
-                .storeCodes(storeCodes)
-                .build();
-        
-        // Buscar dados da Legacy API
-        List<StoreReportByDayResponse> currentDayData = sellService.getStoreReportByDay(reportRequest);
-        
-        log.debug("Dados do dia atual obtidos da Legacy API: {} registros", currentDayData.size());
-        
-        return currentDayData;
     }
     
     /**

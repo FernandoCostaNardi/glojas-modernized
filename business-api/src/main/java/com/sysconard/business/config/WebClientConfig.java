@@ -32,8 +32,8 @@ public class WebClientConfig {
      */
     @Bean("legacyApiWebClient")
     public WebClient legacyApiWebClient() {
-        // URL correta para Legacy API (sem prefixo /api/legacy)
-        String correctBaseUrl = "http://localhost:8087";
+        // URL correta para Legacy API SEM o context-path (já está incluído no endpoint)
+        String correctBaseUrl = legacyApiBaseUrl;
         
         System.out.println("=== WEBCLIENT CONFIG DEBUG ===");
         System.out.println("legacyApiBaseUrl value: " + legacyApiBaseUrl);
@@ -43,7 +43,7 @@ public class WebClientConfig {
         System.out.println("================================");
         
         return WebClient.builder()
-                .baseUrl(correctBaseUrl)  // URL correta sem prefixo
+                .baseUrl(correctBaseUrl)  // URL correta SEM context-path
                 .codecs(configurer -> configurer
                         .defaultCodecs()
                         .maxInMemorySize(16 * 1024 * 1024)) // 16MB buffer
