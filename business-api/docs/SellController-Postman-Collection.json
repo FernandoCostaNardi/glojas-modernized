@@ -1,0 +1,726 @@
+{
+  "info": {
+    "name": "SellController API - Business",
+    "description": "Collection para testes da API de Relatórios de Vendas da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    },
+    {
+      "key": "start_date",
+      "value": "2024-01-01",
+      "type": "string"
+    },
+    {
+      "key": "end_date",
+      "value": "2024-01-31",
+      "type": "string"
+    },
+    {
+      "key": "store_code_001",
+      "value": "001",
+      "type": "string"
+    },
+    {
+      "key": "store_code_002",
+      "value": "002",
+      "type": "string"
+    },
+    {
+      "key": "store_code_003",
+      "value": "003",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Sales Reports",
+      "item": [
+        {
+          "name": "POST Store Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"{{start_date}}\",\n  \"endDate\": \"{{end_date}}\",\n  \"storeCodes\": [\"{{store_code_001}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sales/store-report",
+              "host": ["{{base_url}}"],
+              "path": ["sales", "store-report"]
+            },
+            "description": "Obtém relatório de vendas agregadas por loja para um período específico."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each store has required fields\", function () {",
+                  "    const stores = pm.response.json();",
+                  "    stores.forEach(store => {",
+                  "        pm.expect(store).to.have.property('storeName');",
+                  "        pm.expect(store).to.have.property('storeCode');",
+                  "        pm.expect(store).to.have.property('danfe');",
+                  "        pm.expect(store).to.have.property('pdv');",
+                  "        pm.expect(store).to.have.property('troca');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Numeric values are valid\", function () {",
+                  "    const stores = pm.response.json();",
+                  "    stores.forEach(store => {",
+                  "        pm.expect(store.danfe).to.be.a('number');",
+                  "        pm.expect(store.pdv).to.be.a('number');",
+                  "        pm.expect(store.troca).to.be.a('number');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Store Report By Day",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-03\",\n  \"storeCodes\": [\"{{store_code_001}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sales/store-report-by-day",
+              "host": ["{{base_url}}"],
+              "path": ["sales", "store-report-by-day"]
+            },
+            "description": "Obtém relatório de vendas agregadas por loja e por dia para um período específico."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each record has required fields\", function () {",
+                  "    const records = pm.response.json();",
+                  "    records.forEach(record => {",
+                  "        pm.expect(record).to.have.property('storeName');",
+                  "        pm.expect(record).to.have.property('storeCode');",
+                  "        pm.expect(record).to.have.property('reportDate');",
+                  "        pm.expect(record).to.have.property('danfe');",
+                  "        pm.expect(record).to.have.property('pdv');",
+                  "        pm.expect(record).to.have.property('troca');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Report date is valid\", function () {",
+                  "    const records = pm.response.json();",
+                  "    records.forEach(record => {",
+                  "        pm.expect(record.reportDate).to.match(/^\\d{4}-\\d{2}-\\d{2}$/);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Daily Sales Report",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/sales/daily-sales?startDate={{start_date}}&endDate={{end_date}}",
+              "host": ["{{base_url}}"],
+              "path": ["sales", "daily-sales"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "{{start_date}}"
+                },
+                {
+                  "key": "endDate",
+                  "value": "{{end_date}}"
+                }
+              ]
+            },
+            "description": "Obtém relatório de vendas diárias agregadas por loja para um período específico."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each store has required fields\", function () {",
+                  "    const stores = pm.response.json();",
+                  "    stores.forEach(store => {",
+                  "        pm.expect(store).to.have.property('storeName');",
+                  "        pm.expect(store).to.have.property('pdv');",
+                  "        pm.expect(store).to.have.property('danfe');",
+                  "        pm.expect(store).to.have.property('exchange');",
+                  "        pm.expect(store).to.have.property('total');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"Total is calculated correctly\", function () {",
+                  "    const stores = pm.response.json();",
+                  "    stores.forEach(store => {",
+                  "        const expectedTotal = store.pdv + store.danfe - store.exchange;",
+                  "        pm.expect(store.total).to.equal(expectedTotal);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Current Daily Sales",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/sales/current-daily-sales",
+              "host": ["{{base_url}}"],
+              "path": ["sales", "current-daily-sales"]
+            },
+            "description": "Obtém vendas do dia atual em tempo real sem cache."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Anti-cache headers are present\", function () {",
+                  "    pm.expect(pm.response.headers.get('Cache-Control')).to.include('no-cache');",
+                  "    pm.expect(pm.response.headers.get('Pragma')).to.equal('no-cache');",
+                  "    pm.expect(pm.response.headers.get('Expires')).to.equal('0');",
+                  "});",
+                  "",
+                  "pm.test(\"Each store has total calculated\", function () {",
+                  "    const stores = pm.response.json();",
+                  "    stores.forEach(store => {",
+                  "        pm.expect(store).to.have.property('total');",
+                  "        pm.expect(store.total).to.be.a('number');",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para relatórios de vendas"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "POST Store Report - Single Store",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-31\",\n  \"storeCodes\": [\"001\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Store Report - Multiple Stores",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-31\",\n  \"storeCodes\": [\"001\", \"002\", \"003\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Store Report By Day - Single Store",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-03\",\n  \"storeCodes\": [\"001\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report-by-day",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report-by-day"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Store Report By Day - Multiple Stores",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-02\",\n  \"storeCodes\": [\"001\", \"002\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report-by-day",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report-by-day"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Daily Sales Report - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/sales/daily-sales?startDate=2024-01-01&endDate=2024-01-31",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "daily-sales"],
+                  "query": [
+                    {
+                      "key": "startDate",
+                      "value": "2024-01-01"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "2024-01-31"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Current Daily Sales - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/sales/current-daily-sales",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "current-daily-sales"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "POST Store Report - Missing Start Date",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endDate\": \"2024-01-31\",\n  \"storeCodes\": [\"001\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Store Report - Empty Store List",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-31\",\n  \"storeCodes\": []\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Store Report - Invalid Date Range",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-31\",\n  \"endDate\": \"2024-01-01\",\n  \"storeCodes\": [\"001\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sales/store-report",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "store-report"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Daily Sales Report - Missing Start Date",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/sales/daily-sales?endDate=2024-01-31",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "daily-sales"],
+                  "query": [
+                    {
+                      "key": "endDate",
+                      "value": "2024-01-31"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Current Daily Sales - No Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/sales/current-daily-sales",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "current-daily-sales"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Current Daily Sales - Invalid Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer token_invalido"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/sales/current-daily-sales",
+                  "host": ["{{base_url}}"],
+                  "path": ["sales", "current-daily-sales"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());",
+          "console.log('Headers:', pm.request.headers);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');",
+          "console.log('Response Size:', pm.response.responseSize + ' bytes');"
+        ]
+      }
+    }
+  ]
+}

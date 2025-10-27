@@ -1,0 +1,184 @@
+{
+  "id": "event-origin-controller-business-api-environment",
+  "name": "EventOriginController - Business API Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "default",
+      "enabled": true,
+      "description": "URL base da Business API"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "secret",
+      "enabled": true,
+      "description": "Token JWT válido para autenticação (preenchido pelo AuthController)"
+    },
+    {
+      "key": "event_origin_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de uma origem de evento existente para testes"
+    },
+    {
+      "key": "event_source_pdv",
+      "value": "PDV",
+      "type": "default",
+      "enabled": true,
+      "description": "Fonte de evento PDV"
+    },
+    {
+      "key": "event_source_exchange",
+      "value": "EXCHANGE",
+      "type": "default",
+      "enabled": true,
+      "description": "Fonte de evento EXCHANGE"
+    },
+    {
+      "key": "event_source_danfe",
+      "value": "DANFE",
+      "type": "default",
+      "enabled": true,
+      "description": "Fonte de evento DANFE"
+    },
+    {
+      "key": "source_code_pdv",
+      "value": "PDV-001",
+      "type": "default",
+      "enabled": true,
+      "description": "Código de origem PDV para testes"
+    },
+    {
+      "key": "source_code_exchange",
+      "value": "EXCHANGE-001",
+      "type": "default",
+      "enabled": true,
+      "description": "Código de origem EXCHANGE para testes"
+    },
+    {
+      "key": "source_code_danfe",
+      "value": "DANFE-001",
+      "type": "default",
+      "enabled": true,
+      "description": "Código de origem DANFE para testes"
+    },
+    {
+      "key": "long_source_code",
+      "value": "PDV-001-CODIGO-MUITO-LONGO-QUE-EXCEDE-O-LIMITE-DE-CINQUENTA-CARACTERES",
+      "type": "default",
+      "enabled": true,
+      "description": "Código muito longo para testes de validação"
+    },
+    {
+      "key": "nonexistent_event_origin_id",
+      "value": "00000000-0000-0000-0000-000000000000",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de origem inexistente para testes de erro"
+    },
+    {
+      "key": "page_number",
+      "value": "0",
+      "type": "default",
+      "enabled": true,
+      "description": "Número da página para paginação"
+    },
+    {
+      "key": "page_size",
+      "value": "10",
+      "type": "default",
+      "enabled": true,
+      "description": "Tamanho da página para paginação"
+    },
+    {
+      "key": "sort_by",
+      "value": "sourceCode",
+      "type": "default",
+      "enabled": true,
+      "description": "Campo para ordenação"
+    },
+    {
+      "key": "sort_direction",
+      "value": "asc",
+      "type": "default",
+      "enabled": true,
+      "description": "Direção da ordenação (asc ou desc)"
+    },
+    {
+      "key": "expected_success_status",
+      "value": "200",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para sucesso"
+    },
+    {
+      "key": "expected_created_status",
+      "value": "201",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para criação"
+    },
+    {
+      "key": "expected_bad_request_status",
+      "value": "400",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para erro de validação"
+    },
+    {
+      "key": "expected_unauthorized_status",
+      "value": "401",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para não autorizado"
+    },
+    {
+      "key": "expected_forbidden_status",
+      "value": "403",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para proibido"
+    },
+    {
+      "key": "uuid_pattern",
+      "value": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de UUID"
+    },
+    {
+      "key": "content_type_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Content-Type para requisições JSON"
+    },
+    {
+      "key": "accept_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Accept para respostas JSON"
+    },
+    {
+      "key": "test_environment",
+      "value": "development",
+      "type": "default",
+      "enabled": true,
+      "description": "Ambiente de teste"
+    },
+    {
+      "key": "test_version",
+      "value": "1.0.0",
+      "type": "default",
+      "enabled": true,
+      "description": "Versão do teste"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

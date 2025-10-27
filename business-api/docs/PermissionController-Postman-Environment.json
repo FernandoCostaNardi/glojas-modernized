@@ -1,0 +1,39 @@
+{
+  "id": "permission-controller-env",
+  "name": "PermissionController Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "jwt_token_invalid",
+      "value": "token_invalido",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "jwt_token_expired",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.token_expirado",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "jwt_token_sem_permissao",
+      "value": "",
+      "enabled": true,
+      "type": "default"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2025-08-28T00:00:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

@@ -1,0 +1,879 @@
+{
+  "info": {
+    "name": "OperationController API - Business",
+    "description": "Collection para testes da API de Operações da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    },
+    {
+      "key": "operation_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "string"
+    },
+    {
+      "key": "operation_code",
+      "value": "VENDA-001",
+      "type": "string"
+    },
+    {
+      "key": "operation_source_sell",
+      "value": "SELL",
+      "type": "string"
+    },
+    {
+      "key": "operation_source_exchange",
+      "value": "EXCHANGE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Operations CRUD",
+      "item": [
+        {
+          "name": "POST Create Operation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VENDA-001\",\n  \"description\": \"Operação de Venda de Produtos\",\n  \"operationSource\": \"SELL\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/operations",
+              "host": ["{{base_url}}"],
+              "path": ["operations"]
+            },
+            "description": "Cria uma nova operação no sistema. Requer autenticação JWT e permissão operation:create."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Operation has required fields\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation).to.have.property('id');",
+                  "    pm.expect(operation).to.have.property('code');",
+                  "    pm.expect(operation).to.have.property('description');",
+                  "    pm.expect(operation).to.have.property('operationSource');",
+                  "    pm.expect(operation).to.have.property('createdAt');",
+                  "    pm.expect(operation).to.have.property('updatedAt');",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});",
+                  "",
+                  "pm.test(\"OperationSource is valid\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation.operationSource).to.be.oneOf(['SELL', 'EXCHANGE']);",
+                  "});",
+                  "",
+                  "// Salvar o ID da operação criada para testes subsequentes",
+                  "if (pm.response.code === 201) {",
+                  "    const operation = pm.response.json();",
+                  "    pm.environment.set(\"operation_id\", operation.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update Operation",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VENDA-001-UPDATED\",\n  \"description\": \"Operação de Venda de Produtos Atualizada\",\n  \"operationSource\": \"SELL\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/operations/{{operation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["operations", "{{operation_id}}"]
+            },
+            "description": "Atualiza uma operação existente no sistema. Permite atualização parcial. Requer autenticação JWT e permissão operation:update."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Operation has updated data\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation).to.have.property('updatedAt');",
+                  "});",
+                  "",
+                  "pm.test(\"UpdatedAt is newer than CreatedAt\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    const createdAt = new Date(operation.createdAt);",
+                  "    const updatedAt = new Date(operation.updatedAt);",
+                  "    pm.expect(updatedAt).to.be.greaterThanOrEqual(createdAt);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Operation by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operations/{{operation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["operations", "{{operation_id}}"]
+            },
+            "description": "Busca uma operação pelo ID. Requer autenticação JWT e permissão operation:read."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Operation has required fields\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation).to.have.property('id');",
+                  "    pm.expect(operation).to.have.property('code');",
+                  "    pm.expect(operation).to.have.property('description');",
+                  "    pm.expect(operation).to.have.property('operationSource');",
+                  "    pm.expect(operation).to.have.property('createdAt');",
+                  "    pm.expect(operation).to.have.property('updatedAt');",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET All Operations with Filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operations?code=VENDA&operationSource=SELL&page=0&size=10&sortBy=code&sortDir=asc",
+              "host": ["{{base_url}}"],
+              "path": ["operations"],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "VENDA"
+                },
+                {
+                  "key": "operationSource",
+                  "value": "SELL"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "code"
+                },
+                {
+                  "key": "sortDir",
+                  "value": "asc"
+                }
+              ]
+            },
+            "description": "Busca operações com filtros e paginação. Requer autenticação JWT e permissão operation:read."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required structure\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('operations');",
+                  "    pm.expect(response).to.have.property('pagination');",
+                  "    pm.expect(response).to.have.property('counts');",
+                  "});",
+                  "",
+                  "pm.test(\"Operations is an array\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.operations).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Pagination has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const pagination = response.pagination;",
+                  "    pm.expect(pagination).to.have.property('currentPage');",
+                  "    pm.expect(pagination).to.have.property('totalPages');",
+                  "    pm.expect(pagination).to.have.property('totalElements');",
+                  "    pm.expect(pagination).to.have.property('pageSize');",
+                  "    pm.expect(pagination).to.have.property('hasNext');",
+                  "    pm.expect(pagination).to.have.property('hasPrevious');",
+                  "});",
+                  "",
+                  "pm.test(\"Counts has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const counts = response.counts;",
+                  "    pm.expect(counts).to.have.property('totalSell');",
+                  "    pm.expect(counts).to.have.property('totalExchange');",
+                  "    pm.expect(counts).to.have.property('totalOperations');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Health Check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operations/health",
+              "host": ["{{base_url}}"],
+              "path": ["operations", "health"]
+            },
+            "description": "Endpoint de health check para verificar se o controller está funcionando. Acesso público, não requer autenticação."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is text\", function () {",
+                  "    pm.expect(pm.response.text()).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test(\"Response contains health message\", function () {",
+                  "    pm.expect(pm.response.text()).to.include('OperationController');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para CRUD completo de operações"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "POST Create Operation - SELL",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"VENDA-001\",\n  \"description\": \"Operação de Venda de Produtos\",\n  \"operationSource\": \"SELL\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Operation - EXCHANGE",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"TROCA-001\",\n  \"description\": \"Operação de Troca de Produtos\",\n  \"operationSource\": \"EXCHANGE\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update Operation - Full",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"VENDA-001-UPDATED\",\n  \"description\": \"Operação de Venda de Produtos Atualizada\",\n  \"operationSource\": \"SELL\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations/{{operation_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "{{operation_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update Operation - Partial",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Nova Descrição da Operação\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations/{{operation_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "{{operation_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Operation by ID - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/{{operation_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "{{operation_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Operations - With Filters",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations?code=VENDA&operationSource=SELL&page=0&size=10&sortBy=code&sortDir=asc",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"],
+                  "query": [
+                    {
+                      "key": "code",
+                      "value": "VENDA"
+                    },
+                    {
+                      "key": "operationSource",
+                      "value": "SELL"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "code"
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Operations - With Pagination",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations?page=1&size=5&sortBy=code&sortDir=asc",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "code"
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "POST Create Operation - Invalid Code",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"venda@001\",\n  \"description\": \"Operação de Venda de Produtos\",\n  \"operationSource\": \"SELL\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Operation - Short Description",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"VENDA-001\",\n  \"description\": \"Op\",\n  \"operationSource\": \"SELL\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Operation - Missing Source",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"VENDA-001\",\n  \"description\": \"Operação de Venda de Produtos\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update Operation - Not Found",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Nova Descrição\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/operations/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Operation by ID - Not Found",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Operations - No Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Operations - Invalid Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer token_invalido"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());",
+          "console.log('Headers:', pm.request.headers);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');",
+          "console.log('Response Size:', pm.response.responseSize + ' bytes');"
+        ]
+      }
+    }
+  ]
+}

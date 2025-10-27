@@ -1,0 +1,2211 @@
+{
+  "info": {
+    "name": "UserController API - Business",
+    "description": "Collection para testes da API de Usuários da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "string"
+    },
+    {
+      "key": "username",
+      "value": "joao.silva",
+      "type": "string"
+    },
+    {
+      "key": "email",
+      "value": "joao@example.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Users CRUD",
+      "item": [
+        {
+          "name": "POST Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"MinhaSenh@123\",\n  \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n  \"roles\": [\"USER\", \"MANAGER\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/create",
+              "host": ["{{base_url}}"],
+              "path": ["users", "create"]
+            },
+            "description": "Cria um novo usuário no sistema. Requer autenticação JWT e permissão user:create."
+          },
+          "response": [
+            {
+              "name": "Success - User created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"MinhaSenh@123\",\n  \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n  \"roles\": [\"USER\", \"MANAGER\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "create"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao@example.com\",\n  \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n  \"joinDate\": \"2024-01-15T10:30:00\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\", \"MANAGER\"],\n  \"message\": \"Usuário criado com sucesso\"\n}"
+            },
+            {
+              "name": "Error - Invalid username",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao@silva\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"MinhaSenh@123\",\n  \"roles\": [\"USER\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "create"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Username deve conter apenas letras, números e underscore\"\n}"
+            },
+            {
+              "name": "Error - Invalid email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"email-invalido\",\n  \"password\": \"MinhaSenh@123\",\n  \"roles\": [\"USER\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "create"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Email deve ser válido\"\n}"
+            },
+            {
+              "name": "Error - Empty roles",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"MinhaSenh@123\",\n  \"roles\": []\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "create"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Pelo menos uma role deve ser especificada\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"User has required fields\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user).to.have.property('id');",
+                  "    pm.expect(user).to.have.property('name');",
+                  "    pm.expect(user).to.have.property('username');",
+                  "    pm.expect(user).to.have.property('email');",
+                  "    pm.expect(user).to.have.property('isActive');",
+                  "    pm.expect(user).to.have.property('isNotLocked');",
+                  "    pm.expect(user).to.have.property('roles');",
+                  "    pm.expect(user).to.have.property('joinDate');",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});",
+                  "",
+                  "pm.test(\"User is active by default\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user.isActive).to.be.true;",
+                  "});",
+                  "",
+                  "pm.test(\"User is not locked by default\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user.isNotLocked).to.be.true;",
+                  "});",
+                  "",
+                  "// Salvar o ID do usuário criado para testes subsequentes",
+                  "if (pm.response.code === 201) {",
+                  "    const user = pm.response.json();",
+                  "    pm.environment.set(\"user_id\", user.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva Santos\",\n  \"email\": \"joao.santos@example.com\",\n  \"profileImageUrl\": \"https://example.com/new-avatar.jpg\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\", \"MANAGER\", \"ADMIN\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            },
+            "description": "Atualiza um usuário existente no sistema. Requer autenticação JWT e permissão user:update."
+          },
+          "response": [
+            {
+              "name": "Success - User updated",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva Santos\",\n  \"email\": \"joao.santos@example.com\",\n  \"profileImageUrl\": \"https://example.com/new-avatar.jpg\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\", \"MANAGER\", \"ADMIN\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"João Silva Santos\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao.santos@example.com\",\n  \"profileImageUrl\": \"https://example.com/new-avatar.jpg\",\n  \"joinDate\": \"2024-01-15T10:30:00\",\n  \"lastLoginDate\": \"2024-01-20T14:30:00\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\", \"MANAGER\", \"ADMIN\"],\n  \"message\": \"Usuário atualizado com sucesso\",\n  \"updatedAt\": \"2024-01-21T10:30:00\"\n}"
+            },
+            {
+              "name": "Error - User not found",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva Santos\",\n  \"email\": \"joao.santos@example.com\",\n  \"profileImageUrl\": \"https://example.com/new-avatar.jpg\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Usuário não encontrado com ID: 00000000-0000-0000-0000-000000000000\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"User has updated data\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user.name).to.eql(\"João Silva Santos\");",
+                  "    pm.expect(user.email).to.eql(\"joao.santos@example.com\");",
+                  "    pm.expect(user.isActive).to.be.true;",
+                  "    pm.expect(user.isNotLocked).to.be.true;",
+                  "});",
+                  "",
+                  "pm.test(\"UpdatedAt is newer than JoinDate\", function () {",
+                  "    const user = pm.response.json();",
+                  "    const joinDate = new Date(user.joinDate);",
+                  "    const updatedAt = new Date(user.updatedAt);",
+                  "    pm.expect(updatedAt).to.be.greaterThan(joinDate);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"MinhaSenh@123\",\n  \"newPassword\": \"NovaSenh@456\",\n  \"confirmNewPassword\": \"NovaSenh@456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}/change-password",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}", "change-password"]
+            },
+            "description": "Altera a senha de um usuário. Requer autenticação JWT e permissão user:change-password."
+          },
+          "response": [
+            {
+              "name": "Success - Password changed",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentPassword\": \"MinhaSenh@123\",\n  \"newPassword\": \"NovaSenh@456\",\n  \"confirmNewPassword\": \"NovaSenh@456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/change-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "change-password"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"username\": \"joao.silva\",\n  \"message\": \"Senha alterada com sucesso\",\n  \"changedAt\": \"2024-01-21T10:30:00\"\n}"
+            },
+            {
+              "name": "Error - Invalid current password",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentPassword\": \"SenhaIncorreta\",\n  \"newPassword\": \"NovaSenh@456\",\n  \"confirmNewPassword\": \"NovaSenh@456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/change-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "change-password"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Senha atual incorreta\"\n}"
+            },
+            {
+              "name": "Error - Password doesn't meet criteria",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentPassword\": \"MinhaSenh@123\",\n  \"newPassword\": \"123456\",\n  \"confirmNewPassword\": \"123456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/change-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "change-password"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Nova senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial\"\n}"
+            },
+            {
+              "name": "Error - Password confirmation doesn't match",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentPassword\": \"MinhaSenh@123\",\n  \"newPassword\": \"NovaSenh@456\",\n  \"confirmNewPassword\": \"NovaSenh@789\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/change-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "change-password"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Confirmação da nova senha não confere\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Password change response has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('userId');",
+                  "    pm.expect(response).to.have.property('username');",
+                  "    pm.expect(response).to.have.property('message');",
+                  "    pm.expect(response).to.have.property('changedAt');",
+                  "});",
+                  "",
+                  "pm.test(\"ChangedAt is valid timestamp\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const changedAt = new Date(response.changedAt);",
+                  "    pm.expect(changedAt).to.be.a('date');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH Update User Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": true,\n  \"comment\": \"Usuário reativado pelo administrador\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}/status",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}", "status"]
+            },
+            "description": "Altera o status ativo/inativo de um usuário. Requer autenticação JWT e permissão user:update."
+          },
+          "response": [
+            {
+              "name": "Success - Status activated",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActive\": true,\n  \"comment\": \"Usuário reativado pelo administrador\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/status",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "status"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"username\": \"joao.silva\",\n  \"previousStatus\": false,\n  \"newStatus\": true,\n  \"message\": \"Status do usuário alterado com sucesso\",\n  \"changedAt\": \"2024-01-21T10:30:00\"\n}"
+            },
+            {
+              "name": "Success - Status deactivated",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActive\": false,\n  \"comment\": \"Usuário desativado por violação de política\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/status",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "status"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"username\": \"joao.silva\",\n  \"previousStatus\": true,\n  \"newStatus\": false,\n  \"message\": \"Status do usuário alterado com sucesso\",\n  \"changedAt\": \"2024-01-21T10:30:00\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Status change response has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('userId');",
+                  "    pm.expect(response).to.have.property('username');",
+                  "    pm.expect(response).to.have.property('previousStatus');",
+                  "    pm.expect(response).to.have.property('newStatus');",
+                  "    pm.expect(response).to.have.property('message');",
+                  "    pm.expect(response).to.have.property('changedAt');",
+                  "});",
+                  "",
+                  "pm.test(\"ChangedAt is valid timestamp\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const changedAt = new Date(response.changedAt);",
+                  "    pm.expect(changedAt).to.be.a('date');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PATCH Update User Lock",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isNotLocked\": true,\n  \"comment\": \"Usuário desbloqueado após verificação\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}/lock",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}", "lock"]
+            },
+            "description": "Altera o status de bloqueio de um usuário. Requer autenticação JWT e permissão user:update."
+          },
+          "response": [
+            {
+              "name": "Success - User unlocked",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isNotLocked\": true,\n  \"comment\": \"Usuário desbloqueado após verificação\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/lock",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "lock"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"username\": \"joao.silva\",\n  \"previousLockStatus\": false,\n  \"newLockStatus\": true,\n  \"message\": \"Status de bloqueio do usuário alterado com sucesso\",\n  \"changedAt\": \"2024-01-21T10:30:00\"\n}"
+            },
+            {
+              "name": "Success - User locked",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isNotLocked\": false,\n  \"comment\": \"Usuário bloqueado por tentativas de login suspeitas\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/lock",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "lock"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"userId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"username\": \"joao.silva\",\n  \"previousLockStatus\": true,\n  \"newLockStatus\": false,\n  \"message\": \"Status de bloqueio do usuário alterado com sucesso\",\n  \"changedAt\": \"2024-01-21T10:30:00\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Lock change response has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('userId');",
+                  "    pm.expect(response).to.have.property('username');",
+                  "    pm.expect(response).to.have.property('previousLockStatus');",
+                  "    pm.expect(response).to.have.property('newLockStatus');",
+                  "    pm.expect(response).to.have.property('message');",
+                  "    pm.expect(response).to.have.property('changedAt');",
+                  "});",
+                  "",
+                  "pm.test(\"ChangedAt is valid timestamp\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const changedAt = new Date(response.changedAt);",
+                  "    pm.expect(changedAt).to.be.a('date');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            },
+            "description": "Busca um usuário pelo ID. Requer autenticação JWT e permissão user:read."
+          },
+          "response": [
+            {
+              "name": "Success - User found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao@example.com\",\n  \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n  \"joinDate\": \"2024-01-15T10:30:00\",\n  \"lastLoginDate\": \"2024-01-20T14:30:00\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\", \"MANAGER\"],\n  \"message\": \"Usuário encontrado\",\n  \"updatedAt\": \"2024-01-21T10:30:00\"\n}"
+            },
+            {
+              "name": "Error - User not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "body": "{\n  \"error\": \"Validation failed\",\n  \"message\": \"Usuário não encontrado com ID: 00000000-0000-0000-0000-000000000000\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"User has required fields\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user).to.have.property('id');",
+                  "    pm.expect(user).to.have.property('name');",
+                  "    pm.expect(user).to.have.property('username');",
+                  "    pm.expect(user).to.have.property('email');",
+                  "    pm.expect(user).to.have.property('isActive');",
+                  "    pm.expect(user).to.have.property('isNotLocked');",
+                  "    pm.expect(user).to.have.property('roles');",
+                  "    pm.expect(user).to.have.property('joinDate');",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const user = pm.response.json();",
+                  "    pm.expect(user.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET All Users with Filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users?name=João&isActive=true&page=0&size=10&sortBy=name&sortDir=asc",
+              "host": ["{{base_url}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "João"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "name"
+                },
+                {
+                  "key": "sortDir",
+                  "value": "asc"
+                }
+              ]
+            },
+            "description": "Busca usuários com filtros e paginação. Requer autenticação JWT e permissão user:read."
+          },
+          "response": [
+            {
+              "name": "Success - Users with filters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users?name=João&isActive=true&page=0&size=10&sortBy=name&sortDir=asc",
+                  "host": ["{{base_url}}"],
+                  "path": ["users"],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "João"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"users\": [\n    {\n      \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"name\": \"João Silva\",\n      \"username\": \"joao.silva\",\n      \"email\": \"joao@example.com\",\n      \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n      \"joinDate\": \"2024-01-15T10:30:00\",\n      \"lastLoginDate\": \"2024-01-20T14:30:00\",\n      \"isActive\": true,\n      \"isNotLocked\": true,\n      \"roles\": [\"USER\", \"MANAGER\"],\n      \"message\": \"Usuário encontrado\",\n      \"updatedAt\": \"2024-01-21T10:30:00\"\n    }\n  ],\n  \"pagination\": {\n    \"currentPage\": 0,\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"pageSize\": 10,\n    \"hasNext\": false,\n    \"hasPrevious\": false\n  },\n  \"counts\": {\n    \"totalActive\": 5,\n    \"totalInactive\": 2,\n    \"totalBlocked\": 1,\n    \"totalUsers\": 8\n  }\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required structure\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('users');",
+                  "    pm.expect(response).to.have.property('pagination');",
+                  "    pm.expect(response).to.have.property('counts');",
+                  "});",
+                  "",
+                  "pm.test(\"Users is an array\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.users).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Pagination has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const pagination = response.pagination;",
+                  "    pm.expect(pagination).to.have.property('currentPage');",
+                  "    pm.expect(pagination).to.have.property('totalPages');",
+                  "    pm.expect(pagination).to.have.property('totalElements');",
+                  "    pm.expect(pagination).to.have.property('pageSize');",
+                  "    pm.expect(pagination).to.have.property('hasNext');",
+                  "    pm.expect(pagination).to.have.property('hasPrevious');",
+                  "});",
+                  "",
+                  "pm.test(\"Counts has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const counts = response.counts;",
+                  "    pm.expect(counts).to.have.property('totalActive');",
+                  "    pm.expect(counts).to.have.property('totalInactive');",
+                  "    pm.expect(counts).to.have.property('totalBlocked');",
+                  "    pm.expect(counts).to.have.property('totalUsers');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/all",
+              "host": ["{{base_url}}"],
+              "path": ["users", "all"]
+            },
+            "description": "Busca todos os usuários cadastrados no sistema (sem filtros). Requer autenticação JWT e permissão user:read."
+          },
+          "response": [
+            {
+              "name": "Success - All users",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/all",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "all"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"João Silva\",\n    \"username\": \"joao.silva\",\n    \"email\": \"joao@example.com\",\n    \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n    \"joinDate\": \"2024-01-15T10:30:00\",\n    \"lastLoginDate\": \"2024-01-20T14:30:00\",\n    \"isActive\": true,\n    \"isNotLocked\": true,\n    \"roles\": [\"USER\", \"MANAGER\"],\n    \"message\": \"Usuário encontrado\",\n    \"updatedAt\": \"2024-01-21T10:30:00\"\n  },\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n    \"name\": \"Admin User\",\n    \"username\": \"admin\",\n    \"email\": \"admin@example.com\",\n    \"profileImageUrl\": \"https://example.com/admin-avatar.jpg\",\n    \"joinDate\": \"2024-01-10T10:30:00\",\n    \"lastLoginDate\": \"2024-01-21T09:30:00\",\n    \"isActive\": true,\n    \"isNotLocked\": true,\n    \"roles\": [\"ADMIN\"],\n    \"message\": \"Usuário encontrado\",\n    \"updatedAt\": \"2024-01-21T09:30:00\"\n  }\n]"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each user has required fields\", function () {",
+                  "    const users = pm.response.json();",
+                  "    users.forEach(user => {",
+                  "        pm.expect(user).to.have.property('id');",
+                  "        pm.expect(user).to.have.property('name');",
+                  "        pm.expect(user).to.have.property('username');",
+                  "        pm.expect(user).to.have.property('email');",
+                  "        pm.expect(user).to.have.property('isActive');",
+                  "        pm.expect(user).to.have.property('isNotLocked');",
+                  "        pm.expect(user).to.have.property('roles');",
+                  "        pm.expect(user).to.have.property('joinDate');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID for each user\", function () {",
+                  "    const users = pm.response.json();",
+                  "    users.forEach(user => {",
+                  "        pm.expect(user.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para CRUD completo de usuários"
+    },
+    {
+      "name": "Public Endpoints",
+      "item": [
+        {
+          "name": "GET Check Username Availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/check-username/{{username}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "check-username", "{{username}}"]
+            },
+            "description": "Verifica se um username está disponível. Acesso público, não requer autenticação."
+          },
+          "response": [
+            {
+              "name": "Success - Username available",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/check-username/novo.usuario",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "check-username", "novo.usuario"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"username\": \"novo.usuario\",\n  \"available\": true,\n  \"message\": \"Username disponível\"\n}"
+            },
+            {
+              "name": "Success - Username not available",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/check-username/admin",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "check-username", "admin"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"username\": \"admin\",\n  \"available\": false,\n  \"message\": \"Username já está em uso\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('username');",
+                  "    pm.expect(response).to.have.property('available');",
+                  "    pm.expect(response).to.have.property('message');",
+                  "});",
+                  "",
+                  "pm.test(\"Available is boolean\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.available).to.be.a('boolean');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Check Email Availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/check-email/{{email}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "check-email", "{{email}}"]
+            },
+            "description": "Verifica se um email está disponível. Acesso público, não requer autenticação."
+          },
+          "response": [
+            {
+              "name": "Success - Email available",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/check-email/novo@example.com",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "check-email", "novo@example.com"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"email\": \"novo@example.com\",\n  \"available\": true,\n  \"message\": \"Email disponível\"\n}"
+            },
+            {
+              "name": "Success - Email not available",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/check-email/admin@example.com",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "check-email", "admin@example.com"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"email\": \"admin@example.com\",\n  \"available\": false,\n  \"message\": \"Email já está em uso\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('email');",
+                  "    pm.expect(response).to.have.property('available');",
+                  "    pm.expect(response).to.have.property('message');",
+                  "});",
+                  "",
+                  "pm.test(\"Available is boolean\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.available).to.be.a('boolean');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Health Check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/health",
+              "host": ["{{base_url}}"],
+              "path": ["users", "health"]
+            },
+            "description": "Endpoint de health check para verificar se o controller está funcionando. Acesso público, não requer autenticação."
+          },
+          "response": [
+            {
+              "name": "Success - Health check",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/health",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "health"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"UP\",\n  \"service\": \"UserController\",\n  \"timestamp\": \"2024-01-21T10:30:00\",\n  \"version\": \"1.0\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('status');",
+                  "    pm.expect(response).to.have.property('service');",
+                  "    pm.expect(response).to.have.property('timestamp');",
+                  "    pm.expect(response).to.have.property('version');",
+                  "});",
+                  "",
+                  "pm.test(\"Status is UP\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.status).to.eql(\"UP\");",
+                  "});",
+                  "",
+                  "pm.test(\"Service is UserController\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.service).to.eql(\"UserController\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints públicos para verificação de disponibilidade e monitoramento"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "POST Create User - Success",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao.silva\",\n  \"email\": \"joao@example.com\",\n  \"password\": \"MinhaSenh@123\",\n  \"profileImageUrl\": \"https://example.com/avatar.jpg\",\n  \"roles\": [\"USER\", \"MANAGER\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "create"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update User - Success",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva Santos\",\n  \"email\": \"joao.santos@example.com\",\n  \"profileImageUrl\": \"https://example.com/new-avatar.jpg\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\", \"MANAGER\", \"ADMIN\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Change Password - Success",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentPassword\": \"MinhaSenh@123\",\n  \"newPassword\": \"NovaSenh@456\",\n  \"confirmNewPassword\": \"NovaSenh@456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/change-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "change-password"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PATCH Update Status - Success",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActive\": true,\n  \"comment\": \"Usuário reativado pelo administrador\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/status",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "status"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PATCH Update Lock - Success",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isNotLocked\": true,\n  \"comment\": \"Usuário desbloqueado após verificação\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/lock",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "lock"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET User by ID - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Users with Filters - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users?name=João&isActive=true&page=0&size=10&sortBy=name&sortDir=asc",
+                  "host": ["{{base_url}}"],
+                  "path": ["users"],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "João"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "name"
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Users - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/all",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "all"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "POST Create User - Invalid Data",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva\",\n  \"username\": \"joao@silva\",\n  \"email\": \"email-invalido\",\n  \"password\": \"123\",\n  \"roles\": []\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/create",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "create"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update User - Not Found",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"João Silva Santos\",\n  \"email\": \"joao.santos@example.com\",\n  \"profileImageUrl\": \"https://example.com/new-avatar.jpg\",\n  \"isActive\": true,\n  \"isNotLocked\": true,\n  \"roles\": [\"USER\"]\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Change Password - Invalid Current Password",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"currentPassword\": \"SenhaIncorreta\",\n  \"newPassword\": \"NovaSenh@456\",\n  \"confirmNewPassword\": \"NovaSenh@456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/{{user_id}}/change-password",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "{{user_id}}", "change-password"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PATCH Update Status - Not Found",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isActive\": true,\n  \"comment\": \"Usuário reativado pelo administrador\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/00000000-0000-0000-0000-000000000000/status",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "00000000-0000-0000-0000-000000000000", "status"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PATCH Update Lock - Not Found",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"isNotLocked\": true,\n  \"comment\": \"Usuário desbloqueado após verificação\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/00000000-0000-0000-0000-000000000000/lock",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "00000000-0000-0000-0000-000000000000", "lock"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET User by ID - Not Found",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["users", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Users - No Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": ["{{base_url}}"],
+                  "path": ["users"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Users - Invalid Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token_invalid}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": ["{{base_url}}"],
+                  "path": ["users"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Users - No Permission",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token_sem_permissao}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": ["{{base_url}}"],
+                  "path": ["users"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());",
+          "console.log('Headers:', pm.request.headers);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');",
+          "console.log('Response Size:', pm.response.responseSize + ' bytes');"
+        ]
+      }
+    }
+  ]
+}

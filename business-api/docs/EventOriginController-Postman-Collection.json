@@ -1,0 +1,813 @@
+{
+  "info": {
+    "name": "EventOriginController API - Business",
+    "description": "Collection para testes da API de Origens de Eventos da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    },
+    {
+      "key": "event_origin_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "string"
+    },
+    {
+      "key": "event_source_pdv",
+      "value": "PDV",
+      "type": "string"
+    },
+    {
+      "key": "event_source_exchange",
+      "value": "EXCHANGE",
+      "type": "string"
+    },
+    {
+      "key": "event_source_danfe",
+      "value": "DANFE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Event Origins CRUD",
+      "item": [
+        {
+          "name": "POST Create Event Origin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventSource\": \"PDV\",\n  \"sourceCode\": \"PDV-001\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/event-origins",
+              "host": ["{{base_url}}"],
+              "path": ["event-origins"]
+            },
+            "description": "Cria uma nova origem de evento no sistema. Requer autenticação JWT e permissão origin:create."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Event Origin has required fields\", function () {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.expect(eventOrigin).to.have.property('id');",
+                  "    pm.expect(eventOrigin).to.have.property('eventSource');",
+                  "    pm.expect(eventOrigin).to.have.property('sourceCode');",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.expect(eventOrigin.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});",
+                  "",
+                  "pm.test(\"EventSource is valid\", function () {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.expect(eventOrigin.eventSource).to.be.oneOf(['PDV', 'EXCHANGE', 'DANFE']);",
+                  "});",
+                  "",
+                  "// Salvar o ID da origem criada para testes subsequentes",
+                  "if (pm.response.code === 201) {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.environment.set(\"event_origin_id\", eventOrigin.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update Event Origin",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventSource\": \"PDV\",\n  \"sourceCode\": \"PDV-001-UPDATED\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/event-origins/{{event_origin_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["event-origins", "{{event_origin_id}}"]
+            },
+            "description": "Atualiza uma origem de evento existente no sistema. Requer autenticação JWT e permissão origin:update."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Event Origin has updated data\", function () {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.expect(eventOrigin).to.have.property('sourceCode');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Event Origin by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/event-origins/{{event_origin_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["event-origins", "{{event_origin_id}}"]
+            },
+            "description": "Busca uma origem de evento pelo ID. Requer autenticação JWT e permissão origin:read."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Event Origin has required fields\", function () {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.expect(eventOrigin).to.have.property('id');",
+                  "    pm.expect(eventOrigin).to.have.property('eventSource');",
+                  "    pm.expect(eventOrigin).to.have.property('sourceCode');",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const eventOrigin = pm.response.json();",
+                  "    pm.expect(eventOrigin.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET All Event Origins with Filters",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/event-origins?eventSource=PDV&page=0&size=10&sortBy=sourceCode&sortDir=asc",
+              "host": ["{{base_url}}"],
+              "path": ["event-origins"],
+              "query": [
+                {
+                  "key": "eventSource",
+                  "value": "PDV"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "sourceCode"
+                },
+                {
+                  "key": "sortDir",
+                  "value": "asc"
+                }
+              ]
+            },
+            "description": "Busca origens de evento com filtros e paginação. Requer autenticação JWT e permissão origin:read."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Response has required structure\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('eventOrigins');",
+                  "    pm.expect(response).to.have.property('pagination');",
+                  "    pm.expect(response).to.have.property('counts');",
+                  "});",
+                  "",
+                  "pm.test(\"Event Origins is an array\", function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.eventOrigins).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Pagination has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const pagination = response.pagination;",
+                  "    pm.expect(pagination).to.have.property('currentPage');",
+                  "    pm.expect(pagination).to.have.property('totalPages');",
+                  "    pm.expect(pagination).to.have.property('totalElements');",
+                  "    pm.expect(pagination).to.have.property('pageSize');",
+                  "    pm.expect(pagination).to.have.property('hasNext');",
+                  "    pm.expect(pagination).to.have.property('hasPrevious');",
+                  "});",
+                  "",
+                  "pm.test(\"Counts has required fields\", function () {",
+                  "    const response = pm.response.json();",
+                  "    const counts = response.counts;",
+                  "    pm.expect(counts).to.have.property('totalPdv');",
+                  "    pm.expect(counts).to.have.property('totalExchange');",
+                  "    pm.expect(counts).to.have.property('totalDanfe');",
+                  "    pm.expect(counts).to.have.property('totalEventOrigins');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para CRUD completo de origens de eventos"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "POST Create Event Origin - PDV",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"PDV\",\n  \"sourceCode\": \"PDV-001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Event Origin - EXCHANGE",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"EXCHANGE\",\n  \"sourceCode\": \"EXCHANGE-001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Event Origin - DANFE",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"DANFE\",\n  \"sourceCode\": \"DANFE-001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update Event Origin - Success",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"PDV\",\n  \"sourceCode\": \"PDV-001-UPDATED\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins/{{event_origin_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins", "{{event_origin_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Event Origin by ID - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/event-origins/{{event_origin_id}}",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins", "{{event_origin_id}}"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Event Origins - With Filter",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/event-origins?eventSource=PDV&page=0&size=10&sortBy=sourceCode&sortDir=asc",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"],
+                  "query": [
+                    {
+                      "key": "eventSource",
+                      "value": "PDV"
+                    },
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "sourceCode"
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Event Origins - With Pagination",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/event-origins?page=1&size=5&sortBy=sourceCode&sortDir=asc",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "sourceCode"
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "POST Create Event Origin - Missing EventSource",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceCode\": \"PDV-001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Event Origin - Missing SourceCode",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"PDV\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Event Origin - Long SourceCode",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"PDV\",\n  \"sourceCode\": \"PDV-001-CODIGO-MUITO-LONGO-QUE-EXCEDE-O-LIMITE-DE-CINQUENTA-CARACTERES\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT Update Event Origin - Not Found",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"eventSource\": \"PDV\",\n  \"sourceCode\": \"PDV-001\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/event-origins/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Event Origin by ID - Not Found",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/event-origins/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Event Origins - No Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Event Origins - Invalid Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer token_invalido"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/event-origins",
+                  "host": ["{{base_url}}"],
+                  "path": ["event-origins"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());",
+          "console.log('Headers:', pm.request.headers);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');",
+          "console.log('Response Size:', pm.response.responseSize + ' bytes');"
+        ]
+      }
+    }
+  ]
+}

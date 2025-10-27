@@ -1,0 +1,197 @@
+{
+  "info": {
+    "name": "SyncController API - Business",
+    "description": "Collection para testes da API de Sincronização da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {"key": "base_url", "value": "http://localhost:8089/api/business", "type": "string"},
+    {"key": "jwt_token", "value": "{{jwt_token}}", "type": "string"},
+    {"key": "sync_start_date", "value": "2024-01-01", "type": "string"},
+    {"key": "sync_end_date", "value": "2024-01-31", "type": "string"}
+  ],
+  "item": [
+    {
+      "name": "Sync Operations",
+      "item": [
+        {
+          "name": "POST Sync Daily Sales",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startDate\": \"{{sync_start_date}}\",\n  \"endDate\": \"{{sync_end_date}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sync/daily-sales",
+              "host": ["{{base_url}}"],
+              "path": ["sync", "daily-sales"]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Response is JSON object\", () => pm.expect(pm.response.json()).to.be.an('object'));",
+                  "pm.test(\"Response has required fields\", () => {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('created');",
+                  "    pm.expect(response).to.have.property('updated');",
+                  "    pm.expect(response).to.have.property('storesProcessed');",
+                  "});",
+                  "pm.test(\"Numeric values are valid\", () => {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.created).to.be.at.least(0);",
+                  "    pm.expect(response.updated).to.be.at.least(0);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Sync Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/sync/status",
+              "host": ["{{base_url}}"],
+              "path": ["sync", "status"]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200 or 503\", () => pm.expect([200, 503]).to.include(pm.response.code));",
+                  "pm.test(\"Response has required fields\", () => {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.have.property('serviceName');",
+                  "    pm.expect(response).to.have.property('status');",
+                  "});",
+                  "pm.test(\"Status is valid\", () => {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response.status).to.be.oneOf(['HEALTHY', 'UNHEALTHY']);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "POST Sync Daily Sales - Monthly Period",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-01\",\n  \"endDate\": \"2024-01-31\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sync/daily-sales",
+                  "host": ["{{base_url}}"],
+                  "path": ["sync", "daily-sales"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Sync Status - Healthy",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "url": {
+                  "raw": "{{base_url}}/sync/status",
+                  "host": ["{{base_url}}"],
+                  "path": ["sync", "status"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "POST Sync Daily Sales - Missing Start Date",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"endDate\": \"2024-01-31\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sync/daily-sales",
+                  "host": ["{{base_url}}"],
+                  "path": ["sync", "daily-sales"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Sync Daily Sales - Invalid Date Range",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"startDate\": \"2024-01-31\",\n  \"endDate\": \"2024-01-01\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/sync/daily-sales",
+                  "host": ["{{base_url}}"],
+                  "path": ["sync", "daily-sales"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "store-controller-business-api-environment",
+  "name": "StoreController - Business API Environment",
+  "values": [
+    {"key": "base_url", "value": "http://localhost:8089/api/business", "type": "default", "enabled": true},
+    {"key": "jwt_token", "value": "{{jwt_token}}", "type": "secret", "enabled": true},
+    {"key": "store_id", "value": "550e8400-e29b-41d4-a716-446655440000", "type": "default", "enabled": true},
+    {"key": "store_code", "value": "LOJA01", "type": "default", "enabled": true},
+    {"key": "store_name", "value": "Loja Centro", "type": "default", "enabled": true},
+    {"key": "store_city", "value": "São Paulo", "type": "default", "enabled": true},
+    {"key": "invalid_code_short", "value": "LJ01", "type": "default", "enabled": true},
+    {"key": "invalid_code_lowercase", "value": "loja01", "type": "default", "enabled": true},
+    {"key": "nonexistent_store_id", "value": "00000000-0000-0000-0000-000000000000", "type": "default", "enabled": true}
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

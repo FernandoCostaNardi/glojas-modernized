@@ -51,8 +51,8 @@ public class SellService {
     @Value("${legacy-api.timeout:30}")
     private Integer timeoutSeconds;
     
-    private static final String STORE_REPORT_ENDPOINT = "/api/legacy/sales/store-report";
-    private static final String STORE_REPORT_BY_DAY_ENDPOINT = "/api/legacy/sales/store-report-by-day";
+    private static final String STORE_REPORT_ENDPOINT = "/sales/store-report";
+    private static final String STORE_REPORT_BY_DAY_ENDPOINT = "/sales/store-report-by-day";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
     @Autowired

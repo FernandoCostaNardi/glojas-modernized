@@ -1,0 +1,513 @@
+{
+  "id": "user-controller-business-api-environment",
+  "name": "UserController - Business API Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "default",
+      "enabled": true,
+      "description": "URL base da Business API"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "secret",
+      "enabled": true,
+      "description": "Token JWT válido para autenticação (preenchido pelo AuthController)"
+    },
+    {
+      "key": "user_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de um usuário existente para testes"
+    },
+    {
+      "key": "username",
+      "value": "joao.silva",
+      "type": "default",
+      "enabled": true,
+      "description": "Username para testes de disponibilidade"
+    },
+    {
+      "key": "email",
+      "value": "joao@example.com",
+      "type": "default",
+      "enabled": true,
+      "description": "Email para testes de disponibilidade"
+    },
+    {
+      "key": "jwt_token_invalid",
+      "value": "token_invalido",
+      "type": "default",
+      "enabled": true,
+      "description": "Token JWT inválido para testes de erro"
+    },
+    {
+      "key": "jwt_token_expired",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.token_expirado",
+      "type": "default",
+      "enabled": true,
+      "description": "Token JWT expirado para testes de erro"
+    },
+    {
+      "key": "jwt_token_sem_permissao",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.token_sem_permissao",
+      "type": "default",
+      "enabled": true,
+      "description": "Token JWT válido mas sem permissões adequadas"
+    },
+    {
+      "key": "admin_username",
+      "value": "admin",
+      "type": "default",
+      "enabled": true,
+      "description": "Username do administrador para testes"
+    },
+    {
+      "key": "admin_email",
+      "value": "admin@example.com",
+      "type": "default",
+      "enabled": true,
+      "description": "Email do administrador para testes"
+    },
+    {
+      "key": "test_username",
+      "value": "teste.usuario",
+      "type": "default",
+      "enabled": true,
+      "description": "Username para testes de criação"
+    },
+    {
+      "key": "test_email",
+      "value": "teste@example.com",
+      "type": "default",
+      "enabled": true,
+      "description": "Email para testes de criação"
+    },
+    {
+      "key": "test_password",
+      "value": "TesteSenh@123",
+      "type": "secret",
+      "enabled": true,
+      "description": "Senha para testes de criação"
+    },
+    {
+      "key": "test_name",
+      "value": "Usuário de Teste",
+      "type": "default",
+      "enabled": true,
+      "description": "Nome para testes de criação"
+    },
+    {
+      "key": "test_roles",
+      "value": "USER,MANAGER",
+      "type": "default",
+      "enabled": true,
+      "description": "Roles para testes de criação (separadas por vírgula)"
+    },
+    {
+      "key": "test_profile_image",
+      "value": "https://example.com/test-avatar.jpg",
+      "type": "default",
+      "enabled": true,
+      "description": "URL da imagem de perfil para testes"
+    },
+    {
+      "key": "invalid_username",
+      "value": "joao@silva",
+      "type": "default",
+      "enabled": true,
+      "description": "Username inválido para testes de validação"
+    },
+    {
+      "key": "invalid_email",
+      "value": "email-invalido",
+      "type": "default",
+      "enabled": true,
+      "description": "Email inválido para testes de validação"
+    },
+    {
+      "key": "short_password",
+      "value": "123",
+      "type": "secret",
+      "enabled": true,
+      "description": "Senha muito curta para testes de validação"
+    },
+    {
+      "key": "weak_password",
+      "value": "123456",
+      "type": "secret",
+      "enabled": true,
+      "description": "Senha fraca para testes de validação"
+    },
+    {
+      "key": "strong_password",
+      "value": "MinhaSenh@123",
+      "type": "secret",
+      "enabled": true,
+      "description": "Senha forte para testes de validação"
+    },
+    {
+      "key": "new_strong_password",
+      "value": "NovaSenh@456",
+      "type": "secret",
+      "enabled": true,
+      "description": "Nova senha forte para testes de alteração"
+    },
+    {
+      "key": "not_matching_password",
+      "value": "NovaSenh@789",
+      "type": "secret",
+      "enabled": true,
+      "description": "Senha que não confere para testes de validação"
+    },
+    {
+      "key": "empty_roles",
+      "value": "",
+      "type": "default",
+      "enabled": true,
+      "description": "Roles vazias para testes de validação"
+    },
+    {
+      "key": "nonexistent_user_id",
+      "value": "00000000-0000-0000-0000-000000000000",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de usuário inexistente para testes de erro"
+    },
+    {
+      "key": "filter_name",
+      "value": "João",
+      "type": "default",
+      "enabled": true,
+      "description": "Nome para filtros de busca"
+    },
+    {
+      "key": "filter_roles",
+      "value": "ADMIN,MANAGER",
+      "type": "default",
+      "enabled": true,
+      "description": "Roles para filtros de busca (separadas por vírgula)"
+    },
+    {
+      "key": "filter_is_active",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Filtro por status ativo"
+    },
+    {
+      "key": "filter_is_not_locked",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Filtro por status não bloqueado"
+    },
+    {
+      "key": "page_number",
+      "value": "0",
+      "type": "default",
+      "enabled": true,
+      "description": "Número da página para paginação"
+    },
+    {
+      "key": "page_size",
+      "value": "10",
+      "type": "default",
+      "enabled": true,
+      "description": "Tamanho da página para paginação"
+    },
+    {
+      "key": "sort_by",
+      "value": "name",
+      "type": "default",
+      "enabled": true,
+      "description": "Campo para ordenação"
+    },
+    {
+      "key": "sort_direction",
+      "value": "asc",
+      "type": "default",
+      "enabled": true,
+      "description": "Direção da ordenação (asc ou desc)"
+    },
+    {
+      "key": "status_comment",
+      "value": "Usuário reativado pelo administrador",
+      "type": "default",
+      "enabled": true,
+      "description": "Comentário para alteração de status"
+    },
+    {
+      "key": "lock_comment",
+      "value": "Usuário desbloqueado após verificação",
+      "type": "default",
+      "enabled": true,
+      "description": "Comentário para alteração de bloqueio"
+    },
+    {
+      "key": "deactivation_comment",
+      "value": "Usuário desativado por violação de política",
+      "type": "default",
+      "enabled": true,
+      "description": "Comentário para desativação"
+    },
+    {
+      "key": "lock_comment_negative",
+      "value": "Usuário bloqueado por tentativas de login suspeitas",
+      "type": "default",
+      "enabled": true,
+      "description": "Comentário para bloqueio"
+    },
+    {
+      "key": "available_username",
+      "value": "novo.usuario",
+      "type": "default",
+      "enabled": true,
+      "description": "Username disponível para testes"
+    },
+    {
+      "key": "available_email",
+      "value": "novo@example.com",
+      "type": "default",
+      "enabled": true,
+      "description": "Email disponível para testes"
+    },
+    {
+      "key": "unavailable_username",
+      "value": "admin",
+      "type": "default",
+      "enabled": true,
+      "description": "Username não disponível para testes"
+    },
+    {
+      "key": "unavailable_email",
+      "value": "admin@example.com",
+      "type": "default",
+      "enabled": true,
+      "description": "Email não disponível para testes"
+    },
+    {
+      "key": "health_check_expected_status",
+      "value": "UP",
+      "type": "default",
+      "enabled": true,
+      "description": "Status esperado para health check"
+    },
+    {
+      "key": "health_check_expected_service",
+      "value": "UserController",
+      "type": "default",
+      "enabled": true,
+      "description": "Serviço esperado para health check"
+    },
+    {
+      "key": "health_check_expected_version",
+      "value": "1.0",
+      "type": "default",
+      "enabled": true,
+      "description": "Versão esperada para health check"
+    },
+    {
+      "key": "test_timeout",
+      "value": "30000",
+      "type": "default",
+      "enabled": true,
+      "description": "Timeout para testes em milissegundos"
+    },
+    {
+      "key": "expected_success_status",
+      "value": "200",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para sucesso"
+    },
+    {
+      "key": "expected_created_status",
+      "value": "201",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para criação"
+    },
+    {
+      "key": "expected_bad_request_status",
+      "value": "400",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para erro de validação"
+    },
+    {
+      "key": "expected_unauthorized_status",
+      "value": "401",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para não autorizado"
+    },
+    {
+      "key": "expected_forbidden_status",
+      "value": "403",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para proibido"
+    },
+    {
+      "key": "expected_internal_server_error_status",
+      "value": "500",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para erro interno"
+    },
+    {
+      "key": "content_type_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Content-Type para requisições JSON"
+    },
+    {
+      "key": "accept_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Accept para respostas JSON"
+    },
+    {
+      "key": "authorization_bearer",
+      "value": "Bearer {{jwt_token}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com Bearer token"
+    },
+    {
+      "key": "authorization_bearer_invalid",
+      "value": "Bearer {{jwt_token_invalid}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com token inválido"
+    },
+    {
+      "key": "authorization_bearer_expired",
+      "value": "Bearer {{jwt_token_expired}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com token expirado"
+    },
+    {
+      "key": "authorization_bearer_no_permission",
+      "value": "Bearer {{jwt_token_sem_permissao}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com token sem permissão"
+    },
+    {
+      "key": "uuid_pattern",
+      "value": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de UUID"
+    },
+    {
+      "key": "email_pattern",
+      "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de email"
+    },
+    {
+      "key": "username_pattern",
+      "value": "^[a-zA-Z0-9_]+$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de username"
+    },
+    {
+      "key": "password_pattern",
+      "value": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de senha"
+    },
+    {
+      "key": "date_pattern",
+      "value": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de data ISO"
+    },
+    {
+      "key": "boolean_true",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Valor booleano verdadeiro"
+    },
+    {
+      "key": "boolean_false",
+      "value": "false",
+      "type": "default",
+      "enabled": true,
+      "description": "Valor booleano falso"
+    },
+    {
+      "key": "empty_string",
+      "value": "",
+      "type": "default",
+      "enabled": true,
+      "description": "String vazia para testes"
+    },
+    {
+      "key": "null_value",
+      "value": "null",
+      "type": "default",
+      "enabled": true,
+      "description": "Valor nulo para testes"
+    },
+    {
+      "key": "undefined_value",
+      "value": "undefined",
+      "type": "default",
+      "enabled": true,
+      "description": "Valor indefinido para testes"
+    },
+    {
+      "key": "test_environment",
+      "value": "development",
+      "type": "default",
+      "enabled": true,
+      "description": "Ambiente de teste"
+    },
+    {
+      "key": "test_version",
+      "value": "1.0.0",
+      "type": "default",
+      "enabled": true,
+      "description": "Versão do teste"
+    },
+    {
+      "key": "test_author",
+      "value": "Equipe de Desenvolvimento",
+      "type": "default",
+      "enabled": true,
+      "description": "Autor dos testes"
+    },
+    {
+      "key": "test_date",
+      "value": "2024-01-21",
+      "type": "default",
+      "enabled": true,
+      "description": "Data dos testes"
+    },
+    {
+      "key": "test_description",
+      "value": "Ambiente de teste para UserController da Business API",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição do ambiente de teste"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

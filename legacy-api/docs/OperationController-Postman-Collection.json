@@ -1,0 +1,421 @@
+{
+  "info": {
+    "name": "OperationController API - Legacy",
+    "description": "Collection para testes da API de Operações da Legacy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8087/api/legacy",
+      "type": "string"
+    },
+    {
+      "key": "operation_id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Operations",
+      "item": [
+        {
+          "name": "GET All Operations",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operations",
+              "host": ["{{base_url}}"],
+              "path": ["operations"]
+            },
+            "description": "Busca todas as operações cadastradas no sistema"
+          },
+          "response": [
+            {
+              "name": "Success - Lista de operações",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"000001\",\n    \"description\": \"Venda à vista\"\n  },\n  {\n    \"id\": \"000002\",\n    \"description\": \"Venda a prazo\"\n  },\n  {\n    \"id\": \"000003\",\n    \"description\": \"Devolução\"\n  }\n]"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each operation has required fields\", function () {",
+                  "    const operations = pm.response.json();",
+                  "    operations.forEach(operation => {",
+                  "        pm.expect(operation).to.have.property('id');",
+                  "        pm.expect(operation).to.have.property('description');",
+                  "        pm.expect(operation.id).to.match(/^\\d{6}$/);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Operation by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/operations/{{operation_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["operations", "{{operation_id}}"]
+            },
+            "description": "Busca uma operação específica pelo ID"
+          },
+          "response": [
+            {
+              "name": "Success - Operação encontrada",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"000001\",\n  \"description\": \"Venda à vista\"\n}"
+            },
+            {
+              "name": "Error - ID inválido",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/-1",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "-1"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Error - Operação não encontrada",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/999999",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "999999"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Operation has required fields\", function () {",
+                  "    const operation = pm.response.json();",
+                  "    pm.expect(operation).to.have.property('id');",
+                  "    pm.expect(operation).to.have.property('description');",
+                  "    pm.expect(operation.id).to.match(/^\\d{6}$/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para operações do sistema"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "GET All Operations - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Operation by ID - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "1"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "GET Operation by ID - Invalid ID (Negative)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/-1",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "-1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Operation by ID - Invalid ID (Zero)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/0",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "0"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Operation by ID - Not Found",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/999999",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "999999"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Operation by ID - Non-numeric ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/operations/abc",
+                  "host": ["{{base_url}}"],
+                  "path": ["operations", "abc"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');"
+        ]
+      }
+    }
+  ]
+}

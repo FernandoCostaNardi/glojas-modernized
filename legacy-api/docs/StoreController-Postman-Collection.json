@@ -1,0 +1,472 @@
+{
+  "info": {
+    "name": "StoreController API - Legacy",
+    "description": "Collection para testes da API de Lojas da Legacy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8087/api/legacy",
+      "type": "string"
+    },
+    {
+      "key": "store_id",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Stores",
+      "item": [
+        {
+          "name": "GET All Stores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores",
+              "host": ["{{base_url}}"],
+              "path": ["stores"]
+            },
+            "description": "Busca todas as lojas cadastradas no sistema"
+          },
+          "response": [
+            {
+              "name": "Success - Lista de lojas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"000001\",\n    \"name\": \"Loja Centro\",\n    \"city\": \"São Paulo\"\n  },\n  {\n    \"id\": \"000002\",\n    \"name\": \"Loja Norte\",\n    \"city\": \"Rio de Janeiro\"\n  },\n  {\n    \"id\": \"000003\",\n    \"name\": \"Loja Sul\",\n    \"city\": \"Belo Horizonte\"\n  }\n]"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each store has required fields\", function () {",
+                  "    const stores = pm.response.json();",
+                  "    stores.forEach(store => {",
+                  "        pm.expect(store).to.have.property('id');",
+                  "        pm.expect(store).to.have.property('name');",
+                  "        pm.expect(store).to.have.property('city');",
+                  "        pm.expect(store.id).to.match(/^\\d{6}$/);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Store by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores/{{store_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["stores", "{{store_id}}"]
+            },
+            "description": "Busca uma loja específica pelo ID"
+          },
+          "response": [
+            {
+              "name": "Success - Loja encontrada",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"000001\",\n  \"name\": \"Loja Centro\",\n  \"city\": \"São Paulo\"\n}"
+            },
+            {
+              "name": "Error - ID inválido (negativo)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/-1",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "-1"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Error - ID não numérico",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/abc",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "abc"]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Error - Loja não encontrada",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/999999",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "999999"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON object\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('object');",
+                  "});",
+                  "",
+                  "pm.test(\"Store has required fields\", function () {",
+                  "    const store = pm.response.json();",
+                  "    pm.expect(store).to.have.property('id');",
+                  "    pm.expect(store).to.have.property('name');",
+                  "    pm.expect(store).to.have.property('city');",
+                  "    pm.expect(store.id).to.match(/^\\d{6}$/);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para lojas do sistema"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "GET All Stores - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Store by ID - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "1"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "GET Store by ID - Invalid ID (Negative)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/-1",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "-1"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Store by ID - Invalid ID (Zero)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/0",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "0"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Store by ID - Not Found",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/999999",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "999999"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Store by ID - Non-numeric ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/abc",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "abc"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Store by ID - Empty ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", ""]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');"
+        ]
+      }
+    }
+  ]
+}

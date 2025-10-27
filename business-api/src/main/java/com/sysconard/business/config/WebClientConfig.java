@@ -43,7 +43,7 @@ public class WebClientConfig {
         System.out.println("================================");
         
         return WebClient.builder()
-                .baseUrl(correctBaseUrl)  // URL correta SEM context-path
+                .baseUrl(correctBaseUrl + legacyApiContextPath)  // URL completa COM context-path
                 .codecs(configurer -> configurer
                         .defaultCodecs()
                         .maxInMemorySize(16 * 1024 * 1024)) // 16MB buffer

@@ -1,0 +1,436 @@
+{
+  "id": "operation-kind-controller-business-api-environment",
+  "name": "OperationKindController - Business API Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "default",
+      "enabled": true,
+      "description": "URL base da Business API"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "secret",
+      "enabled": true,
+      "description": "Token JWT válido para autenticação (preenchido pelo AuthController)"
+    },
+    {
+      "key": "jwt_token_invalid",
+      "value": "token_invalido",
+      "type": "default",
+      "enabled": true,
+      "description": "Token JWT inválido para testes de erro"
+    },
+    {
+      "key": "jwt_token_expired",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.token_expirado",
+      "type": "default",
+      "enabled": true,
+      "description": "Token JWT expirado para testes de erro"
+    },
+    {
+      "key": "jwt_token_sem_permissao",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.token_sem_permissao",
+      "type": "default",
+      "enabled": true,
+      "description": "Token JWT válido mas sem permissões adequadas"
+    },
+    {
+      "key": "expected_success_status",
+      "value": "200",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para sucesso"
+    },
+    {
+      "key": "expected_unauthorized_status",
+      "value": "401",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para não autorizado"
+    },
+    {
+      "key": "expected_forbidden_status",
+      "value": "403",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para proibido"
+    },
+    {
+      "key": "expected_internal_server_error_status",
+      "value": "500",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para erro interno"
+    },
+    {
+      "key": "content_type_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Content-Type para requisições JSON"
+    },
+    {
+      "key": "accept_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Accept para respostas JSON"
+    },
+    {
+      "key": "authorization_bearer",
+      "value": "Bearer {{jwt_token}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com Bearer token"
+    },
+    {
+      "key": "authorization_bearer_invalid",
+      "value": "Bearer {{jwt_token_invalid}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com token inválido"
+    },
+    {
+      "key": "authorization_bearer_expired",
+      "value": "Bearer {{jwt_token_expired}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com token expirado"
+    },
+    {
+      "key": "authorization_bearer_no_permission",
+      "value": "Bearer {{jwt_token_sem_permissao}}",
+      "type": "default",
+      "enabled": true,
+      "description": "Header de autorização com token sem permissão"
+    },
+    {
+      "key": "operation_kind_id_pattern",
+      "value": "^\\d{6}$",
+      "type": "default",
+      "enabled": true,
+      "description": "Padrão regex para validação de ID de tipo de operação (6 dígitos)"
+    },
+    {
+      "key": "test_timeout",
+      "value": "5000",
+      "type": "default",
+      "enabled": true,
+      "description": "Timeout para testes em milissegundos"
+    },
+    {
+      "key": "test_environment",
+      "value": "development",
+      "type": "default",
+      "enabled": true,
+      "description": "Ambiente de teste"
+    },
+    {
+      "key": "test_version",
+      "value": "1.0.0",
+      "type": "default",
+      "enabled": true,
+      "description": "Versão do teste"
+    },
+    {
+      "key": "test_author",
+      "value": "Equipe de Desenvolvimento",
+      "type": "default",
+      "enabled": true,
+      "description": "Autor dos testes"
+    },
+    {
+      "key": "test_date",
+      "value": "2024-01-21",
+      "type": "default",
+      "enabled": true,
+      "description": "Data dos testes"
+    },
+    {
+      "key": "test_description",
+      "value": "Ambiente de teste para OperationKindController da Business API",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição do ambiente de teste"
+    },
+    {
+      "key": "operation_kind_sample_id",
+      "value": "000001",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de exemplo de tipo de operação"
+    },
+    {
+      "key": "operation_kind_sample_description",
+      "value": "Venda de Produtos",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição de exemplo de tipo de operação"
+    },
+    {
+      "key": "operation_kind_sample_id_2",
+      "value": "000002",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de exemplo de tipo de operação 2"
+    },
+    {
+      "key": "operation_kind_sample_description_2",
+      "value": "Compra de Produtos",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição de exemplo de tipo de operação 2"
+    },
+    {
+      "key": "operation_kind_sample_id_3",
+      "value": "000003",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de exemplo de tipo de operação 3"
+    },
+    {
+      "key": "operation_kind_sample_description_3",
+      "value": "Transferência de Estoque",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição de exemplo de tipo de operação 3"
+    },
+    {
+      "key": "operation_kind_sample_id_4",
+      "value": "000004",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de exemplo de tipo de operação 4"
+    },
+    {
+      "key": "operation_kind_sample_description_4",
+      "value": "Devolução de Produtos",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição de exemplo de tipo de operação 4"
+    },
+    {
+      "key": "operation_kind_sample_id_5",
+      "value": "000005",
+      "type": "default",
+      "enabled": true,
+      "description": "ID de exemplo de tipo de operação 5"
+    },
+    {
+      "key": "operation_kind_sample_description_5",
+      "value": "Ajuste de Inventário",
+      "type": "default",
+      "enabled": true,
+      "description": "Descrição de exemplo de tipo de operação 5"
+    },
+    {
+      "key": "empty_array",
+      "value": "[]",
+      "type": "default",
+      "enabled": true,
+      "description": "Array vazio para testes"
+    },
+    {
+      "key": "unauthorized_error_message",
+      "value": "Token JWT ausente",
+      "type": "default",
+      "enabled": true,
+      "description": "Mensagem de erro para token ausente"
+    },
+    {
+      "key": "unauthorized_error_message_invalid",
+      "value": "Token JWT inválido",
+      "type": "default",
+      "enabled": true,
+      "description": "Mensagem de erro para token inválido"
+    },
+    {
+      "key": "unauthorized_error_message_expired",
+      "value": "Token JWT expirado",
+      "type": "default",
+      "enabled": true,
+      "description": "Mensagem de erro para token expirado"
+    },
+    {
+      "key": "forbidden_error_message",
+      "value": "Usuário sem permissão operation:read",
+      "type": "default",
+      "enabled": true,
+      "description": "Mensagem de erro para falta de permissão"
+    },
+    {
+      "key": "internal_server_error_message",
+      "value": "Erro interno do servidor",
+      "type": "default",
+      "enabled": true,
+      "description": "Mensagem de erro para erro interno"
+    },
+    {
+      "key": "required_permission",
+      "value": "operation:read",
+      "type": "default",
+      "enabled": true,
+      "description": "Permissão necessária para acessar o endpoint"
+    },
+    {
+      "key": "legacy_api_integration",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Indica se há integração com Legacy API"
+    },
+    {
+      "key": "filtering_enabled",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Indica se filtros de negócio estão habilitados"
+    },
+    {
+      "key": "read_only_controller",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Indica se o controller é somente leitura"
+    },
+    {
+      "key": "cors_origin",
+      "value": "http://localhost:3000",
+      "type": "default",
+      "enabled": true,
+      "description": "Origem CORS configurada"
+    },
+    {
+      "key": "controller_name",
+      "value": "OperationKindController",
+      "type": "default",
+      "enabled": true,
+      "description": "Nome do controller"
+    },
+    {
+      "key": "service_name",
+      "value": "OperationKindService",
+      "type": "default",
+      "enabled": true,
+      "description": "Nome do serviço"
+    },
+    {
+      "key": "dto_name",
+      "value": "OperationKindDto",
+      "type": "default",
+      "enabled": true,
+      "description": "Nome do DTO"
+    },
+    {
+      "key": "endpoint_path",
+      "value": "/operation-kinds",
+      "type": "default",
+      "enabled": true,
+      "description": "Caminho do endpoint"
+    },
+    {
+      "key": "http_method",
+      "value": "GET",
+      "type": "default",
+      "enabled": true,
+      "description": "Método HTTP do endpoint"
+    },
+    {
+      "key": "response_format",
+      "value": "JSON Array",
+      "type": "default",
+      "enabled": true,
+      "description": "Formato da resposta"
+    },
+    {
+      "key": "authentication_required",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Indica se autenticação é obrigatória"
+    },
+    {
+      "key": "authorization_required",
+      "value": "true",
+      "type": "default",
+      "enabled": true,
+      "description": "Indica se autorização é obrigatória"
+    },
+    {
+      "key": "business_logic",
+      "value": "Filter available operation kinds",
+      "type": "default",
+      "enabled": true,
+      "description": "Lógica de negócio do endpoint"
+    },
+    {
+      "key": "integration_type",
+      "value": "Legacy API",
+      "type": "default",
+      "enabled": true,
+      "description": "Tipo de integração externa"
+    },
+    {
+      "key": "data_source",
+      "value": "Legacy API + Business Database",
+      "type": "default",
+      "enabled": true,
+      "description": "Fonte de dados"
+    },
+    {
+      "key": "filtering_criteria",
+      "value": "Remove already registered operation kinds",
+      "type": "default",
+      "enabled": true,
+      "description": "Critério de filtragem"
+    },
+    {
+      "key": "id_format",
+      "value": "6-digit string",
+      "type": "default",
+      "enabled": true,
+      "description": "Formato do ID"
+    },
+    {
+      "key": "description_field",
+      "value": "String",
+      "type": "default",
+      "enabled": true,
+      "description": "Tipo do campo descrição"
+    },
+    {
+      "key": "validation_rules",
+      "value": "ID and description cannot be null or empty",
+      "type": "default",
+      "enabled": true,
+      "description": "Regras de validação"
+    },
+    {
+      "key": "error_handling",
+      "value": "Comprehensive error handling with proper HTTP status codes",
+      "type": "default",
+      "enabled": true,
+      "description": "Tratamento de erros"
+    },
+    {
+      "key": "logging_level",
+      "value": "INFO",
+      "type": "default",
+      "enabled": true,
+      "description": "Nível de logging"
+    },
+    {
+      "key": "performance_target",
+      "value": "< 5000ms",
+      "type": "default",
+      "enabled": true,
+      "description": "Meta de performance"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

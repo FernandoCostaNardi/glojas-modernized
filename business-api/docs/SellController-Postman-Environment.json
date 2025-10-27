@@ -1,0 +1,149 @@
+{
+  "id": "sell-controller-business-api-environment",
+  "name": "SellController - Business API Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "default",
+      "enabled": true,
+      "description": "URL base da Business API"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "secret",
+      "enabled": true,
+      "description": "Token JWT válido para autenticação (preenchido pelo AuthController)"
+    },
+    {
+      "key": "start_date",
+      "value": "2024-01-01",
+      "type": "default",
+      "enabled": true,
+      "description": "Data de início para relatórios"
+    },
+    {
+      "key": "end_date",
+      "value": "2024-01-31",
+      "type": "default",
+      "enabled": true,
+      "description": "Data de fim para relatórios"
+    },
+    {
+      "key": "start_date_short",
+      "value": "2024-01-01",
+      "type": "default",
+      "enabled": true,
+      "description": "Data de início para relatórios curtos (3 dias)"
+    },
+    {
+      "key": "end_date_short",
+      "value": "2024-01-03",
+      "type": "default",
+      "enabled": true,
+      "description": "Data de fim para relatórios curtos (3 dias)"
+    },
+    {
+      "key": "store_code_001",
+      "value": "001",
+      "type": "default",
+      "enabled": true,
+      "description": "Código da loja 1"
+    },
+    {
+      "key": "store_code_002",
+      "value": "002",
+      "type": "default",
+      "enabled": true,
+      "description": "Código da loja 2"
+    },
+    {
+      "key": "store_code_003",
+      "value": "003",
+      "type": "default",
+      "enabled": true,
+      "description": "Código da loja 3"
+    },
+    {
+      "key": "invalid_start_date",
+      "value": "2024-01-31",
+      "type": "default",
+      "enabled": true,
+      "description": "Data de início inválida (posterior à data de fim)"
+    },
+    {
+      "key": "invalid_end_date",
+      "value": "2024-01-01",
+      "type": "default",
+      "enabled": true,
+      "description": "Data de fim inválida (anterior à data de início)"
+    },
+    {
+      "key": "expected_success_status",
+      "value": "200",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para sucesso"
+    },
+    {
+      "key": "expected_bad_request_status",
+      "value": "400",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para erro de validação"
+    },
+    {
+      "key": "expected_unauthorized_status",
+      "value": "401",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para não autorizado"
+    },
+    {
+      "key": "expected_forbidden_status",
+      "value": "403",
+      "type": "default",
+      "enabled": true,
+      "description": "Status HTTP esperado para proibido"
+    },
+    {
+      "key": "content_type_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Content-Type para requisições JSON"
+    },
+    {
+      "key": "accept_json",
+      "value": "application/json",
+      "type": "default",
+      "enabled": true,
+      "description": "Accept para respostas JSON"
+    },
+    {
+      "key": "date_format",
+      "value": "YYYY-MM-DD",
+      "type": "default",
+      "enabled": true,
+      "description": "Formato de data ISO (YYYY-MM-DD)"
+    },
+    {
+      "key": "test_environment",
+      "value": "development",
+      "type": "default",
+      "enabled": true,
+      "description": "Ambiente de teste"
+    },
+    {
+      "key": "test_version",
+      "value": "1.0.0",
+      "type": "default",
+      "enabled": true,
+      "description": "Versão do teste"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

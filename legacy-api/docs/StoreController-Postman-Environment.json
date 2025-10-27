@@ -1,0 +1,57 @@
+{
+  "id": "store-controller-env",
+  "name": "StoreController Environment",
+  "values": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8087/api/legacy",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "store_id",
+      "value": "1",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "test_store_id",
+      "value": "2",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "invalid_store_id",
+      "value": "-1",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "not_found_store_id",
+      "value": "999999",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "zero_store_id",
+      "value": "0",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "non_numeric_store_id",
+      "value": "abc",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "empty_store_id",
+      "value": "",
+      "enabled": true,
+      "type": "default"
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2025-08-28T00:00:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

@@ -19,9 +19,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(@NonNull InterceptorRegistry registry) {
         // Registra o interceptor de somente leitura para todas as rotas
+        // EXCETO para endpoints de sales (relatórios de consulta)
         registry.addInterceptor(readOnlyInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/actuator/**"); // Permite endpoints de monitoramento
+                .excludePathPatterns(
+                        "/actuator/**",  // Permite endpoints de monitoramento
+                        "/sales/**"      // Permite endpoints de relatórios (POST de consulta)
+                );
     }
 
     @Override

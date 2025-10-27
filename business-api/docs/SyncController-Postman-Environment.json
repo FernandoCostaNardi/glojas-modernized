@@ -1,0 +1,16 @@
+{
+  "id": "sync-controller-business-api-environment",
+  "name": "SyncController - Business API Environment",
+  "values": [
+    {"key": "base_url", "value": "http://localhost:8089/api/business", "type": "default", "enabled": true},
+    {"key": "jwt_token", "value": "{{jwt_token}}", "type": "secret", "enabled": true},
+    {"key": "sync_start_date", "value": "2024-01-01", "type": "default", "enabled": true},
+    {"key": "sync_end_date", "value": "2024-01-31", "type": "default", "enabled": true},
+    {"key": "sync_start_date_week", "value": "2024-01-01", "type": "default", "enabled": true},
+    {"key": "sync_end_date_week", "value": "2024-01-07", "type": "default", "enabled": true},
+    {"key": "future_date", "value": "2025-01-01", "type": "default", "enabled": true}
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

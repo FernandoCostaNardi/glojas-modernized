@@ -1,0 +1,15 @@
+{
+  "id": "store-legacy-controller-business-api-environment",
+  "name": "StoreLegacyController - Business API Environment",
+  "values": [
+    {"key": "base_url", "value": "http://localhost:8089/api/business", "type": "default", "enabled": true, "description": "URL base da Business API"},
+    {"key": "legacy_api_url", "value": "http://localhost:8087/api/legacy", "type": "default", "enabled": true, "description": "URL da Legacy API"},
+    {"key": "expected_success_status", "value": "200", "type": "default", "enabled": true, "description": "Status HTTP esperado para sucesso"},
+    {"key": "expected_error_status", "value": "500", "type": "default", "enabled": true, "description": "Status HTTP esperado para erro"},
+    {"key": "content_type_json", "value": "application/json", "type": "default", "enabled": true, "description": "Content-Type para requisições JSON"},
+    {"key": "accept_json", "value": "application/json", "type": "default", "enabled": true, "description": "Accept para respostas JSON"}
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2024-01-21T10:30:00.000Z",
+  "_postman_exported_using": "Postman/10.0.0"
+}

@@ -5,10 +5,8 @@ import com.sysconard.business.dto.operation.OperationKindDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,23 +64,4 @@ public class OperationKindService {
         }
     }
     
-    /**
-     * Testa conectividade com a Legacy API para operações.
-     * 
-     * @return Resultado do teste de conexão
-     */
-    public Map<String, Object> testLegacyApiConnection() {
-        log.info("Testando conectividade com Legacy API para operações");
-        
-        try {
-            return legacyApiClient.testConnection();
-        } catch (Exception e) {
-            log.error("Erro no teste de conectividade", e);
-            return Map.of(
-                    "status", "ERROR",
-                    "message", "Erro ao testar conectividade: " + e.getMessage(),
-                    "timestamp", LocalDateTime.now().toString()
-            );
-        }
-    }
 }

@@ -1,0 +1,325 @@
+{
+  "info": {
+    "name": "StoreController API - Business",
+    "description": "Collection para testes da API de Lojas da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    },
+    {
+      "key": "store_id",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "string"
+    },
+    {
+      "key": "store_code",
+      "value": "LOJA01",
+      "type": "string"
+    },
+    {
+      "key": "store_name",
+      "value": "Loja Centro",
+      "type": "string"
+    },
+    {
+      "key": "store_city",
+      "value": "São Paulo",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Stores CRUD",
+      "item": [
+        {
+          "name": "POST Create Store",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"LOJA01\",\n  \"name\": \"Loja Centro\",\n  \"city\": \"São Paulo\",\n  \"status\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/stores",
+              "host": ["{{base_url}}"],
+              "path": ["stores"]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Response is JSON object\", () => pm.expect(pm.response.json()).to.be.an('object'));",
+                  "pm.test(\"Store has required fields\", () => {",
+                  "    const store = pm.response.json();",
+                  "    pm.expect(store).to.have.property('id');",
+                  "    pm.expect(store).to.have.property('code');",
+                  "    pm.expect(store).to.have.property('name');",
+                  "});",
+                  "if (pm.response.code === 201) {",
+                  "    pm.environment.set(\"store_id\", pm.response.json().id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update Store",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Loja Centro - Atualizada\",\n  \"city\": \"São Paulo - SP\",\n  \"status\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/stores/{{store_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["stores", "{{store_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Store by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores/{{store_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["stores", "{{store_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET All Stores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores?page=0&size=10&sortBy=code&sortDir=asc",
+              "host": ["{{base_url}}"],
+              "path": ["stores"],
+              "query": [
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"},
+                {"key": "sortBy", "value": "code"},
+                {"key": "sortDir", "value": "asc"}
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Search Stores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores/search?city=São Paulo&status=true&page=0&size=10&sortBy=code&sortDir=asc",
+              "host": ["{{base_url}}"],
+              "path": ["stores", "search"],
+              "query": [
+                {"key": "city", "value": "São Paulo"},
+                {"key": "status", "value": "true"},
+                {"key": "page", "value": "0"},
+                {"key": "size", "value": "10"},
+                {"key": "sortBy", "value": "code"},
+                {"key": "sortDir", "value": "asc"}
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Remove Store",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"},
+              {"key": "Authorization", "value": "Bearer {{jwt_token}}", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores/{{store_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["stores", "{{store_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET Health Check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {"key": "Content-Type", "value": "application/json", "type": "text"},
+              {"key": "Accept", "value": "application/json", "type": "text"}
+            ],
+            "url": {
+              "raw": "{{base_url}}/stores/health",
+              "host": ["{{base_url}}"],
+              "path": ["stores", "health"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "POST Create Store - Success",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"LOJA01\",\n  \"name\": \"Loja Centro\",\n  \"city\": \"São Paulo\",\n  \"status\": true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/stores",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Search Stores - By City",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/search?city=São Paulo&page=0&size=10",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "search"],
+                  "query": [
+                    {"key": "city", "value": "São Paulo"},
+                    {"key": "page", "value": "0"},
+                    {"key": "size", "value": "10"}
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "POST Create Store - Invalid Code Length",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"LJ01\",\n  \"name\": \"Loja Centro\",\n  \"city\": \"São Paulo\",\n  \"status\": true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/stores",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "POST Create Store - Invalid Code Pattern",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"loja01\",\n  \"name\": \"Loja Centro\",\n  \"city\": \"São Paulo\",\n  \"status\": true\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/stores",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Store by ID - Not Found",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {"key": "Content-Type", "value": "application/json"},
+                  {"key": "Accept", "value": "application/json"},
+                  {"key": "Authorization", "value": "Bearer {{jwt_token}}"}
+                ],
+                "url": {
+                  "raw": "{{base_url}}/stores/00000000-0000-0000-0000-000000000000",
+                  "host": ["{{base_url}}"],
+                  "path": ["stores", "00000000-0000-0000-0000-000000000000"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

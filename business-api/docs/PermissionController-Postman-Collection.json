@@ -1,0 +1,543 @@
+{
+  "info": {
+    "name": "PermissionController API - Business",
+    "description": "Collection para testes da API de Permissões da Business API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8089/api/business",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "{{jwt_token}}",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Permissions",
+      "item": [
+        {
+          "name": "GET All Permissions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/permissions",
+              "host": ["{{base_url}}"],
+              "path": ["permissions"]
+            },
+            "description": "Retorna todas as permissões cadastradas no sistema. Requer autenticação JWT e permissão permission:read."
+          },
+          "response": [
+            {
+              "name": "Success - Lista de permissões",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"name\": \"permission:read\",\n    \"resource\": \"permission\",\n    \"action\": \"read\",\n    \"description\": \"Permissão para ler dados de permissões\",\n    \"createdAt\": \"2024-01-15T10:30:00\"\n  },\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440001\",\n    \"name\": \"user:read\",\n    \"resource\": \"user\",\n    \"action\": \"read\",\n    \"description\": \"Permissão para ler dados de usuários\",\n    \"createdAt\": \"2024-01-15T10:31:00\"\n  },\n  {\n    \"id\": \"550e8400-e29b-41d4-a716-446655440002\",\n    \"name\": \"user:write\",\n    \"resource\": \"user\",\n    \"action\": \"write\",\n    \"description\": \"Permissão para criar/editar usuários\",\n    \"createdAt\": \"2024-01-15T10:32:00\"\n  }\n]"
+            },
+            {
+              "name": "Error - Token ausente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Error - Token inválido",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer token_invalido"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "name": "Error - Sem permissão",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token_sem_permissao}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is JSON array\", function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array');",
+                  "});",
+                  "",
+                  "pm.test(\"Each permission has required fields\", function () {",
+                  "    const permissions = pm.response.json();",
+                  "    permissions.forEach(permission => {",
+                  "        pm.expect(permission).to.have.property('id');",
+                  "        pm.expect(permission).to.have.property('name');",
+                  "        pm.expect(permission).to.have.property('resource');",
+                  "        pm.expect(permission).to.have.property('action');",
+                  "        pm.expect(permission).to.have.property('description');",
+                  "        pm.expect(permission).to.have.property('createdAt');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test(\"ID is valid UUID\", function () {",
+                  "    const permissions = pm.response.json();",
+                  "    permissions.forEach(permission => {",
+                  "        pm.expect(permission.id).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Health Check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/permissions/health",
+              "host": ["{{base_url}}"],
+              "path": ["permissions", "health"]
+            },
+            "description": "Endpoint de health check para verificar se o controller está funcionando. Acesso público, não requer autenticação."
+          },
+          "response": [
+            {
+              "name": "Success - Health check",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions/health",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions", "health"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain;charset=UTF-8"
+                }
+              ],
+              "cookie": [],
+              "body": "PermissionController está funcionando"
+            },
+            {
+              "name": "Error - Server Error",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions/health",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions", "health"]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response is string\", function () {",
+                  "    pm.expect(pm.response.text()).to.be.a('string');",
+                  "});",
+                  "",
+                  "pm.test(\"Response contains expected message\", function () {",
+                  "    pm.expect(pm.response.text()).to.include(\"PermissionController está funcionando\");",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ],
+      "description": "Endpoints para consulta de permissões"
+    },
+    {
+      "name": "Test Scenarios",
+      "item": [
+        {
+          "name": "Success Cases",
+          "item": [
+            {
+              "name": "GET All Permissions - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET Health Check - Success",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions/health",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions", "health"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de sucesso para validação"
+        },
+        {
+          "name": "Error Cases",
+          "item": [
+            {
+              "name": "GET All Permissions - No Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Permissions - Invalid Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token_invalid}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Permissions - Expired Token",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token_expired}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Permissions - No Permission",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token_sem_permissao}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET All Permissions - Server Error",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{jwt_token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/permissions",
+                  "host": ["{{base_url}}"],
+                  "path": ["permissions"]
+                }
+              },
+              "response": []
+            }
+          ],
+          "description": "Cenários de erro para validação"
+        }
+      ],
+      "description": "Cenários de teste organizados por tipo"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da requisição",
+          "console.log('Executando requisição:', pm.request.url.toString());",
+          "console.log('Headers:', pm.request.headers);"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log da resposta",
+          "console.log('Status Code:', pm.response.code);",
+          "console.log('Response Time:', pm.response.responseTime + 'ms');",
+          "console.log('Response Size:', pm.response.responseSize + ' bytes');"
+        ]
+      }
+    }
+  ]
+}
