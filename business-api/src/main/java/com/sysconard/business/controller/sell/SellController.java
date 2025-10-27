@@ -18,9 +18,12 @@ import com.sysconard.business.dto.sell.DailySalesReportResponse;
 import com.sysconard.business.dto.sell.StoreReportRequest;
 import com.sysconard.business.dto.sell.StoreReportResponse;
 import com.sysconard.business.dto.sell.StoreReportByDayResponse;
+import com.sysconard.business.dto.sell.ChartDataResponse;
+import com.sysconard.business.dto.sell.ChartDataWithMetricsResponse;
 import com.sysconard.business.service.sell.DailySalesReportService;
 import com.sysconard.business.service.sell.SellService;
 import com.sysconard.business.service.sell.CurrentDailySalesService;
+import com.sysconard.business.service.sell.SalesChartService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -46,6 +49,7 @@ public class SellController {
     private final SellService sellService;
     private final DailySalesReportService dailySalesReportService;
     private final CurrentDailySalesService currentDailySalesService;
+    private final SalesChartService salesChartService;
     
     /**
      * Endpoint para obter relatório de vendas por loja.
@@ -167,6 +171,80 @@ public class SellController {
             
         } catch (Exception e) {
             log.error("Erro ao processar vendas do dia atual: {}", e.getMessage(), e);
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        }
+    }
+    
+    /**
+     * Endpoint para obter dados de vendas para gráficos.
+     * Retorna dados agregados por dia para alimentar gráficos de vendas.
+     * Aplica filtros de loja e permissões do usuário autenticado.
+     * 
+     * @param startDate Data de início do período (obrigatório)
+     * @param endDate Data de fim do período (obrigatório)
+     * @param storeCode Código da loja específica (opcional, null = todas as lojas)
+     * @return Lista de dados agregados por dia para o gráfico
+     */
+    @GetMapping("/monthly-chart-data")
+    @PreAuthorize("hasAuthority('sell:read')")
+    public ResponseEntity<List<ChartDataResponse>> getMonthlyChartData(
+            @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false) String storeCode) {
+        
+        log.info("Recebida solicitação de dados do gráfico: startDate={}, endDate={}, storeCode={}", 
+                startDate, endDate, storeCode);
+        
+        try {
+            List<ChartDataResponse> chartData = salesChartService.getChartData(startDate, endDate, storeCode);
+            
+            log.info("Dados do gráfico processados com sucesso: {} pontos de dados retornados", chartData.size());
+            
+            return ResponseEntity.ok(chartData);
+            
+        } catch (IllegalArgumentException e) {
+            log.warn("Parâmetros inválidos para dados do gráfico: {}", e.getMessage());
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        } catch (Exception e) {
+            log.error("Erro ao processar dados do gráfico: {}", e.getMessage(), e);
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        }
+    }
+    
+    /**
+     * Endpoint para obter dados de gráfico de vendas com métricas calculadas.
+     * Retorna dados agregados por dia para alimentar gráficos de vendas
+     * junto com métricas como melhor dia, pior dia e total de lojas ativas.
+     * Aplica filtros de loja e permissões do usuário autenticado.
+     * 
+     * @param startDate Data de início do período (obrigatório)
+     * @param endDate Data de fim do período (obrigatório)
+     * @param storeCode Código da loja específica (opcional, null = todas as lojas)
+     * @return Dados do gráfico com métricas calculadas
+     */
+    @GetMapping("/chart-data-with-metrics")
+    @PreAuthorize("hasAuthority('sell:read')")
+    public ResponseEntity<ChartDataWithMetricsResponse> getChartDataWithMetrics(
+            @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false) String storeCode) {
+        
+        log.info("Recebida solicitação de dados do gráfico com métricas: startDate={}, endDate={}, storeCode={}", 
+                startDate, endDate, storeCode);
+        
+        try {
+            ChartDataWithMetricsResponse response = salesChartService.getChartDataWithMetrics(startDate, endDate, storeCode);
+            
+            log.info("Dados do gráfico com métricas processados com sucesso: {} pontos de dados retornados", 
+                    response.chartData().size());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (IllegalArgumentException e) {
+            log.warn("Parâmetros inválidos para dados do gráfico com métricas: {}", e.getMessage());
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        } catch (Exception e) {
+            log.error("Erro ao processar dados do gráfico com métricas: {}", e.getMessage(), e);
             throw e; // Será tratado pelo GlobalExceptionHandler
         }
     }

@@ -41,7 +41,7 @@ const VendasPage: React.FC<VendasPageProps> = () => {
    * Renderiza o conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className={`flex-1 bg-white overflow-auto ${
+    <main className={`flex-1 bg-white ${
       isMobile ? 'p-2' : 'p-4'
     }`}>
       {renderPageHeader()}
@@ -50,12 +50,12 @@ const VendasPage: React.FC<VendasPageProps> = () => {
   );
 
   return (
-    <div className="h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-white">
       {/* Header */}
       <Header />
       
       {/* Layout principal */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 relative">
         {/* Sidebar */}
         <Sidebar />
         

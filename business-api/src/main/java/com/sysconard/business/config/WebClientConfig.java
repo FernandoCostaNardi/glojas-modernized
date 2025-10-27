@@ -15,11 +15,11 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 @Configuration
 public class WebClientConfig {
-    
-    @Value("${legacy-api.base-url:http://localhost:8087}")
+
+    @Value("${legacy-api.base-url}")
     private String legacyApiBaseUrl;
-    
-    @Value("${legacy-api.context-path:/api/legacy}")
+
+    @Value("${legacy-api.context-path}")
     private String legacyApiContextPath;
     
     @Value("${legacy-api.timeout:30}")
@@ -43,7 +43,7 @@ public class WebClientConfig {
         System.out.println("================================");
         
         return WebClient.builder()
-                .baseUrl(correctBaseUrl + legacyApiContextPath)  // URL completa COM context-path
+                .baseUrl(legacyApiBaseUrl + legacyApiContextPath)  // URL completa COM context-path
                 .codecs(configurer -> configurer
                         .defaultCodecs()
                         .maxInMemorySize(16 * 1024 * 1024)) // 16MB buffer

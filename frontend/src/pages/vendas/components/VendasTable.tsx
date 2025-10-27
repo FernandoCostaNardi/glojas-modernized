@@ -48,6 +48,16 @@ const VendasTable: React.FC<VendasTableProps> = ({
   };
 
   /**
+   * Calcula a porcentagem de vendas de uma loja em relação ao total
+   * @param value - Valor da loja
+   * @param total - Total geral
+   * @returns Porcentagem formatada
+   */
+  const calculatePercentage = (value: number, total: number): number => {
+    return total > 0 ? (value / total) * 100 : 0;
+  };
+
+  /**
    * Renderiza o estado de loading
    */
   const renderLoading = (): React.ReactNode => (
@@ -123,20 +133,23 @@ const VendasTable: React.FC<VendasTableProps> = ({
   const renderTableHeader = (): React.ReactNode => (
     <thead className="bg-smart-gray-50">
       <tr>
-        <th className="px-2 py-2 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className="px-6 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
           Loja
         </th>
-        <th className="px-2 py-2 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className="px-6 py-3 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
           PDV
         </th>
-        <th className="px-2 py-2 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className="px-6 py-3 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
           DANFE
         </th>
-        <th className="px-2 py-2 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className="px-6 py-3 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
           Exchange
         </th>
-        <th className="px-2 py-2 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className="px-6 py-3 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
           Total
+        </th>
+        <th className="px-6 py-3 text-center text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+          % do total
         </th>
       </tr>
     </thead>
@@ -147,25 +160,51 @@ const VendasTable: React.FC<VendasTableProps> = ({
    * @param item - Dados da venda
    * @param index - Índice da linha
    */
-  const renderTableRow = (item: DailySalesData, index: number): React.ReactNode => (
-    <tr key={index} className="hover:bg-smart-gray-50 transition-colors duration-200">
-      <td className="px-2 py-2 whitespace-nowrap text-xs font-medium text-smart-gray-900">
-        {item.storeName}
-      </td>
-      <td className="px-2 py-2 whitespace-nowrap text-xs text-smart-gray-900 text-right">
-        {formatCurrency(item.pdv)}
-      </td>
-      <td className="px-2 py-2 whitespace-nowrap text-xs text-smart-gray-900 text-right">
-        {formatCurrency(item.danfe)}
-      </td>
-      <td className="px-2 py-2 whitespace-nowrap text-xs text-smart-gray-900 text-right">
-        {formatCurrency(item.exchange)}
-      </td>
-      <td className="px-2 py-2 whitespace-nowrap text-xs font-semibold text-smart-gray-900 text-right">
-        {formatCurrency(item.total)}
-      </td>
-    </tr>
-  );
+  const renderTableRow = (item: DailySalesData, index: number): React.ReactNode => {
+    const grandTotal = calculateTotal();
+    const percentage = calculatePercentage(item.total, grandTotal);
+    
+    return (
+      <tr 
+        key={index} 
+        className={`hover:bg-smart-gray-50 transition-colors duration-200 ${
+          index % 2 === 0 ? 'bg-white' : 'bg-smart-gray-50'
+        }`}
+      >
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-smart-gray-900">
+          {item.storeName}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-smart-gray-900 text-right">
+          {formatCurrency(item.pdv)}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-smart-gray-900 text-right">
+          {formatCurrency(item.danfe)}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-smart-gray-900 text-right">
+          {formatCurrency(item.exchange)}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-smart-gray-900 text-right">
+          {formatCurrency(item.total)}
+        </td>
+        <td className="px-6 py-4">
+          <div className="flex items-center space-x-3">
+            {/* Barra de Progresso */}
+            <div className="flex-1 bg-smart-gray-200 rounded-full h-2 overflow-hidden">
+              <div 
+                className="bg-smart-blue-500 h-full rounded-full transition-all duration-300"
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
+            
+            {/* Porcentagem */}
+            <span className="text-sm font-medium text-smart-gray-700 min-w-[45px]">
+              {percentage.toFixed(1)}%
+            </span>
+          </div>
+        </td>
+      </tr>
+    );
+  };
 
   /**
    * Renderiza o rodapé da tabela com totais
@@ -184,20 +223,23 @@ const VendasTable: React.FC<VendasTableProps> = ({
     return (
       <tfoot className="bg-smart-red-50 border-t-2 border-smart-red-200">
         <tr>
-          <td className="px-2 py-2 whitespace-nowrap text-xs font-bold text-smart-gray-900">
+          <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-smart-gray-900">
             TOTAL GERAL
           </td>
-          <td className="px-2 py-2 whitespace-nowrap text-xs font-bold text-smart-gray-900 text-right">
+          <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-smart-gray-900 text-right">
             {formatCurrency(totals.pdv)}
           </td>
-          <td className="px-2 py-2 whitespace-nowrap text-xs font-bold text-smart-gray-900 text-right">
+          <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-smart-gray-900 text-right">
             {formatCurrency(totals.danfe)}
           </td>
-          <td className="px-2 py-2 whitespace-nowrap text-xs font-bold text-smart-gray-900 text-right">
+          <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-smart-gray-900 text-right">
             {formatCurrency(totals.exchange)}
           </td>
-          <td className="px-2 py-2 whitespace-nowrap text-xs font-bold text-smart-red-700 text-right">
+          <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-smart-red-700 text-right">
             {formatCurrency(totals.total)}
+          </td>
+          <td className="px-6 py-3 whitespace-nowrap text-sm font-bold text-smart-red-700 text-center">
+            100.0%
           </td>
         </tr>
       </tfoot>
@@ -274,7 +316,7 @@ const VendasTable: React.FC<VendasTableProps> = ({
    * Renderiza a tabela de dados (desktop)
    */
   const renderDesktopTable = (): React.ReactNode => (
-    <div className="bg-white rounded-lg shadow-smart-md border border-smart-gray-100 overflow-hidden mx-4">
+    <div className="bg-white rounded-lg shadow-lg border border-smart-gray-100 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full divide-y divide-smart-gray-200">
           {renderTableHeader()}

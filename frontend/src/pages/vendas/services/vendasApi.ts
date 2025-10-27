@@ -1,4 +1,5 @@
 import { businessApi } from '@/services/api';
+import { ChartDataResponse, ChartDataWithMetricsResponse } from '@/types/sales';
 
 /**
  * Interface para os dados de vendas diárias retornados pela API
@@ -77,6 +78,82 @@ export const testVendasApiConnection = async (): Promise<boolean> => {
   } catch (error) {
     console.warn('Teste de conectividade falhou:', error);
     return false;
+  }
+};
+
+/**
+ * Busca dados para gráfico de vendas diárias
+ * @param startDate - Data de início no formato YYYY-MM-DD
+ * @param endDate - Data de fim no formato YYYY-MM-DD
+ * @param storeCode - Código da loja específica (opcional)
+ * @returns Promise com array de dados do gráfico
+ * @throws Error em caso de falha na requisição
+ */
+export const getChartData = async (
+  startDate: string,
+  endDate: string,
+  storeCode?: string
+): Promise<ChartDataResponse[]> => {
+  try {
+    console.log(`Buscando dados do gráfico: ${startDate} até ${endDate}${storeCode ? ` para loja ${storeCode}` : ' (todas as lojas)'}`);
+    
+    const params: Record<string, string> = {
+      startDate,
+      endDate
+    };
+    
+    if (storeCode) {
+      params.storeCode = storeCode;
+    }
+    
+    const response = await businessApi.get('/sales/monthly-chart-data', {
+      params
+    });
+    
+    console.log(`Dados do gráfico recebidos: ${response.data.length} pontos de dados`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar dados do gráfico:', error);
+    throw error;
+  }
+};
+
+/**
+ * Busca dados para gráfico de vendas diárias com métricas calculadas
+ * @param startDate - Data de início no formato YYYY-MM-DD
+ * @param endDate - Data de fim no formato YYYY-MM-DD
+ * @param storeCode - Código da loja específica (opcional)
+ * @returns Promise com dados do gráfico e métricas calculadas
+ * @throws Error em caso de falha na requisição
+ */
+export const getChartDataWithMetrics = async (
+  startDate: string,
+  endDate: string,
+  storeCode?: string
+): Promise<ChartDataWithMetricsResponse> => {
+  try {
+    console.log(`Buscando dados do gráfico com métricas: ${startDate} até ${endDate}${storeCode ? ` para loja ${storeCode}` : ' (todas as lojas)'}`);
+    
+    const params: Record<string, string> = {
+      startDate,
+      endDate
+    };
+    
+    if (storeCode) {
+      params.storeCode = storeCode;
+    }
+    
+    const response = await businessApi.get('/sales/chart-data-with-metrics', {
+      params
+    });
+    
+    console.log(`Dados do gráfico com métricas recebidos: ${response.data.chartData.length} pontos de dados`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar dados do gráfico com métricas:', error);
+    throw error;
   }
 };
 

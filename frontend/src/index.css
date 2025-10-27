@@ -2,3 +2,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Correção forçada para permitir scroll fluido */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: auto !important;
+  min-height: 100vh !important;
+  max-height: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#root {
+  min-height: 100vh !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Remover qualquer limitação de altura em elementos principais */
+main, .main, .content, .page-content {
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}

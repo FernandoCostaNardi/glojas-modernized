@@ -112,7 +112,7 @@ public class LegacyApiClient {
         try {
             return legacyApiWebClient
                     .get()
-                    .uri("/api/legacy/operations")
+                    .uri("/operations")
                     .retrieve()
                     .bodyToFlux(OperationKindDto.class)
                     .collectList()
@@ -143,7 +143,7 @@ public class LegacyApiClient {
         try {
             return legacyApiWebClient
                     .get()
-                    .uri("/api/legacy/stores")
+                    .uri("/stores")
                     .retrieve()
                     .bodyToFlux(StoreResponseDto.class)
                     .collectList()
