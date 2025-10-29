@@ -22,16 +22,21 @@ interface MetricsData {
 interface SalesMetricsCardsProps {
   readonly data: MetricsData;
   readonly className?: string;
+  readonly bestLabel?: string;
+  readonly worstLabel?: string;
 }
 
 /**
  * Componente de cards de métricas para vendas
- * Exibe total de lojas ativas, melhor dia e pior dia
+ * Exibe total de lojas ativas, melhor dia/mês e pior dia/mês
  * Design moderno com ícones e cores diferenciadas
+ * Suporta labels customizáveis para diferentes contextos (diário/mensal)
  */
 const SalesMetricsCards: React.FC<SalesMetricsCardsProps> = ({ 
   data, 
-  className = '' 
+  className = '',
+  bestLabel = 'Melhor Dia',
+  worstLabel = 'Pior Dia'
 }) => {
   /**
    * Formata valor monetário para o padrão brasileiro
@@ -70,12 +75,12 @@ const SalesMetricsCards: React.FC<SalesMetricsCardsProps> = ({
         </div>
       </div>
 
-      {/* Card 2: Melhor Dia */}
+      {/* Card 2: Melhor Dia/Mês */}
       <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-smart-orange-500 animate-fade-in">
         <div className="flex items-center space-x-3">
           <Trophy className="h-8 w-8 text-smart-orange-500" />
           <div>
-            <p className="text-xs text-smart-gray-600 mb-1">Melhor Dia</p>
+            <p className="text-xs text-smart-gray-600 mb-1">{bestLabel}</p>
             {data.bestDay ? (
               <>
                 <p className="text-sm font-semibold text-smart-gray-900">
@@ -92,12 +97,12 @@ const SalesMetricsCards: React.FC<SalesMetricsCardsProps> = ({
         </div>
       </div>
 
-      {/* Card 3: Pior Dia */}
+      {/* Card 3: Pior Dia/Mês */}
       <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-error-500 animate-fade-in">
         <div className="flex items-center space-x-3">
           <AlertTriangle className="h-8 w-8 text-error-500" />
           <div>
-            <p className="text-xs text-smart-gray-600 mb-1">Pior Dia</p>
+            <p className="text-xs text-smart-gray-600 mb-1">{worstLabel}</p>
             {data.worstDay ? (
               <>
                 <p className="text-sm font-semibold text-smart-gray-900">

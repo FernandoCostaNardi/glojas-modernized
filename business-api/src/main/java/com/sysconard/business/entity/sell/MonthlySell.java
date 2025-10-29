@@ -62,6 +62,13 @@ public class MonthlySell {
     private BigDecimal total;
     
     /**
+     * Ano e mês no formato YYYY-MM.
+     * Utilizado para agrupamento e identificação única por loja e período.
+     */
+    @Column(name = "year_month", nullable = false, length = 7)
+    private String yearMonth;
+    
+    /**
      * Data e hora de criação do registro.
      * Preenchida automaticamente na primeira persistência.
      */

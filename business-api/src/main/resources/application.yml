@@ -52,12 +52,13 @@ spring:
     secret: Z2xvamFzLXNlY3JldC1rZXktMjAyNC12ZXJ5LXNlY3VyZS1zdHJpbmctY2hhbmdlLWluLXByb2R1Y3Rpb24tYXQtbGVhc3QtNjQtY2hhcmFjdGVycy1sb25n
     expiration: 86400000 # 24 horas em millisegundos
     
-  # Configurações Email (para reset de senha)
+  # Configurações Email (para reset de senha e notificações)
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${EMAIL_USERNAME:}
-    password: ${EMAIL_PASSWORD:}
+    username: ${EMAIL_USERNAME:fcostanardi@gmail.com}
+    password: ${EMAIL_PASSWORD:rfzw kmiw lodf sfvb}
+    default-from: ${EMAIL_FROM:fcostanardi@gmail.com}
     properties:
       mail:
         smtp:
@@ -92,7 +93,7 @@ legacy-api:
   context-path: /api/legacy
   timeout: 30
 
-# Configurações para sincronização de vendas diárias
+# Configurações para sincronização de vendas diárias e mensais
 sync:
   daily-sales:
     enabled: true
@@ -101,7 +102,16 @@ sync:
     timeout: 30s
     schedule:
       enabled: true
-      cron: "0 0 1 * * *"  # Todo dia às 01:00 AM
+      cron: "0 0 1 * * *"  # Diariamente às 1h da manhã
     weekly:
       enabled: false
       cron: "0 0 2 * * SUN"  # Todo domingo às 02:00 AM
+      
+  monthly-sales:
+    enabled: true
+    batch-size: 1000
+    retry-attempts: 3
+    timeout: 30s
+    schedule:
+      enabled: true
+      cron: "0 30 1 * * *"  # Diariamente às 01:30 AM

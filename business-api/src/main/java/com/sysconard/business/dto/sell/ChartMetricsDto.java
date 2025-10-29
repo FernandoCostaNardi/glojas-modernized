@@ -37,3 +37,5 @@ public record ChartMetricsDto(
         totalActiveStores = totalActiveStores != null ? totalActiveStores : 0;
     }
 }
+
+

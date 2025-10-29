@@ -9,6 +9,7 @@ import PermissionManagement from '@/pages/settings/PermissionManagement';
 import OperationManagement from '@/pages/settings/OperationManagement';
 import EventOriginManagement from '@/pages/settings/EventOriginManagement';
 import StoreManagement from '@/pages/settings/StoreManagement';
+import EmailNotifierManagement from '@/pages/settings/EmailNotifierManagement';
 import VendasPage from '@/pages/vendas/VendasPage';
 import Login from '@/pages/Login';
 
@@ -85,6 +86,14 @@ const AppContent: React.FC = () => {
     return (
       <ProtectedRoute>
         <StoreManagement />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/settings/email-notifiers') {
+    return (
+      <ProtectedRoute>
+        <EmailNotifierManagement />
       </ProtectedRoute>
     );
   }

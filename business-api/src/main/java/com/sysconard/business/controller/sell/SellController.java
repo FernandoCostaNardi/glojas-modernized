@@ -20,10 +20,16 @@ import com.sysconard.business.dto.sell.StoreReportResponse;
 import com.sysconard.business.dto.sell.StoreReportByDayResponse;
 import com.sysconard.business.dto.sell.ChartDataResponse;
 import com.sysconard.business.dto.sell.ChartDataWithMetricsResponse;
+import com.sysconard.business.dto.sell.MonthlySalesReportResponse;
+import com.sysconard.business.dto.sell.YearlySalesReportResponse;
 import com.sysconard.business.service.sell.DailySalesReportService;
 import com.sysconard.business.service.sell.SellService;
 import com.sysconard.business.service.sell.CurrentDailySalesService;
 import com.sysconard.business.service.sell.SalesChartService;
+import com.sysconard.business.service.sell.MonthlySalesReportService;
+import com.sysconard.business.service.sell.MonthlySalesChartService;
+import com.sysconard.business.service.sell.YearlySalesReportService;
+import com.sysconard.business.service.sell.YearlySalesChartService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -50,6 +56,10 @@ public class SellController {
     private final DailySalesReportService dailySalesReportService;
     private final CurrentDailySalesService currentDailySalesService;
     private final SalesChartService salesChartService;
+    private final MonthlySalesReportService monthlySalesReportService;
+    private final MonthlySalesChartService monthlySalesChartService;
+    private final YearlySalesReportService yearlySalesReportService;
+    private final YearlySalesChartService yearlySalesChartService;
     
     /**
      * Endpoint para obter relatório de vendas por loja.
@@ -245,6 +255,147 @@ public class SellController {
             throw e; // Será tratado pelo GlobalExceptionHandler
         } catch (Exception e) {
             log.error("Erro ao processar dados do gráfico com métricas: {}", e.getMessage(), e);
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        }
+    }
+    
+    /**
+     * Endpoint para obter relatório de vendas mensais agregadas por loja.
+     * Retorna dados consolidados de vendas mensais para um período específico.
+     * 
+     * @param startYearMonth Ano/mês de início do período (formato YYYY-MM)
+     * @param endYearMonth Ano/mês de fim do período (formato YYYY-MM)
+     * @return Lista de vendas mensais agregadas por loja
+     */
+    @GetMapping("/monthly-sales")
+    @PreAuthorize("hasAuthority('sell:read')")
+    public ResponseEntity<List<MonthlySalesReportResponse>> getMonthlySalesReport(
+            @RequestParam @NotNull String startYearMonth,
+            @RequestParam @NotNull String endYearMonth) {
+        
+        log.info("Recebida solicitação de relatório de vendas mensais: startYearMonth={}, endYearMonth={}", 
+                startYearMonth, endYearMonth);
+        
+        try {
+            List<MonthlySalesReportResponse> report = monthlySalesReportService.generateReport(startYearMonth, endYearMonth);
+            
+            log.info("Relatório de vendas mensais processado com sucesso: {} lojas retornadas", report.size());
+            
+            return ResponseEntity.ok(report);
+            
+        } catch (IllegalArgumentException e) {
+            log.warn("Parâmetros inválidos para relatório de vendas mensais: {}", e.getMessage());
+            throw e; // Será tratado pelo GlobalExceptionHandler como 400 Bad Request
+        } catch (Exception e) {
+            log.error("Erro ao processar relatório de vendas mensais: {}", e.getMessage(), e);
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        }
+    }
+    
+    /**
+     * Endpoint para obter dados de gráfico de vendas mensais com métricas calculadas.
+     * Retorna dados agregados por mês para alimentar gráficos de vendas mensais
+     * junto com métricas como melhor mês, pior mês e total de lojas ativas.
+     * Aplica filtros de loja e permissões do usuário autenticado.
+     * 
+     * @param startYearMonth Ano/mês de início do período (formato YYYY-MM)
+     * @param endYearMonth Ano/mês de fim do período (formato YYYY-MM)
+     * @param storeCode Código da loja específica (opcional, null = todas as lojas)
+     * @return Dados do gráfico mensal com métricas calculadas
+     */
+    @GetMapping("/monthly-chart-data-with-metrics")
+    @PreAuthorize("hasAuthority('sell:read')")
+    public ResponseEntity<ChartDataWithMetricsResponse> getMonthlyChartDataWithMetrics(
+            @RequestParam @NotNull String startYearMonth,
+            @RequestParam @NotNull String endYearMonth,
+            @RequestParam(required = false) String storeCode) {
+        
+        log.info("Recebida solicitação de dados do gráfico mensal com métricas: startYearMonth={}, endYearMonth={}, storeCode={}", 
+                startYearMonth, endYearMonth, storeCode);
+        
+        try {
+            ChartDataWithMetricsResponse response = monthlySalesChartService.getChartDataWithMetrics(startYearMonth, endYearMonth, storeCode);
+            
+            log.info("Dados do gráfico mensal com métricas processados com sucesso: {} pontos de dados retornados", 
+                    response.chartData().size());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (IllegalArgumentException e) {
+            log.warn("Parâmetros inválidos para dados do gráfico mensal com métricas: {}", e.getMessage());
+            throw e; // Será tratado pelo GlobalExceptionHandler como 400 Bad Request
+        } catch (Exception e) {
+            log.error("Erro ao processar dados do gráfico mensal com métricas: {}", e.getMessage(), e);
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        }
+    }
+    
+    /**
+     * Endpoint para obter relatório de vendas anuais agregadas por loja.
+     * Busca dados da tabela year_sells e calcula percentuais de participação.
+     * 
+     * @param startYear Ano de início do período
+     * @param endYear Ano de fim do período
+     * @return Lista de vendas anuais agregadas por loja com percentuais
+     */
+    @GetMapping("/yearly-sales")
+    @PreAuthorize("hasAnyAuthority('sell:read', 'sell:read:all')")
+    public ResponseEntity<List<YearlySalesReportResponse>> getYearlySalesReport(
+            @RequestParam @NotNull Integer startYear,
+            @RequestParam @NotNull Integer endYear) {
+        
+        log.info("Recebida solicitação de relatório de vendas anuais: startYear={}, endYear={}", 
+                startYear, endYear);
+        
+        try {
+            List<YearlySalesReportResponse> report = yearlySalesReportService.generateReport(startYear, endYear);
+            
+            log.info("Relatório de vendas anuais processado com sucesso: {} lojas retornadas", 
+                    report.size());
+            
+            return ResponseEntity.ok(report);
+            
+        } catch (IllegalArgumentException e) {
+            log.warn("Parâmetros inválidos para relatório de vendas anuais: {}", e.getMessage());
+            throw e; // Será tratado pelo GlobalExceptionHandler como 400 Bad Request
+        } catch (Exception e) {
+            log.error("Erro ao processar relatório de vendas anuais: {}", e.getMessage(), e);
+            throw e; // Será tratado pelo GlobalExceptionHandler
+        }
+    }
+    
+    /**
+     * Endpoint para obter dados do gráfico de vendas anuais com métricas calculadas.
+     * Busca dados da tabela year_sells e calcula métricas de performance.
+     * 
+     * @param startYear Ano de início do período
+     * @param endYear Ano de fim do período
+     * @param storeCode Código da loja específica (opcional, null = todas as lojas)
+     * @return Dados do gráfico anual com métricas calculadas
+     */
+    @GetMapping("/yearly-chart-data-with-metrics")
+    @PreAuthorize("hasAnyAuthority('sell:read', 'sell:read:all')")
+    public ResponseEntity<ChartDataWithMetricsResponse> getYearlyChartDataWithMetrics(
+            @RequestParam @NotNull Integer startYear,
+            @RequestParam @NotNull Integer endYear,
+            @RequestParam(required = false) String storeCode) {
+        
+        log.info("Recebida solicitação de dados do gráfico anual com métricas: startYear={}, endYear={}, storeCode={}", 
+                startYear, endYear, storeCode);
+        
+        try {
+            ChartDataWithMetricsResponse response = yearlySalesChartService.getChartDataWithMetrics(startYear, endYear, storeCode);
+            
+            log.info("Dados do gráfico anual com métricas processados com sucesso: {} pontos de dados retornados", 
+                    response.chartData().size());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (IllegalArgumentException e) {
+            log.warn("Parâmetros inválidos para dados do gráfico anual com métricas: {}", e.getMessage());
+            throw e; // Será tratado pelo GlobalExceptionHandler como 400 Bad Request
+        } catch (Exception e) {
+            log.error("Erro ao processar dados do gráfico anual com métricas: {}", e.getMessage(), e);
             throw e; // Será tratado pelo GlobalExceptionHandler
         }
     }

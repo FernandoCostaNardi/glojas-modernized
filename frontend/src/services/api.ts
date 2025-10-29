@@ -20,7 +20,11 @@ import {
   CreateStoreRequest,
   CreateStoreResponse,
   UpdateStoreRequest,
-  UpdateStoreResponse
+  UpdateStoreResponse,
+  CreateEmailNotifierRequest,
+  EmailNotifierResponse,
+  EmailNotifierPageResponse,
+  UpdateEmailNotifierRequest
 } from '@/types';
 
 /**
@@ -682,6 +686,101 @@ export const storeService = {
       return response.data;
     } catch (error) {
       console.error('❌ Erro ao buscar lojas legacy:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para gerenciamento de EmailNotifier
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const emailNotifierService = {
+  /**
+   * Cria um novo EmailNotifier
+   * @param emailNotifierData Dados do EmailNotifier a ser criado
+   * @returns Promise com dados do EmailNotifier criado
+   */
+  createEmailNotifier: async (emailNotifierData: CreateEmailNotifierRequest): Promise<EmailNotifierResponse> => {
+    try {
+      const response = await api.post('/email-notifiers', emailNotifierData);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao criar EmailNotifier:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca todos os EmailNotifiers com paginação
+   * @param page Número da página (0-based)
+   * @param size Tamanho da página
+   * @param sortBy Campo para ordenação
+   * @param sortDir Direção da ordenação (asc/desc)
+   * @returns Promise com página de EmailNotifiers
+   */
+  getAllEmailNotifiers: async (
+    page: number = 0,
+    size: number = 20,
+    sortBy: string = 'email',
+    sortDir: string = 'asc'
+  ): Promise<EmailNotifierPageResponse> => {
+    try {
+      const params = new URLSearchParams();
+      params.append('page', page.toString());
+      params.append('size', size.toString());
+      params.append('sortBy', sortBy);
+      params.append('sortDir', sortDir);
+
+      const response = await api.get(`/email-notifiers?${params.toString()}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar EmailNotifiers:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca um EmailNotifier específico por ID
+   * @param id ID do EmailNotifier
+   * @returns Promise com dados do EmailNotifier
+   */
+  getEmailNotifierById: async (id: string): Promise<EmailNotifierResponse> => {
+    try {
+      const response = await api.get(`/email-notifiers/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar EmailNotifier por ID:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Atualiza um EmailNotifier existente
+   * @param id ID do EmailNotifier a ser atualizado
+   * @param emailNotifierData Dados do EmailNotifier a ser atualizado
+   * @returns Promise com dados do EmailNotifier atualizado
+   */
+  updateEmailNotifier: async (id: string, emailNotifierData: UpdateEmailNotifierRequest): Promise<EmailNotifierResponse> => {
+    try {
+      const response = await api.put(`/email-notifiers/${id}`, emailNotifierData);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao atualizar EmailNotifier:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Remove um EmailNotifier
+   * @param id ID do EmailNotifier a ser removido
+   * @returns Promise de confirmação
+   */
+  deleteEmailNotifier: async (id: string): Promise<void> => {
+    try {
+      await api.delete(`/email-notifiers/${id}`);
+    } catch (error) {
+      console.error('❌ Erro ao remover EmailNotifier:', error);
       throw error;
     }
   }

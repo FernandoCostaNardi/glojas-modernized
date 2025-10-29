@@ -21,7 +21,6 @@ interface OperationFiltersProps {
  * Seguindo princípios de Clean Code com responsabilidade única
  */
 const OperationFilters: React.FC<OperationFiltersProps> = ({
-  filters,
   pendingFilters,
   onPendingFiltersChange,
   onApplyFilters,

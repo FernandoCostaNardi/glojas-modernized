@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useLayout } from '@/contexts/LayoutContext';
 import VendasDiarias from './VendasDiarias';
+import VendasMensais from './VendasMensais';
+import VendasAnuais from './VendasAnuais';
 
 /**
  * Interface para as propriedades do VendasTabs
@@ -120,27 +122,9 @@ const VendasTabs: React.FC<VendasTabsProps> = ({ className = '' }) => {
       case 'diarias':
         return <VendasDiarias />;
       case 'mensais':
-        return (
-          <div className="bg-white rounded-lg shadow-smart-md p-8 border border-smart-gray-100 text-center">
-            <div className="text-smart-gray-500 text-lg">
-              🚧 Vendas Mensais - Em desenvolvimento
-            </div>
-            <p className="text-smart-gray-400 mt-2">
-              Esta funcionalidade estará disponível em breve.
-            </p>
-          </div>
-        );
+        return <VendasMensais />;
       case 'anuais':
-        return (
-          <div className="bg-white rounded-lg shadow-smart-md p-8 border border-smart-gray-100 text-center">
-            <div className="text-smart-gray-500 text-lg">
-              🚧 Vendas Anuais - Em desenvolvimento
-            </div>
-            <p className="text-smart-gray-400 mt-2">
-              Esta funcionalidade estará disponível em breve.
-            </p>
-          </div>
-        );
+        return <VendasAnuais />;
       default:
         return <VendasDiarias />;
     }

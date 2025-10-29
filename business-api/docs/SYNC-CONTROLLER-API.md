@@ -623,3 +623,5 @@ curl -X GET "http://localhost:8089/api/business/sync/status" \
 **Última Atualização**: 28/08/2025  
 **Versão**: 1.0  
 **Responsável**: Equipe de Desenvolvimento Business API
+
+

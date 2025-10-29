@@ -68,6 +68,13 @@ const Settings: React.FC = () => {
       description: 'Gerenciar lojas do sistema e suas configurações',
       icon: '🏪',
       href: '/settings/stores'
+    },
+    {
+      id: 'email-notifiers',
+      title: 'Cadastro de Notificações por Email',
+      description: 'Gerenciar emails que receberão notificações de vendas',
+      icon: '📧',
+      href: '/settings/email-notifiers'
     }
   ];
 
@@ -111,6 +118,8 @@ const Settings: React.FC = () => {
       window.location.href = '/settings/operations';
     } else if (action.id === 'stores') {
       window.location.href = '/settings/stores';
+    } else if (action.id === 'email-notifiers') {
+      window.location.href = '/settings/email-notifiers';
     }
   };
 

@@ -13,6 +13,9 @@ export * from './eventOrigin';
 // Exportar tipos de Store
 export * from './store';
 
+// Exportar tipos de EmailNotifier
+export * from './emailNotifier';
+
 // =====================================================
 // TIPOS DE COMPONENTES UI
 // =====================================================

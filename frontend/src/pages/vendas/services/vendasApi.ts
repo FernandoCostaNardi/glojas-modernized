@@ -12,6 +12,24 @@ export interface DailySalesReportResponse {
   readonly total: number;
 }
 
+/**
+ * Interface para os dados de vendas mensais retornados pela API
+ */
+export interface MonthlySalesReportResponse {
+  readonly storeName: string;
+  readonly total: number;
+  readonly percentageOfTotal: number;
+}
+
+/**
+ * Interface para os dados de vendas anuais retornados pela API
+ */
+export interface YearlySalesReportResponse {
+  readonly storeName: string;
+  readonly total: number;
+  readonly percentageOfTotal: number;
+}
+
 // Usamos o cliente central `businessApi` cujo baseURL já aponta para /api/business
 
 /**
@@ -153,6 +171,142 @@ export const getChartDataWithMetrics = async (
     return response.data;
   } catch (error) {
     console.error('Erro ao buscar dados do gráfico com métricas:', error);
+    throw error;
+  }
+};
+
+/**
+ * Busca relatório de vendas mensais agregadas por loja
+ * @param startYearMonth - Ano/mês de início no formato YYYY-MM
+ * @param endYearMonth - Ano/mês de fim no formato YYYY-MM
+ * @returns Promise com array de dados de vendas mensais
+ * @throws Error em caso de falha na requisição
+ */
+export const getMonthlySalesReport = async (
+  startYearMonth: string, 
+  endYearMonth: string
+): Promise<MonthlySalesReportResponse[]> => {
+  try {
+    console.log(`Buscando relatório de vendas mensais: ${startYearMonth} até ${endYearMonth}`);
+    
+    const response = await businessApi.get('/sales/monthly-sales', {
+      params: { 
+        startYearMonth, 
+        endYearMonth 
+      }
+    });
+    
+    console.log(`Relatório mensal recebido: ${response.data.length} registros`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar relatório de vendas mensais:', error);
+    throw error;
+  }
+};
+
+/**
+ * Busca dados para gráfico de vendas mensais com métricas calculadas
+ * @param startYearMonth - Ano/mês de início no formato YYYY-MM
+ * @param endYearMonth - Ano/mês de fim no formato YYYY-MM
+ * @param storeCode - Código da loja específica (opcional)
+ * @returns Promise com dados do gráfico mensal e métricas calculadas
+ * @throws Error em caso de falha na requisição
+ */
+export const getMonthlyChartDataWithMetrics = async (
+  startYearMonth: string,
+  endYearMonth: string,
+  storeCode?: string
+): Promise<ChartDataWithMetricsResponse> => {
+  try {
+    console.log(`Buscando dados do gráfico mensal com métricas: ${startYearMonth} até ${endYearMonth}${storeCode ? ` para loja ${storeCode}` : ' (todas as lojas)'}`);
+    
+    const params: Record<string, string> = {
+      startYearMonth,
+      endYearMonth
+    };
+    
+    if (storeCode) {
+      params.storeCode = storeCode;
+    }
+    
+    const response = await businessApi.get('/sales/monthly-chart-data-with-metrics', {
+      params
+    });
+    
+    console.log(`Dados do gráfico mensal com métricas recebidos: ${response.data.chartData.length} pontos de dados`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar dados do gráfico mensal com métricas:', error);
+    throw error;
+  }
+};
+
+/**
+ * Busca relatório de vendas anuais
+ * @param startYear - Ano de início
+ * @param endYear - Ano de fim
+ * @returns Promise com array de dados de vendas anuais
+ * @throws Error em caso de falha na requisição
+ */
+export const getYearlySalesReport = async (
+  startYear: number,
+  endYear: number
+): Promise<YearlySalesReportResponse[]> => {
+  try {
+    console.log(`Buscando relatório de vendas anuais: ${startYear} até ${endYear}`);
+    
+    const response = await businessApi.get('/sales/yearly-sales', {
+      params: { 
+        startYear, 
+        endYear 
+      }
+    });
+    
+    console.log(`Relatório anual recebido: ${response.data.length} registros`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar relatório de vendas anuais:', error);
+    throw error;
+  }
+};
+
+/**
+ * Busca dados para gráfico de vendas anuais com métricas calculadas
+ * @param startYear - Ano de início
+ * @param endYear - Ano de fim
+ * @param storeCode - Código da loja específica (opcional)
+ * @returns Promise com dados do gráfico anual e métricas calculadas
+ * @throws Error em caso de falha na requisição
+ */
+export const getYearlyChartDataWithMetrics = async (
+  startYear: number,
+  endYear: number,
+  storeCode?: string
+): Promise<ChartDataWithMetricsResponse> => {
+  try {
+    console.log(`Buscando dados do gráfico anual com métricas: ${startYear} até ${endYear}${storeCode ? ` para loja ${storeCode}` : ' (todas as lojas)'}`);
+    
+    const params: Record<string, string> = {
+      startYear: startYear.toString(),
+      endYear: endYear.toString()
+    };
+    
+    if (storeCode) {
+      params.storeCode = storeCode;
+    }
+    
+    const response = await businessApi.get('/sales/yearly-chart-data-with-metrics', {
+      params
+    });
+    
+    console.log(`Dados do gráfico anual com métricas recebidos: ${response.data.chartData.length} pontos de dados`);
+    
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar dados do gráfico anual com métricas:', error);
     throw error;
   }
 };

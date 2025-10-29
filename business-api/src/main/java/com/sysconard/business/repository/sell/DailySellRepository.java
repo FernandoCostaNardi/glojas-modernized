@@ -132,4 +132,30 @@ public interface DailySellRepository extends JpaRepository<DailySell, UUID> {
         @Param("startDate") LocalDate startDate,
         @Param("endDate") LocalDate endDate
     );
+    
+    /**
+     * Busca vendas agregadas por loja e mês em um período específico.
+     * Utiliza agregação SQL para otimizar performance e retorna dados consolidados por mês.
+     * Utilizado para sincronização de vendas mensais.
+     * 
+     * @param startDate Data de início do período
+     * @param endDate Data de fim do período
+     * @return Lista de vendas agregadas por loja e mês
+     */
+    @Query(value = """
+        SELECT 
+            d.store_id,
+            d.store_code,
+            d.store_name,
+            TO_CHAR(d.date, 'YYYY-MM') as yearMonth,
+            SUM(d.total) as totalSum
+        FROM daily_sells d 
+        WHERE d.date BETWEEN :startDate AND :endDate
+        GROUP BY d.store_id, d.store_code, d.store_name, TO_CHAR(d.date, 'YYYY-MM')
+        ORDER BY d.store_code, TO_CHAR(d.date, 'YYYY-MM')
+        """, nativeQuery = true)
+    List<Object[]> findMonthlyAggregatedSalesByDateRange(
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate
+    );
 }

@@ -29,6 +29,9 @@ CREATE TABLE IF NOT EXISTS monthly_sells (
     -- Valor total das vendas mensais (NUMERIC com 15 dígitos, 2 decimais)
     total NUMERIC(15, 2) NOT NULL,
     
+    -- Ano e mês no formato YYYY-MM (VARCHAR com 7 caracteres)
+    year_month VARCHAR(7) NOT NULL,
+    
     -- Data e hora de criação do registro
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
@@ -52,6 +55,10 @@ ON monthly_sells(store_id);
 CREATE INDEX IF NOT EXISTS idx_monthly_sells_created_at 
 ON monthly_sells(created_at);
 
+-- Índice composto único para garantir unicidade por loja e mês
+CREATE UNIQUE INDEX IF NOT EXISTS idx_monthly_sells_store_year_month 
+ON monthly_sells(store_id, year_month);
+
 -- =====================================================
 -- COMENTÁRIOS NA TABELA E COLUNAS
 -- =====================================================
@@ -63,6 +70,7 @@ COMMENT ON COLUMN monthly_sells.store_code IS 'Código da loja para identificaç
 COMMENT ON COLUMN monthly_sells.store_id IS 'ID único da loja (referência)';
 COMMENT ON COLUMN monthly_sells.store_name IS 'Nome comercial da loja';
 COMMENT ON COLUMN monthly_sells.total IS 'Valor total consolidado das vendas mensais';
+COMMENT ON COLUMN monthly_sells.year_month IS 'Ano e mês no formato YYYY-MM para agrupamento';
 COMMENT ON COLUMN monthly_sells.created_at IS 'Data e hora de criação do registro';
 COMMENT ON COLUMN monthly_sells.updated_at IS 'Data e hora da última atualização do registro';
 
@@ -83,6 +91,13 @@ SELECT
 FROM information_schema.columns
 WHERE table_name = 'monthly_sells'
 ORDER BY ordinal_position;
+
+-- Verificar se o campo year_month foi criado
+SELECT 'Campo year_month criado com sucesso!' as status
+WHERE EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'monthly_sells' AND column_name = 'year_month'
+);
 
 -- Listar índices criados
 SELECT 

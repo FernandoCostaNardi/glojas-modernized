@@ -28,3 +28,5 @@ public record ChartDataWithMetricsResponse(
         chartData = chartData != null ? chartData : List.of();
     }
 }
+
+

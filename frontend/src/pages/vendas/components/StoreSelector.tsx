@@ -125,11 +125,11 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({
         }`}
       >
         <option value="">
-          📊 Todas as Lojas
+          Todas as Lojas
         </option>
         {stores.map((store) => (
           <option key={store.code} value={store.code}>
-            🏪 {store.name}
+            {store.name}
           </option>
         ))}
       </select>
