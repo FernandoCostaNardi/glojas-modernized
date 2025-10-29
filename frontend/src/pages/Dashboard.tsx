@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLayout } from '@/contexts/LayoutContext';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
+import DashboardSalesChart from './Dashboard/DashboardSalesChart';
+import { getDashboardSummary } from '@/services/dashboardApi';
+import { DashboardSummary, DashboardState } from '@/types/dashboard';
 
 /**
  * Página principal do Dashboard
@@ -12,69 +15,147 @@ import Sidebar from '@/components/layout/Sidebar';
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { isMobile } = useLayout();
+  
+  // Estado para dados do dashboard
+  const [dashboardState, setDashboardState] = useState<DashboardState>({
+    data: null,
+    loading: true,
+    error: null
+  });
 
   /**
-   * Renderiza estatísticas rápidas (placeholder)
+   * Carrega dados do dashboard ao montar o componente
    */
-  const renderQuickStats = (): React.ReactNode => (
-    <div className={`grid gap-4 mb-6 ${
-      isMobile 
-        ? 'grid-cols-1' 
-        : 'grid-cols-2 lg:grid-cols-4'
-    }`}>
-      {[
-        { title: 'Usuários Ativos', value: '248', icon: '👥', color: 'bg-blue-500' },
-        { title: 'Vendas Hoje', value: 'R$ 12.450', icon: '💰', color: 'bg-green-500' },
-        { title: 'Produtos', value: '1.024', icon: '📦', color: 'bg-purple-500' },
-        { title: 'Relatórios', value: '15', icon: '📊', color: 'bg-orange-500' },
-      ].map((stat, index) => (
-        <div key={index} className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
-          isMobile ? 'p-4' : 'p-6'
+  useEffect(() => {
+    const loadDashboardData = async (): Promise<void> => {
+      try {
+        setDashboardState(prev => ({ ...prev, loading: true, error: null }));
+        
+        const data = await getDashboardSummary();
+        
+        setDashboardState({
+          data,
+          loading: false,
+          error: null
+        });
+      } catch (error) {
+        setDashboardState({
+          data: null,
+          loading: false,
+          error: error instanceof Error ? error.message : 'Erro ao carregar dados do dashboard'
+        });
+      }
+    };
+
+    loadDashboardData();
+  }, []);
+
+  /**
+   * Formata valor monetário para exibição
+   */
+  const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(value);
+  };
+
+  /**
+   * Renderiza cards de métricas do dashboard
+   */
+  const renderDashboardStats = (): React.ReactNode => {
+    if (dashboardState.loading) {
+      return (
+        <div className={`grid gap-4 mb-6 ${
+          isMobile 
+            ? 'grid-cols-1' 
+            : 'grid-cols-2 lg:grid-cols-4'
         }`}>
-          <div className="flex items-center">
-            <div className={`${stat.color} rounded-lg p-3 text-white text-2xl mr-4`}>
-              {stat.icon}
+          {[1, 2, 3, 4].map((index) => (
+            <div key={index} className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
+              isMobile ? 'p-4' : 'p-6'
+            }`}>
+              <div className="animate-pulse">
+                <div className="flex items-center">
+                  <div className="bg-smart-gray-200 rounded-lg p-3 w-12 h-12 mr-4"></div>
+                  <div className="flex-1">
+                    <div className="h-4 bg-smart-gray-200 rounded mb-2"></div>
+                    <div className="h-8 bg-smart-gray-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
             </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (dashboardState.error) {
+      return (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+          <div className="flex items-center">
+            <div className="text-red-500 mr-3">⚠️</div>
             <div>
-              <h3 className="text-sm font-medium text-smart-gray-600">{stat.title}</h3>
-              <p className="text-2xl font-bold text-smart-gray-800">{stat.value}</p>
+              <h3 className="text-sm font-medium text-red-800">Erro ao carregar dados</h3>
+              <p className="text-sm text-red-600">{dashboardState.error}</p>
             </div>
           </div>
         </div>
-      ))}
-    </div>
-  );
+      );
+    }
 
-  /**
-   * Renderiza ações rápidas
-   */
-  const renderQuickActions = (): React.ReactNode => (
-    <div className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 mb-6 ${
-      isMobile ? 'p-4' : 'p-6'
-    }`}>
-      <h2 className={`font-semibold text-smart-gray-800 mb-4 ${
-        isMobile ? 'text-base' : 'text-lg'
-      }`}>Ações Rápidas</h2>
-      <div className={`grid gap-4 ${
-        isMobile ? 'grid-cols-1' : 'grid-cols-2 lg:grid-cols-3'
+    const stats = [
+      { 
+        title: 'Total Vendas Dia Atual', 
+        value: formatCurrency(dashboardState.data?.totalSalesToday || 0), 
+        icon: '💰', 
+        color: 'bg-green-500' 
+      },
+      { 
+        title: 'Total Vendas Mês Atual', 
+        value: formatCurrency(dashboardState.data?.totalSalesMonth || 0), 
+        icon: '📈', 
+        color: 'bg-blue-500' 
+      },
+      { 
+        title: 'Total Vendas Ano Atual', 
+        value: formatCurrency(dashboardState.data?.totalSalesYear || 0), 
+        icon: '📊', 
+        color: 'bg-purple-500' 
+      },
+      { 
+        title: 'Quantidade Lojas Ativas', 
+        value: (dashboardState.data?.activeStoresCount || 0).toString(), 
+        icon: '🏪', 
+        color: 'bg-orange-500' 
+      },
+    ];
+
+    return (
+      <div className={`grid gap-4 mb-6 ${
+        isMobile 
+          ? 'grid-cols-1' 
+          : 'grid-cols-2 lg:grid-cols-4'
       }`}>
-        {[
-          { title: 'Novo Produto', description: 'Cadastrar novo produto', icon: '➕' },
-          { title: 'Relatório de Vendas', description: 'Gerar relatório do dia', icon: '📈' },
-          { title: 'Gerenciar Usuários', description: 'Administrar usuários', icon: '⚙️' },
-        ].map((action, index) => (
-          <button
-            key={index}
-            className="p-4 border border-smart-gray-200 rounded-lg hover:bg-smart-gray-50 transition-colors duration-200 text-left"
-          >
-            <div className="text-2xl mb-2">{action.icon}</div>
-            <h3 className="font-medium text-smart-gray-800">{action.title}</h3>
-            <p className="text-sm text-smart-gray-600">{action.description}</p>
-          </button>
+        {stats.map((stat, index) => (
+          <div key={index} className={`bg-white rounded-lg shadow-smart-md border border-smart-gray-100 ${
+            isMobile ? 'p-4' : 'p-6'
+          }`}>
+            <div className="flex items-center">
+              <div className={`${stat.color} rounded-lg p-3 text-white text-2xl mr-4`}>
+                {stat.icon}
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-smart-gray-600">{stat.title}</h3>
+                <p className="text-2xl font-bold text-smart-gray-800">{stat.value}</p>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
-    </div>
-  );
+    );
+  };
+
 
   /**
    * Renderiza informações do usuário
@@ -146,8 +227,8 @@ const Dashboard: React.FC = () => {
         </p>
       </div>
 
-      {/* Conteúdo da dashboard */}
-      {renderQuickStats()}
+      {/* Cards de métricas do dashboard */}
+      {renderDashboardStats()}
       
       <div className={`grid gap-6 ${
         isMobile 
@@ -155,7 +236,7 @@ const Dashboard: React.FC = () => {
           : 'grid-cols-1 lg:grid-cols-3'
       }`}>
         <div className={isMobile ? '' : 'lg:col-span-2'}>
-          {renderQuickActions()}
+          <DashboardSalesChart />
         </div>
         <div>
           {renderUserInfo()}

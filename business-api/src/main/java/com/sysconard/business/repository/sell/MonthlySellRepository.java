@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -167,4 +168,14 @@ public interface MonthlySellRepository extends JpaRepository<MonthlySell, UUID> 
            "ORDER BY m.store_code",
            nativeQuery = true)
     List<Object[]> findYearlyAggregatedSalesByYear(@Param("year") Integer year);
+    
+    /**
+     * Soma total de vendas para um ano/mês específico.
+     * Utilizado para dashboard e métricas de vendas mensais.
+     * 
+     * @param yearMonth Ano/mês no formato YYYY-MM
+     * @return Soma total das vendas do período
+     */
+    @Query("SELECT COALESCE(SUM(m.total), 0) FROM MonthlySell m WHERE m.yearMonth = :yearMonth")
+    BigDecimal sumTotalByYearMonth(@Param("yearMonth") String yearMonth);
 }

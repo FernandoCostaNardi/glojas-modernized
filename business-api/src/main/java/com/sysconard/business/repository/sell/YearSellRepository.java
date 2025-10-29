@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -138,4 +139,14 @@ public interface YearSellRepository extends JpaRepository<YearSell, UUID> {
         @Param("startYear") Integer startYear,
         @Param("endYear") Integer endYear
     );
+    
+    /**
+     * Soma total de vendas para um ano específico.
+     * Utilizado para dashboard e métricas de vendas anuais.
+     * 
+     * @param year Ano para agregação
+     * @return Soma total das vendas do ano
+     */
+    @Query("SELECT COALESCE(SUM(y.total), 0) FROM YearSell y WHERE y.year = :year")
+    BigDecimal sumTotalByYear(@Param("year") Integer year);
 }
