@@ -26,6 +26,8 @@ import {
   EmailNotifierPageResponse,
   UpdateEmailNotifierRequest
 } from '@/types';
+import { StockPageResponse, StockFilters } from '@/types/stock';
+import { PurchaseAnalysisPageResponse, PurchaseAnalysisFilters } from '@/types/purchaseAnalysis';
 
 /**
  * Clientes Axios centralizados
@@ -781,6 +783,134 @@ export const emailNotifierService = {
       await api.delete(`/email-notifiers/${id}`);
     } catch (error) {
       console.error('❌ Erro ao remover EmailNotifier:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para operações de estoque
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const stockService = {
+  /**
+   * Busca estoque com filtros, paginação e ordenação
+   * @param filters Filtros de busca
+   * @returns Promise com resposta paginada de estoque
+   */
+  getStocks: async (filters: StockFilters): Promise<StockPageResponse> => {
+    try {
+      const params = new URLSearchParams();
+      
+      // Adicionar filtros opcionais
+      if (filters.refplu) {
+        params.append('refplu', filters.refplu);
+      }
+      if (filters.marca) {
+        params.append('marca', filters.marca);
+      }
+      if (filters.descricao) {
+        params.append('descricao', filters.descricao);
+      }
+      if (filters.hasStock !== undefined) {
+        params.append('hasStock', filters.hasStock.toString());
+      }
+      
+      // Adicionar parâmetros de paginação e ordenação
+      params.append('page', filters.page.toString());
+      params.append('size', filters.size.toString());
+      params.append('sortBy', filters.sortBy);
+      params.append('sortDir', filters.sortDir);
+
+      const response = await api.get(`/stocks?${params.toString()}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar estoque:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Testa conectividade com o serviço de estoque
+   * @returns Promise com status da conexão
+   */
+  testConnection: async (): Promise<{ status: string; service: string; timestamp: string; version: string }> => {
+    try {
+      const response = await api.get('/stocks/health');
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao testar conexão com estoque:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para análise de compras
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const purchaseAnalysisService = {
+  /**
+   * Busca análise de compras com filtros, paginação e ordenação
+   * @param filters Filtros de busca
+   * @returns Promise com resposta paginada de análise de compras
+   */
+  getPurchaseAnalysis: async (filters: PurchaseAnalysisFilters): Promise<PurchaseAnalysisPageResponse> => {
+    try {
+      const params = new URLSearchParams();
+      
+      // Adicionar filtros opcionais
+      if (filters.refplu) {
+        params.append('refplu', filters.refplu);
+      }
+      
+      // Adicionar filtro de produtos sem vendas (padrão true)
+      params.append('hideNoSales', (filters.hideNoSales ?? true).toString());
+      
+      // Adicionar parâmetros de paginação e ordenação
+      params.append('page', filters.page.toString());
+      params.append('size', filters.size.toString());
+      params.append('sortBy', filters.sortBy);
+      params.append('sortDir', filters.sortDir);
+
+      const response = await api.get(`/api/v1/purchase-analysis?${params.toString()}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar análise de compras:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para estoque crítico
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const criticalStockService = {
+  /**
+   * Busca produtos com estoque crítico (estoque < média mensal de vendas)
+   * @param filters Filtros de busca (sem hideNoSales)
+   * @returns Promise com resposta paginada de estoque crítico
+   */
+  getCriticalStock: async (filters: Omit<PurchaseAnalysisFilters, 'hideNoSales'>): Promise<PurchaseAnalysisPageResponse> => {
+    try {
+      const params = new URLSearchParams();
+
+      // Adicionar filtro opcional
+      if (filters.refplu) {
+        params.append('refplu', filters.refplu);
+      }
+
+      // Adicionar parâmetros de paginação e ordenação
+      params.append('page', filters.page.toString());
+      params.append('size', filters.size.toString());
+      params.append('sortBy', filters.sortBy);
+      params.append('sortDir', filters.sortDir);
+
+      const response = await api.get(`/api/v1/critical-stock?${params.toString()}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar estoque crítico:', error);
       throw error;
     }
   }

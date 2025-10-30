@@ -94,8 +94,13 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
    */
   const generateMonthSequence = (startYearMonth: string, endYearMonth: string): string[] => {
     const months: string[] = [];
-    const [startYear, startMonth] = startYearMonth.split('-').map(Number);
-    const [endYear, endMonth] = endYearMonth.split('-').map(Number);
+    const startParts = startYearMonth.split('-').map(Number);
+    const endParts = endYearMonth.split('-').map(Number);
+    
+    const startYear = startParts[0] ?? 0;
+    const startMonth = startParts[1] ?? 1;
+    const endYear = endParts[0] ?? 0;
+    const endMonth = endParts[1] ?? 12;
     
     let currentYear = startYear;
     let currentMonth = startMonth;
@@ -250,8 +255,8 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
         } else if (item.date.includes(',')) {
           // Se for formato "2025,1,1", converter para "2025-01"
           const parts = item.date.split(',');
-          const year = parts[0];
-          const month = parts[1].padStart(2, '0');
+          const year = parts[0] ?? '';
+          const month = (parts[1] ?? '1').padStart(2, '0');
           yearMonth = `${year}-${month}`;
         } else {
           yearMonth = item.date;
@@ -261,8 +266,8 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
         const dateStr = String(item.date);
         if (dateStr.includes(',')) {
           const parts = dateStr.split(',');
-          const year = parts[0];
-          const month = parts[1].padStart(2, '0');
+          const year = parts[0] ?? '';
+          const month = (parts[1] ?? '1').padStart(2, '0');
           yearMonth = `${year}-${month}`;
         } else {
           yearMonth = dateStr.length >= 7 ? dateStr.substring(0, 7) : dateStr;

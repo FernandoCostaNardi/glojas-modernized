@@ -5,7 +5,7 @@ import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import DashboardSalesChart from './Dashboard/DashboardSalesChart';
 import { getDashboardSummary } from '@/services/dashboardApi';
-import { DashboardSummary, DashboardState } from '@/types/dashboard';
+import { DashboardState } from '@/types/dashboard';
 
 /**
  * Página principal do Dashboard

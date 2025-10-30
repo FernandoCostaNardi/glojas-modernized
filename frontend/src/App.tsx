@@ -11,6 +11,8 @@ import EventOriginManagement from '@/pages/settings/EventOriginManagement';
 import StoreManagement from '@/pages/settings/StoreManagement';
 import EmailNotifierManagement from '@/pages/settings/EmailNotifierManagement';
 import VendasPage from '@/pages/vendas/VendasPage';
+import Estoque from '@/pages/estoque/Estoque';
+import AnaliseCompras from '@/pages/analise-compras/AnaliseCompras';
 import Login from '@/pages/Login';
 
 /**
@@ -100,8 +102,24 @@ const AppContent: React.FC = () => {
 
   if (currentPath === '/vendas') {
     return (
-      <ProtectedRoute>
+      <ProtectedRoute requiredPermission="sell:read">
         <VendasPage />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/estoque') {
+    return (
+      <ProtectedRoute requiredPermission="stock:read">
+        <Estoque />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/analise-compras') {
+    return (
+      <ProtectedRoute requiredPermission="buy:read">
+        <AnaliseCompras />
       </ProtectedRoute>
     );
   }

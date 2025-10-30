@@ -45,7 +45,7 @@ const DashboardSalesChart: React.FC<DashboardSalesChartProps> = ({
   /**
    * Callback para métricas do gráfico (não utilizado no dashboard)
    */
-  const handleChartMetricsChange = (metrics: any): void => {
+  const handleChartMetricsChange = (_metrics: any): void => {
     // No dashboard, não precisamos das métricas do gráfico
     // pois já temos os cards de métricas principais
   };

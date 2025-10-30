@@ -17,7 +17,7 @@ interface HeaderProps {
  */
 const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   const { user, logout, hasPermission } = useAuth();
-  const { isMobile, isDesktop, isSidebarCollapsed, toggleSidebar } = useLayout();
+  const { isMobile, toggleSidebar } = useLayout();
   
   // Usar a prop se fornecida, senão usar do contexto
   // const finalIsSidebarCollapsed = propIsSidebarCollapsed !== undefined ? propIsSidebarCollapsed : isSidebarCollapsed;
@@ -190,23 +190,9 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
   return (
     <header className={headerClasses}>
-      {/* Lado esquerdo: Hamburger + Logo */}
+      {/* Lado esquerdo: Hamburger */}
       <div className="flex items-center">
         {renderHamburgerButton()}
-        
-        <div className="flex items-center">
-          <img 
-            src="/logoheader.png" 
-            alt="Smart Eletron" 
-            className={`w-auto object-contain ${
-              isMobile 
-                ? 'h-10' 
-                : isDesktop && !isSidebarCollapsed 
-                  ? 'h-12' 
-                  : 'h-10'
-            }`}
-          />
-        </div>
       </div>
 
       {/* Lado direito: Configurações + Menu usuário */}
