@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +37,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class StockService {
+
+    private static final int MAX_SEARCH_WORDS = 5;
 
     private final StockRepository stockRepository;
 
@@ -160,8 +163,21 @@ public class StockService {
      * @return StockFilters configurado
      */
     private StockFilters createStockFilters(String refplu, String marca, String descricao) {
-        // Processa múltiplas palavras na descrição
-        List<String> descricaoWords = splitIntoWords(descricao);
+        List<String> words = splitIntoWords(descricao);
+
+        String[] wordLikes = new String[MAX_SEARCH_WORDS];
+        for (int i = 0; i < MAX_SEARCH_WORDS; i++) {
+            if (i < words.size()) {
+                wordLikes[i] = "%" + words.get(i) + "%";
+            } else {
+                wordLikes[i] = null;
+            }
+        }
+
+        String lettersPattern = buildLettersPattern(descricao, words);
+        if (lettersPattern != null && words.size() == 1) {
+            wordLikes[0] = null;
+        }
         
         return StockFilters.builder()
                 .refplu(refplu)
@@ -169,10 +185,12 @@ public class StockService {
                 .descricao(descricao)
                 .refpluFilter(createLikeFilter(refplu))
                 .marcaFilter(createLikeFilter(marca))
-                .descricaoFilter(createContainedLettersFilter(descricao))
-                .grupoFilter(createContainedLettersFilter(descricao))
-                .descricaoWords(descricaoWords.isEmpty() ? null : String.join("|", descricaoWords))
-                .grupoWords(descricaoWords.isEmpty() ? null : String.join("|", descricaoWords))
+                .word1(wordLikes[0])
+                .word2(wordLikes[1])
+                .word3(wordLikes[2])
+                .word4(wordLikes[3])
+                .word5(wordLikes[4])
+                .lettersPattern(lettersPattern)
                 .build();
     }
     
@@ -191,6 +209,40 @@ public class StockService {
     }
 
     /**
+     * Cria padrão de letras contidas para buscas abreviadas (ex: NTB -> %N%T%B%)
+     *
+     * @param value Valor original informado na descrição
+     * @param words Palavras processadas a partir do valor
+     * @return Padrão de letras contidas ou null se não aplicável
+     */
+    private String buildLettersPattern(String value, List<String> words) {
+        if (!StringUtils.hasText(value) || words.size() != 1) {
+            return null;
+        }
+
+        String sanitized = value.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
+        if (sanitized.length() < 2 || sanitized.length() > 5) {
+            return null;
+        }
+
+        boolean hasVowel = sanitized.chars()
+                .mapToObj(c -> (char) c)
+                .anyMatch(c -> "AEIOU".indexOf(c) >= 0);
+        if (hasVowel) {
+            return null;
+        }
+
+        StringBuilder pattern = new StringBuilder("%");
+        for (char c : sanitized.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                pattern.append(c).append("%");
+            }
+        }
+
+        return pattern.length() > 1 ? pattern.toString() : null;
+    }
+
+    /**
      * Cria filtro LIKE para busca no banco
      * 
      * @param value Valor para filtrar
@@ -198,35 +250,6 @@ public class StockService {
      */
     private String createLikeFilter(String value) {
         return StringUtils.hasText(value) ? "%" + value + "%" : null;
-    }
-
-    /**
-     * Cria filtro de busca por letras contidas
-     * Transforma "NTB" em "%N%T%B%" para buscar palavras que contenham essas letras na ordem
-     * Exemplo: "NTB" encontra "notebook", "NTB123", etc.
-     * 
-     * @param value Valor para filtrar
-     * @return Filtro LIKE com letras contidas ou null se valor for nulo/vazio
-     */
-    private String createContainedLettersFilter(String value) {
-        if (!StringUtils.hasText(value)) {
-            return null;
-        }
-        
-        // Remove espaços e converte para maiúsculo para busca case-insensitive
-        String cleaned = value.trim().toUpperCase();
-        
-        // Transforma cada letra em "%LETRA%"
-        // Exemplo: "NTB" -> "%N%T%B%"
-        StringBuilder filter = new StringBuilder();
-        for (char c : cleaned.toCharArray()) {
-            if (Character.isLetterOrDigit(c)) {
-                filter.append("%").append(c);
-            }
-        }
-        filter.append("%");
-        
-        return filter.toString();
     }
 
     /**
@@ -247,7 +270,8 @@ public class StockService {
         return stockRepository.findStocksWithFilters(
                 filters.getRefplu(), filters.getMarca(), filters.getDescricao(),
                 filters.getRefpluFilter(), filters.getMarcaFilter(),
-                filters.getDescricaoWords(), filters.getGrupoWords(),
+                filters.getWord1(), filters.getWord2(), filters.getWord3(), filters.getWord4(), filters.getWord5(),
+                filters.getLettersPattern(),
                 hasStock, sortBy, sortDir, offset, pageable.getPageSize()
         );
     }
@@ -263,7 +287,8 @@ public class StockService {
         return stockRepository.countStocksWithFilters(
                 filters.getRefplu(), filters.getMarca(), filters.getDescricao(),
                 filters.getRefpluFilter(), filters.getMarcaFilter(),
-                filters.getDescricaoWords(), filters.getGrupoWords(),
+                filters.getWord1(), filters.getWord2(), filters.getWord3(), filters.getWord4(), filters.getWord5(),
+                filters.getLettersPattern(),
                 hasStock
         );
     }
@@ -388,10 +413,12 @@ public class StockService {
         private String descricao;
         private String refpluFilter;
         private String marcaFilter;
-        private String descricaoFilter;
-        private String grupoFilter;
-        private String descricaoWords;
-        private String grupoWords;
+        private String word1;
+        private String word2;
+        private String word3;
+        private String word4;
+        private String word5;
+        private String lettersPattern;
     }
     
     /**

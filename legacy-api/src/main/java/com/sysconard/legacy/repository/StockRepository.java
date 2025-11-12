@@ -27,8 +27,12 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
      * @param descricao Filtro por descrição (opcional)
      * @param refpluFilter Filtro LIKE para refplu
      * @param marcaFilter Filtro LIKE para marca
-     * @param descricaoFilter Filtro LIKE para descrição (busca em descrição, marca e grupo)
-     * @param grupoFilter Filtro LIKE para grupo (usado quando descrição é informada)
+     * @param word1 Palavra normalizada para busca (opcional)
+     * @param word2 Palavra normalizada para busca (opcional)
+     * @param word3 Palavra normalizada para busca (opcional)
+     * @param word4 Palavra normalizada para busca (opcional)
+     * @param word5 Palavra normalizada para busca (opcional)
+     * @param lettersPattern Padrão de letras contidas para buscas abreviadas (opcional)
      * @param hasStock Filtrar apenas produtos com estoque total > 0 (padrão: true)
      * @param offset Offset para paginação
      * @param size Tamanho da página
@@ -69,13 +73,17 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "COALESCE(MAX(CASE WHEN e.lojcod = 14 THEN e.esttot ELSE 0 END), 0) AS total, " +
             "ROW_NUMBER() OVER (" +
             "ORDER BY " +
-            "CASE WHEN :descricaoWords IS NOT NULL THEN " +
-            "CASE WHEN (" +
-            "UPPER(' ' + p.prodes + ' ') LIKE '% ' + SUBSTRING(:descricaoWords, 1, CASE WHEN CHARINDEX('|', :descricaoWords) > 0 THEN CHARINDEX('|', :descricaoWords) - 1 ELSE LEN(:descricaoWords) END) + ' %' OR " +
-            "UPPER(' ' + m.mardes + ' ') LIKE '% ' + SUBSTRING(:descricaoWords, 1, CASE WHEN CHARINDEX('|', :descricaoWords) > 0 THEN CHARINDEX('|', :descricaoWords) - 1 ELSE LEN(:descricaoWords) END) + ' %' OR " +
-            "UPPER(' ' + g.grpdes + ' ') LIKE '% ' + SUBSTRING(:descricaoWords, 1, CASE WHEN CHARINDEX('|', :descricaoWords) > 0 THEN CHARINDEX('|', :descricaoWords) - 1 ELSE LEN(:descricaoWords) END) + ' %'" +
-            ") THEN 0 ELSE 1 END " +
-            "ELSE 0 END ASC, " +
+            "CASE " +
+            "WHEN :descricao IS NULL THEN 0 " +
+            "WHEN :word1 IS NOT NULL AND (" +
+            "UPPER(p.prodes) LIKE :word1 OR UPPER(m.mardes) LIKE :word1 OR UPPER(g.grpdes) LIKE :word1" +
+            ") THEN 0 " +
+            "WHEN :lettersPattern IS NOT NULL AND (" +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(p.prodes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern OR " +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(m.mardes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern OR " +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(g.grpdes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern" +
+            ") THEN 0 " +
+            "ELSE 1 END, " +
             "CASE WHEN :sortDir = 'asc' THEN " +
             "CASE WHEN :sortBy = 'refplu' THEN r.refplu " +
             "WHEN :sortBy = 'marca' THEN m.mardes " +
@@ -153,10 +161,45 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "WHERE (:refplu IS NULL OR r.refplu LIKE :refpluFilter) " +
             "AND (:marca IS NULL OR m.mardes LIKE :marcaFilter) " +
             "AND (:descricao IS NULL OR (" +
-            "(:descricaoWords IS NULL OR (" +
-            "(UPPER(p.prodes) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
-            "UPPER(m.mardes) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
-            "UPPER(g.grpdes) LIKE '%' + REPLACE(:grupoWords, '|', '%') + '%')" +
+            "(:word1 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word1 OR UPPER(m.mardes) LIKE :word1 OR UPPER(g.grpdes) LIKE :word1" +
+            ")) " +
+            "AND (:word2 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word2 OR UPPER(m.mardes) LIKE :word2 OR UPPER(g.grpdes) LIKE :word2" +
+            ")) " +
+            "AND (:word3 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word3 OR UPPER(m.mardes) LIKE :word3 OR UPPER(g.grpdes) LIKE :word3" +
+            ")) " +
+            "AND (:word4 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word4 OR UPPER(m.mardes) LIKE :word4 OR UPPER(g.grpdes) LIKE :word4" +
+            ")) " +
+            "AND (:word5 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word5 OR UPPER(m.mardes) LIKE :word5 OR UPPER(g.grpdes) LIKE :word5" +
+            ")) " +
+            "AND (:lettersPattern IS NULL OR (" +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(p.prodes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern OR " +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(m.mardes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern OR " +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(g.grpdes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern" +
+            "))" +
+            "(:word1 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word1 OR UPPER(m.mardes) LIKE :word1 OR UPPER(g.grpdes) LIKE :word1" +
+            ")) " +
+            "AND (:word2 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word2 OR UPPER(m.mardes) LIKE :word2 OR UPPER(g.grpdes) LIKE :word2" +
+            ")) " +
+            "AND (:word3 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word3 OR UPPER(m.mardes) LIKE :word3 OR UPPER(g.grpdes) LIKE :word3" +
+            ")) " +
+            "AND (:word4 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word4 OR UPPER(m.mardes) LIKE :word4 OR UPPER(g.grpdes) LIKE :word4" +
+            ")) " +
+            "AND (:word5 IS NULL OR (" +
+            "UPPER(p.prodes) LIKE :word5 OR UPPER(m.mardes) LIKE :word5 OR UPPER(g.grpdes) LIKE :word5" +
+            ")) " +
+            "AND (:lettersPattern IS NULL OR (" +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(p.prodes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern OR " +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(m.mardes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern OR " +
+            "REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(UPPER(g.grpdes), ' ', ''), '-', ''), '/', ''), '.', ''), ',', ''), '_', '') LIKE :lettersPattern" +
             "))" +
             ")) " +
             "GROUP BY r.refplu, m.mardes, p.prodes, g.grpdes " +
@@ -246,8 +289,12 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             @Param("descricao") String descricao,
             @Param("refpluFilter") String refpluFilter,
             @Param("marcaFilter") String marcaFilter,
-            @Param("descricaoWords") String descricaoWords,
-            @Param("grupoWords") String grupoWords,
+            @Param("word1") String word1,
+            @Param("word2") String word2,
+            @Param("word3") String word3,
+            @Param("word4") String word4,
+            @Param("word5") String word5,
+            @Param("lettersPattern") String lettersPattern,
             @Param("hasStock") Boolean hasStock
     );
     
@@ -307,6 +354,7 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "INNER JOIN referencia r ON e.refplu = r.refplu " +
             "INNER JOIN produto p ON r.procod = p.procod " +
             "INNER JOIN marca m ON p.marcod = m.marcod " +
+            "INNER JOIN grupo g ON p.grpcod = g.grpcod " +
             "GROUP BY r.refplu, m.mardes, p.prodes, g.grpdes " +
             "ORDER BY r.refplu",
             nativeQuery = true)
