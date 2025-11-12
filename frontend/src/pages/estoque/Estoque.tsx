@@ -43,7 +43,8 @@ const Estoque: React.FC<EstoqueProps> = () => {
 
   /**
    * Carrega os nomes das lojas ativas do sistema
-   * Cria um mapeamento de número da loja (1-14) para nome da loja
+   * Cria um mapeamento de número da loja para nome da loja
+   * Ordena as lojas por código antes de criar o mapeamento para garantir ordem consistente
    */
   const loadStores = async (): Promise<void> => {
     try {
@@ -52,6 +53,13 @@ const Estoque: React.FC<EstoqueProps> = () => {
       
       // Filtrar apenas lojas ativas
       const activeStores = allStores.filter((store: any) => store.status === true);
+      
+      // Ordenar lojas por código (número) para garantir ordem consistente
+      activeStores.sort((a: any, b: any) => {
+        const codeA = parseInt(a.code, 10);
+        const codeB = parseInt(b.code, 10);
+        return codeA - codeB;
+      });
       
       // Criar mapeamento: número da loja → nome da loja
       const storeMap = new Map<number, string>();
@@ -62,7 +70,7 @@ const Estoque: React.FC<EstoqueProps> = () => {
       });
       
       setStores(storeMap);
-      console.log(`✅ Lojas carregadas: ${storeMap.size}`);
+      console.log(`✅ Lojas carregadas: ${storeMap.size} (ordenadas por código)`);
       
     } catch (err) {
       console.error('❌ Erro ao carregar lojas:', err);
@@ -72,16 +80,18 @@ const Estoque: React.FC<EstoqueProps> = () => {
   };
 
   /**
-   * Carrega dados de estoque com os filtros atuais
+   * Carrega dados de estoque com os filtros fornecidos
+   * @param stockFilters Filtros a serem usados (opcional, usa filters do estado se não fornecido)
    */
-  const loadStocks = async (): Promise<void> => {
+  const loadStocks = async (stockFilters?: StockFilters): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
       
-      console.log('Carregando estoque com filtros:', filters);
+      const filtersToUse = stockFilters || filters;
+      console.log('Carregando estoque com filtros:', filtersToUse);
       
-      const response = await stockService.getStocks(filters);
+      const response = await stockService.getStocks(filtersToUse);
       setData(response);
       
       console.log(`Estoque carregado: ${response.content.length} itens de ${response.pagination.totalElements} total`);
@@ -124,8 +134,9 @@ const Estoque: React.FC<EstoqueProps> = () => {
    * Executa busca com os filtros atuais
    */
   const handleSearch = (): void => {
-    setFilters(prev => ({ ...prev, page: 0 })); // Reset para primeira página
-    loadStocks();
+    const newFilters = { ...filters, page: 0 }; // Reset para primeira página
+    setFilters(newFilters);
+    loadStocks(newFilters); // Passar os novos filtros diretamente
   };
 
   /**
@@ -141,7 +152,7 @@ const Estoque: React.FC<EstoqueProps> = () => {
     };
     setFilters(clearedFilters);
     setShowOnlyWithStock(true);
-    loadStocks();
+    loadStocks(clearedFilters); // Passar os filtros limpos diretamente
   };
 
   /**
@@ -152,6 +163,7 @@ const Estoque: React.FC<EstoqueProps> = () => {
     setShowOnlyWithStock(checked);
     const newFilters = { ...filters, hasStock: checked, page: 0 }; // Reset para primeira página
     setFilters(newFilters);
+    loadStocks(newFilters); // Passar os novos filtros diretamente
   };
 
   /**
@@ -161,7 +173,7 @@ const Estoque: React.FC<EstoqueProps> = () => {
   const handlePageChange = (page: number): void => {
     const newFilters = { ...filters, page };
     setFilters(newFilters);
-    loadStocks();
+    loadStocks(newFilters); // Passar os novos filtros diretamente
   };
 
   /**
@@ -169,9 +181,11 @@ const Estoque: React.FC<EstoqueProps> = () => {
    * @param size Novo tamanho
    */
   const handleSizeChange = (size: number): void => {
+    console.log(`🔄 Alterando tamanho da página de ${filters.size} para ${size}`);
     const newFilters = { ...filters, size, page: 0 }; // Reset para primeira página
+    console.log('🔄 Novos filtros:', newFilters);
     setFilters(newFilters);
-    loadStocks();
+    loadStocks(newFilters); // Passar os novos filtros diretamente
   };
 
   /**
@@ -182,7 +196,7 @@ const Estoque: React.FC<EstoqueProps> = () => {
   const handleSortChange = (sortBy: string, sortDir: 'asc' | 'desc'): void => {
     const newFilters = { ...filters, sortBy, sortDir, page: 0 }; // Reset para primeira página
     setFilters(newFilters);
-    loadStocks();
+    loadStocks(newFilters); // Passar os novos filtros diretamente
   };
 
   /**
@@ -252,6 +266,7 @@ const Estoque: React.FC<EstoqueProps> = () => {
         pageSize={filters.size}
         sortBy={filters.sortBy}
         sortDir={filters.sortDir}
+        isMobile={isMobile}
       />
     </main>
   );

@@ -234,6 +234,9 @@ public class LegacyApiClient {
      * Busca análise de compras na Legacy API com filtros e paginação
      * 
      * @param refplu Filtro por refplu (opcional)
+     * @param descricao Filtro por descrição (opcional)
+     * @param grupo Filtro por grupo (opcional)
+     * @param marca Filtro por marca (opcional)
      * @param hideNoSales Ocultar produtos sem vendas nos últimos 90 dias
      * @param page Número da página (0-based)
      * @param size Tamanho da página
@@ -243,10 +246,10 @@ public class LegacyApiClient {
      * @throws RuntimeException Se houver erro na comunicação
      */
     public PurchaseAnalysisPageResponseDTO getPurchaseAnalysis(
-            String refplu, Boolean hideNoSales, Integer page, Integer size, String sortBy, String sortDir) {
+            String refplu, String descricao, String grupo, String marca, Boolean hideNoSales, Integer page, Integer size, String sortBy, String sortDir) {
         
-        log.info("Buscando análise de compras na Legacy API - hideNoSales: {}, página: {}, tamanho: {}", 
-                hideNoSales, page, size);
+        log.info("Buscando análise de compras na Legacy API - refplu: {}, descricao: {}, grupo: {}, marca: {}, hideNoSales: {}, página: {}, tamanho: {}", 
+                refplu, descricao, grupo, marca, hideNoSales, page, size);
         
         try {
             return legacyApiWebClient
@@ -264,6 +267,15 @@ public class LegacyApiClient {
                         // Adicionar filtros opcionais
                         if (refplu != null && !refplu.trim().isEmpty()) {
                             builder.queryParam("refplu", refplu);
+                        }
+                        if (descricao != null && !descricao.trim().isEmpty()) {
+                            builder.queryParam("descricao", descricao);
+                        }
+                        if (grupo != null && !grupo.trim().isEmpty()) {
+                            builder.queryParam("grupo", grupo);
+                        }
+                        if (marca != null && !marca.trim().isEmpty()) {
+                            builder.queryParam("marca", marca);
                         }
                         
                         return builder.build();
@@ -408,6 +420,9 @@ public class LegacyApiClient {
      * Busca produtos com estoque crítico na Legacy API.
      * 
      * @param refplu Filtro por refplu (opcional)
+     * @param descricao Filtro por descrição (opcional)
+     * @param grupo Filtro por grupo (opcional)
+     * @param marca Filtro por marca (opcional)
      * @param page Número da página (0-based)
      * @param size Tamanho da página
      * @param sortBy Campo para ordenação
@@ -416,9 +431,10 @@ public class LegacyApiClient {
      * @throws RuntimeException Se houver erro na comunicação
      */
     public CriticalStockPageResponseDTO getCriticalStock(
-            String refplu, Integer page, Integer size, String sortBy, String sortDir) {
+            String refplu, String descricao, String grupo, String marca, Integer page, Integer size, String sortBy, String sortDir) {
         
-        log.info("Buscando estoque crítico na Legacy API - página: {}, tamanho: {}", page, size);
+        log.info("Buscando estoque crítico na Legacy API - refplu: {}, descricao: {}, grupo: {}, marca: {}, página: {}, tamanho: {}", 
+                refplu, descricao, grupo, marca, page, size);
         
         try {
             return legacyApiWebClient
@@ -435,6 +451,15 @@ public class LegacyApiClient {
                         // Adicionar filtros opcionais
                         if (refplu != null && !refplu.trim().isEmpty()) {
                             builder.queryParam("refplu", refplu);
+                        }
+                        if (descricao != null && !descricao.trim().isEmpty()) {
+                            builder.queryParam("descricao", descricao);
+                        }
+                        if (grupo != null && !grupo.trim().isEmpty()) {
+                            builder.queryParam("grupo", grupo);
+                        }
+                        if (marca != null && !marca.trim().isEmpty()) {
+                            builder.queryParam("marca", marca);
                         }
                         
                         return builder.build();

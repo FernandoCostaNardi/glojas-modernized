@@ -63,57 +63,57 @@ const SalesMetricsCards: React.FC<SalesMetricsCardsProps> = ({
   };
 
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 ${className}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 mb-6 ${className}`}>
       {/* Card 1: Total de Lojas Ativas */}
-      <div className="bg-white rounded-lg shadow-lg p-6 animate-fade-in">
+      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 animate-fade-in">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-smart-gray-600 mb-1">Total de Lojas Ativas</p>
-            <p className="text-3xl font-bold text-smart-gray-900">{data.totalActiveStores}</p>
+            <p className="text-xs md:text-sm text-smart-gray-600 mb-1">Total de Lojas Ativas</p>
+            <p className="text-2xl md:text-3xl font-bold text-smart-gray-900">{data.totalActiveStores}</p>
           </div>
-          <Store className="h-12 w-12 text-smart-gray-400" />
+          <Store className="h-8 w-8 md:h-12 md:w-12 text-smart-gray-400" />
         </div>
       </div>
 
       {/* Card 2: Melhor Dia/Mês */}
-      <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-smart-orange-500 animate-fade-in">
+      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 border-l-4 border-smart-orange-500 animate-fade-in">
         <div className="flex items-center space-x-3">
-          <Trophy className="h-8 w-8 text-smart-orange-500" />
-          <div>
+          <Trophy className="h-6 w-6 md:h-8 md:w-8 text-smart-orange-500 flex-shrink-0" />
+          <div className="min-w-0 flex-1">
             <p className="text-xs text-smart-gray-600 mb-1">{bestLabel}</p>
             {data.bestDay ? (
               <>
-                <p className="text-sm font-semibold text-smart-gray-900">
+                <p className="text-xs md:text-sm font-semibold text-smart-gray-900">
                   {formatDate(data.bestDay.date)}
                 </p>
-                <p className="text-lg font-bold text-smart-orange-600">
+                <p className="text-base md:text-lg font-bold text-smart-orange-600">
                   {formatCurrency(data.bestDay.value)}
                 </p>
               </>
             ) : (
-              <p className="text-sm text-smart-gray-500">Nenhum dado disponível</p>
+              <p className="text-xs md:text-sm text-smart-gray-500">Nenhum dado disponível</p>
             )}
           </div>
         </div>
       </div>
 
       {/* Card 3: Pior Dia/Mês */}
-      <div className="bg-white rounded-lg shadow-lg p-6 border-l-4 border-error-500 animate-fade-in">
+      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 border-l-4 border-error-500 animate-fade-in">
         <div className="flex items-center space-x-3">
-          <AlertTriangle className="h-8 w-8 text-error-500" />
-          <div>
+          <AlertTriangle className="h-6 w-6 md:h-8 md:w-8 text-error-500 flex-shrink-0" />
+          <div className="min-w-0 flex-1">
             <p className="text-xs text-smart-gray-600 mb-1">{worstLabel}</p>
             {data.worstDay ? (
               <>
-                <p className="text-sm font-semibold text-smart-gray-900">
+                <p className="text-xs md:text-sm font-semibold text-smart-gray-900">
                   {formatDate(data.worstDay.date)}
                 </p>
-                <p className="text-lg font-bold text-error-600">
+                <p className="text-base md:text-lg font-bold text-error-600">
                   {formatCurrency(data.worstDay.value)}
                 </p>
               </>
             ) : (
-              <p className="text-sm text-smart-gray-500">Nenhum dado disponível</p>
+              <p className="text-xs md:text-sm text-smart-gray-500">Nenhum dado disponível</p>
             )}
           </div>
         </div>

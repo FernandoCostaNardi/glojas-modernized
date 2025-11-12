@@ -1,5 +1,6 @@
 import React from 'react';
 import { StockItem, StockPageResponse, PAGE_SIZES } from '@/types/stock';
+import StockCardList from './StockCardList';
 
 /**
  * Interface para as propriedades do StockTable
@@ -16,6 +17,7 @@ interface StockTableProps {
   readonly pageSize: number;
   readonly sortBy: string;
   readonly sortDir: 'asc' | 'desc';
+  readonly isMobile?: boolean;
 }
 
 /**
@@ -34,8 +36,11 @@ const StockTable: React.FC<StockTableProps> = ({
   currentPage: _currentPage,
   pageSize,
   sortBy,
-  sortDir
+  sortDir,
+  isMobile = false
 }) => {
+  // Log para debug - verificar o pageSize recebido
+  console.log(`📏 StockTable recebeu pageSize: ${pageSize}`);
   /**
    * Manipula clique em header para ordenação
    * @param column Nome da coluna
@@ -156,7 +161,7 @@ const StockTable: React.FC<StockTableProps> = ({
 
   /**
    * Obtém o nome da loja baseado no número
-   * @param storeNumber Número da loja (1-14)
+   * @param storeNumber Número da loja
    * @returns Nome da loja ou nome genérico se não encontrado
    */
   const getStoreName = (storeNumber: number): string => {
@@ -164,107 +169,115 @@ const StockTable: React.FC<StockTableProps> = ({
   };
 
   /**
-   * Renderiza o cabeçalho da tabela com controles de ordenação
+   * Obtém lista de números de lojas ordenados
+   * @returns Array de números de lojas ordenados
    */
-  const renderTableHeader = (): React.ReactNode => (
-    <thead className="bg-smart-gray-50">
-      <tr>
-        <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300">
-          RefPLU
-        </th>
-        <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300">
-          Marca
-        </th>
-        <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300">
-          Descrição
-        </th>
-        {Array.from({ length: 14 }, (_, i) => {
-          const storeNumber = i + 1;
-          const storeName = getStoreName(storeNumber);
-          const columnName = `loj${storeNumber}`;
-          
-          return (
-            <React.Fragment key={storeNumber}>
-              {renderSortableHeader(
-                columnName,
-                storeName,
-                "px-2 py-3 text-center text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300"
-              )}
-            </React.Fragment>
-          );
-        })}
-        {renderSortableHeader(
-          'total',
-          'Total',
-          'px-4 py-3 text-center text-xs font-medium text-smart-gray-500 uppercase tracking-wider bg-smart-gray-100'
-        )}
-      </tr>
-    </thead>
-  );
+  const getSortedStoreNumbers = (): number[] => {
+    return Array.from(storeNames.keys()).sort((a, b) => a - b);
+  };
+
+  /**
+   * Renderiza o cabeçalho da tabela com controles de ordenação
+   * Renderiza colunas dinamicamente baseado nas lojas carregadas
+   */
+  const renderTableHeader = (): React.ReactNode => {
+    const sortedStoreNumbers = getSortedStoreNumbers();
+    
+    return (
+      <thead className="bg-smart-gray-50">
+        <tr>
+          <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300">
+            RefPLU
+          </th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300">
+            Marca
+          </th>
+          <th className="px-4 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300">
+            Descrição
+          </th>
+          {sortedStoreNumbers.map((storeNumber) => {
+            const storeName = getStoreName(storeNumber);
+            const columnName = `loj${storeNumber}`;
+            
+            return (
+              <React.Fragment key={storeNumber}>
+                {renderSortableHeader(
+                  columnName,
+                  storeName,
+                  "px-2 py-3 text-center text-xs font-medium text-smart-gray-500 uppercase tracking-wider border-r border-smart-gray-300"
+                )}
+              </React.Fragment>
+            );
+          })}
+          {renderSortableHeader(
+            'total',
+            'Total',
+            'px-4 py-3 text-center text-xs font-medium text-smart-gray-500 uppercase tracking-wider bg-smart-gray-100'
+          )}
+        </tr>
+      </thead>
+    );
+  };
+
+  /**
+   * Obtém o valor de estoque de uma loja específica do item
+   * @param item Item de estoque
+   * @param storeNumber Número da loja
+   * @returns Valor do estoque ou null
+   */
+  const getStoreQuantity = (item: StockItem, storeNumber: number): number | null => {
+    // Mapear número da loja para propriedade do item (loj1, loj2, etc.)
+    const propertyMap: { [key: number]: keyof StockItem } = {
+      1: 'loj1', 2: 'loj2', 3: 'loj3', 4: 'loj4', 5: 'loj5',
+      6: 'loj6', 7: 'loj7', 8: 'loj8', 9: 'loj9', 10: 'loj10',
+      11: 'loj11', 12: 'loj12', 13: 'loj13', 14: 'loj14'
+    };
+    
+    const property = propertyMap[storeNumber];
+    if (property) {
+      const value = item[property];
+      return typeof value === 'number' ? value : null;
+    }
+    return null;
+  };
 
   /**
    * Renderiza uma linha da tabela
+   * Renderiza colunas de lojas dinamicamente baseado nas lojas carregadas
    * @param item Item de estoque
    * @param index Índice da linha
    */
-  const renderTableRow = (item: StockItem, index: number): React.ReactNode => (
-    <tr key={item.refplu} className={index % 2 === 0 ? 'bg-white' : 'bg-smart-gray-50'}>
-      <td className="px-4 py-3 text-sm font-medium text-smart-gray-900 border-r border-smart-gray-200">
-        {item.refplu}
-      </td>
-      <td className="px-4 py-3 text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {item.marca}
-      </td>
-      <td className="px-4 py-3 text-sm text-smart-gray-900 max-w-xs truncate border-r border-smart-gray-200" title={item.descricao}>
-        {item.descricao}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj1)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj2)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj3)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj4)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj5)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj6)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj7)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj8)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj9)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj10)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj11)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj12)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj13)}
-      </td>
-      <td className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200">
-        {renderQuantityCell(item.loj14)}
-      </td>
-      <td className="px-4 py-3 text-center text-sm font-bold text-smart-gray-900 bg-smart-gray-100">
-        {renderQuantityCell(item.total)}
-      </td>
-    </tr>
-  );
+  const renderTableRow = (item: StockItem, index: number): React.ReactNode => {
+    const sortedStoreNumbers = getSortedStoreNumbers();
+    
+    return (
+      <tr key={item.refplu} className={index % 2 === 0 ? 'bg-white' : 'bg-smart-gray-50'}>
+        <td className="px-4 py-3 text-sm font-medium text-smart-gray-900 border-r border-smart-gray-200">
+          {item.refplu}
+        </td>
+        <td className="px-4 py-3 text-sm text-smart-gray-900 border-r border-smart-gray-200">
+          {item.marca}
+        </td>
+        <td className="px-4 py-3 text-sm text-smart-gray-900 max-w-xs truncate border-r border-smart-gray-200" title={item.descricao}>
+          {item.descricao}
+        </td>
+        {sortedStoreNumbers.map((storeNumber) => {
+          const quantity = getStoreQuantity(item, storeNumber);
+          return (
+            <td 
+              key={storeNumber}
+              className="px-2 py-3 text-center text-sm text-smart-gray-900 border-r border-smart-gray-200"
+            >
+              {renderQuantityCell(quantity)}
+            </td>
+          );
+        })}
+        <td className="px-4 py-3 text-center text-sm font-bold text-smart-gray-900 bg-smart-gray-100">
+          {renderQuantityCell(item.total)}
+        </td>
+      </tr>
+    );
+  };
 
   /**
    * Renderiza controles de paginação
@@ -351,11 +364,30 @@ const StockTable: React.FC<StockTableProps> = ({
     );
   };
 
-  // Renderizar estados especiais
+  // Renderizar versão mobile (cards) se isMobile for true
+  if (isMobile) {
+    return (
+      <StockCardList
+        data={data}
+        loading={loading}
+        error={error}
+        storeNames={storeNames}
+        onPageChange={onPageChange}
+        onSizeChange={onSizeChange}
+        pageSize={pageSize}
+      />
+    );
+  }
+
+  // Renderizar estados especiais (desktop)
   if (loading) return renderLoading();
   if (error) return renderError();
   if (!data || !data.content || data.content.length === 0) return renderEmpty();
 
+  // Log para debug - verificar quantos itens estão sendo renderizados
+  console.log(`📊 Renderizando tabela: ${data.content.length} itens (pageSize recebido: ${pageSize}, esperado: ${data.pagination?.pageSize || 'N/A'})`);
+
+  // Renderizar versão desktop (tabela)
   return (
     <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
       <div className="overflow-x-auto">

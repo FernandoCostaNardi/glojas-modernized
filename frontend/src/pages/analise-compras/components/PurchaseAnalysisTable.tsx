@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLayout } from '@/contexts/LayoutContext';
 import { PurchaseAnalysisPageResponse, PAGE_SIZES, PurchaseAnalysisTabType } from '@/types/purchaseAnalysis';
+import PurchaseAnalysisCardList from './PurchaseAnalysisCardList';
 
 /**
  * Interface para as propriedades do componente
@@ -365,7 +366,22 @@ const PurchaseAnalysisTable: React.FC<PurchaseAnalysisTableProps> = ({
     );
   };
 
-  // Renderização principal
+  // Renderizar versão mobile (cards) se isMobile for true
+  if (isMobile) {
+    return (
+      <PurchaseAnalysisCardList
+        data={data}
+        loading={loading}
+        error={error}
+        onPageChange={onPageChange}
+        onSizeChange={onSizeChange}
+        pageSize={pageSize}
+        activeTab={activeTab}
+      />
+    );
+  }
+
+  // Renderização principal (desktop - tabela)
   if (loading) return renderLoading();
   if (error) return renderError();
   return renderTable();

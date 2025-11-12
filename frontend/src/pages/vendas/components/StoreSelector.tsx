@@ -108,7 +108,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({
    * Renderiza o seletor de lojas
    */
   const renderSelector = (): React.ReactNode => (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full max-w-full">
       <label htmlFor="store-selector" className={`block font-medium text-smart-gray-700 ${
         isMobile ? 'text-xs' : 'text-xs'
       }`}>
@@ -120,7 +120,7 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({
         value={selectedStoreCode || ''}
         onChange={handleStoreChange}
         disabled={disabled || loading}
-        className={`w-full px-2 py-1 text-xs border border-smart-gray-300 rounded focus:ring-1 focus:ring-smart-red-500 focus:border-smart-red-500 transition-colors duration-200 ${
+        className={`w-full max-w-full px-3 py-2 md:px-2 md:py-1 text-xs border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-red-500 focus:border-smart-red-500 transition-colors duration-200 ${
           disabled || loading ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'
         }`}
       >
@@ -136,19 +136,19 @@ const StoreSelector: React.FC<StoreSelectorProps> = ({
       
       {selectedStoreCode && (
         <div className={`flex items-center text-xs text-smart-gray-600 ${
-          isMobile ? 'justify-center' : ''
+          isMobile ? 'justify-start' : ''
         }`}>
-          <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
           </svg>
-          <span>Filtro ativo: {stores.find(s => s.code === selectedStoreCode)?.name}</span>
+          <span className="truncate">Filtro ativo: {stores.find(s => s.code === selectedStoreCode)?.name}</span>
         </div>
       )}
     </div>
   );
 
   return (
-    <div className={`store-selector ${className}`}>
+    <div className={`store-selector w-full max-w-full ${className}`}>
       {loading ? renderLoading() : error ? renderError() : renderSelector()}
     </div>
   );

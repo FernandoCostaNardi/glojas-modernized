@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import { YearlySalesReportResponse } from '../services/vendasApi';
 import { formatCurrency, formatPercentage } from '@/utils/formatters';
 
@@ -17,6 +18,7 @@ interface VendasTableYearlyProps {
  * Seguindo princípios de Clean Code com responsabilidade única
  */
 const VendasTableYearly: React.FC<VendasTableYearlyProps> = ({ data, loading, error }) => {
+  const { isMobile } = useLayout();
 
   /**
    * Renderiza o corpo da tabela baseado no estado
@@ -46,15 +48,15 @@ const VendasTableYearly: React.FC<VendasTableYearlyProps> = ({ data, loading, er
    */
   const renderTableRow = (item: YearlySalesReportResponse, index: number): React.ReactNode => (
     <tr key={index} className="hover:bg-smart-gray-50">
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-smart-gray-900">{item.storeName}</div>
+      <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-4'} whitespace-nowrap`}>
+        <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-smart-gray-900`}>{item.storeName}</div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-right">
-        <div className="text-sm font-medium text-smart-gray-900">
+      <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-4'} whitespace-nowrap text-right`}>
+        <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-smart-gray-900`}>
           {formatCurrency(item.total)}
         </div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-right">
+      <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-4'} whitespace-nowrap text-right`}>
         <div className="flex items-center justify-end space-x-3">
           <div className="w-20 bg-smart-gray-200 rounded-full h-2">
             <div
@@ -62,7 +64,7 @@ const VendasTableYearly: React.FC<VendasTableYearlyProps> = ({ data, loading, er
               style={{ width: `${Math.min(item.percentageOfTotal, 100)}%` }}
             ></div>
           </div>
-          <div className="text-sm font-medium text-smart-gray-900 min-w-[60px] text-right">
+          <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-smart-gray-900 min-w-[60px] text-right`}>
             {formatPercentage(item.percentageOfTotal)}
           </div>
         </div>
@@ -83,13 +85,13 @@ const VendasTableYearly: React.FC<VendasTableYearlyProps> = ({ data, loading, er
     return (
       <tfoot className="bg-smart-gray-100">
         <tr>
-          <td className="px-6 py-3 text-left text-xs font-bold text-smart-gray-700 uppercase tracking-wider">
+          <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-left text-xs font-bold text-smart-gray-700 uppercase tracking-wider`}>
             Total Geral
           </td>
-          <td className="px-6 py-3 text-right text-sm font-bold text-smart-gray-900">
+          <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right ${isMobile ? 'text-xs' : 'text-sm'} font-bold text-smart-gray-900`}>
             {formatCurrency(totalSum)}
           </td>
-          <td className="px-6 py-3 text-right text-sm font-bold text-smart-gray-900">
+          <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right ${isMobile ? 'text-xs' : 'text-sm'} font-bold text-smart-gray-900`}>
             {formatPercentage(100)}
           </td>
         </tr>
@@ -153,26 +155,26 @@ const VendasTableYearly: React.FC<VendasTableYearlyProps> = ({ data, loading, er
   );
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-smart-gray-200">
+    <div className="bg-white rounded-lg shadow-lg border border-smart-gray-100 overflow-hidden w-full max-w-full box-border">
+      <div className="overflow-x-auto w-full max-w-full">
+        <table className="w-full divide-y divide-smart-gray-200 min-w-full">
           <thead className="bg-smart-gray-50">
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-left text-xs font-bold text-smart-gray-700 uppercase tracking-wider"
+                className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-left text-xs font-bold text-smart-gray-700 uppercase tracking-wider`}
               >
                 Loja
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-right text-xs font-bold text-smart-gray-700 uppercase tracking-wider"
+                className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right text-xs font-bold text-smart-gray-700 uppercase tracking-wider`}
               >
                 Total
               </th>
               <th
                 scope="col"
-                className="px-6 py-3 text-right text-xs font-bold text-smart-gray-700 uppercase tracking-wider"
+                className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right text-xs font-bold text-smart-gray-700 uppercase tracking-wider`}
               >
                 % do Total
               </th>

@@ -32,6 +32,9 @@ public class PurchaseAnalysisController {
      * Requer permissão buy:read.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @param hideNoSales Ocultar produtos sem vendas nos últimos 90 dias (padrão true)
      * @param page Número da página (base 0)
      * @param size Tamanho da página
@@ -43,19 +46,22 @@ public class PurchaseAnalysisController {
     @PreAuthorize("hasAuthority('buy:read')")
     public ResponseEntity<PurchaseAnalysisPageResponseDTO> getPurchaseAnalysis(
             @RequestParam(required = false) String refplu,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) String grupo,
+            @RequestParam(required = false) String marca,
             @RequestParam(required = false) Boolean hideNoSales,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "20") Integer size,
             @RequestParam(defaultValue = "refplu") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         
-        log.info("GET /api/v1/purchase-analysis - refplu={}, hideNoSales={}, page={}, size={}, sortBy={}, sortDir={}",
-                refplu, hideNoSales, page, size, sortBy, sortDir);
+        log.info("GET /api/v1/purchase-analysis - refplu={}, descricao={}, grupo={}, marca={}, hideNoSales={}, page={}, size={}, sortBy={}, sortDir={}",
+                refplu, descricao, grupo, marca, hideNoSales, page, size, sortBy, sortDir);
         
         try {
             // Criar request validado
             PurchaseAnalysisSearchRequest request = new PurchaseAnalysisSearchRequest(
-                refplu, hideNoSales, page, size, sortBy, sortDir
+                refplu, descricao, grupo, marca, hideNoSales, page, size, sortBy, sortDir
             );
             
             // Buscar dados

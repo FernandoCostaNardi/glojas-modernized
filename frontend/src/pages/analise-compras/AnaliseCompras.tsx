@@ -204,74 +204,15 @@ const AnaliseCompras: React.FC<AnaliseComprasProps> = () => {
         />
       </div>
       
-      {/* Filtros de busca - Renderizar apenas se estiver na aba geral ou ocultar switch na aba crítica */}
-      {activeTab === 'geral' && (
-        <PurchaseAnalysisFiltersComponent
-          filters={filters}
-          onFiltersChange={handleFiltersChange}
-          onSearch={handleSearch}
-          onClear={handleClear}
-          loading={loading}
-        />
-      )}
-      
-      {activeTab === 'estoque-critico' && (
-        <div className={`bg-smart-gray-50 rounded-lg border border-smart-gray-200 ${
-          isMobile ? 'p-2' : 'p-4'
-        }`}>
-          <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-12'}`}>
-            {/* Campo REFPLU */}
-            <div className={isMobile ? '' : 'col-span-4'}>
-              <label className="block text-sm font-medium text-smart-gray-700 mb-1">
-                REFPLU
-              </label>
-              <input
-                type="text"
-                value={filters.refplu || ''}
-                onChange={(e) => handleFiltersChange({ ...filters, refplu: e.target.value })}
-                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                placeholder="Digite o REFPLU"
-                disabled={loading}
-                className={`w-full px-3 rounded-lg border border-smart-gray-300 
-                  focus:outline-none focus:ring-2 focus:ring-smart-blue-500 focus:border-transparent
-                  disabled:bg-smart-gray-100 disabled:cursor-not-allowed
-                  ${isMobile ? 'py-2 text-sm' : 'py-2 text-base'}`}
-              />
-            </div>
-
-            {/* Botões de ação */}
-            <div className={`flex gap-2 items-end ${
-              isMobile ? '' : 'col-span-8 justify-end'
-            }`}>
-              <button
-                onClick={handleSearch}
-                disabled={loading}
-                className={`flex-1 sm:flex-none px-6 rounded-lg font-medium
-                  bg-smart-blue-600 text-white hover:bg-smart-blue-700
-                  focus:outline-none focus:ring-2 focus:ring-smart-blue-500 focus:ring-offset-2
-                  disabled:bg-smart-gray-300 disabled:cursor-not-allowed
-                  transition-colors duration-200
-                  ${isMobile ? 'py-2 text-sm' : 'py-2 text-base'}`}
-              >
-                {loading ? 'Buscando...' : '🔍 Buscar'}
-              </button>
-
-              <button
-                onClick={handleClear}
-                disabled={loading}
-                className={`flex-1 sm:flex-none px-6 rounded-lg font-medium
-                  bg-smart-gray-200 text-smart-gray-700 hover:bg-smart-gray-300
-                  focus:outline-none focus:ring-2 focus:ring-smart-gray-500 focus:ring-offset-2
-                  disabled:bg-smart-gray-100 disabled:cursor-not-allowed
-                  transition-colors duration-200
-                  ${isMobile ? 'py-2 text-sm' : 'py-2 text-base'}`}
-              >
-                🗑️ Limpar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Filtros de busca - Aplicar em ambas as abas */}
+      <PurchaseAnalysisFiltersComponent
+        filters={filters}
+        onFiltersChange={handleFiltersChange}
+        onSearch={handleSearch}
+        onClear={handleClear}
+        loading={loading}
+        activeTab={activeTab}
+      />
 
       {/* Separador */}
       <div className="my-4 border-t border-smart-gray-200"></div>

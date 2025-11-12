@@ -27,6 +27,9 @@ public class PurchaseAnalysisController {
      * Busca análise de compras com filtros, paginação e ordenação.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @param hideNoSales Ocultar produtos sem vendas nos últimos 90 dias (padrão true)
      * @param page Número da página (base 0)
      * @param size Tamanho da página
@@ -37,18 +40,21 @@ public class PurchaseAnalysisController {
     @GetMapping
     public ResponseEntity<PurchaseAnalysisPageResponse> getPurchaseAnalysis(
             @RequestParam(required = false) String refplu,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) String grupo,
+            @RequestParam(required = false) String marca,
             @RequestParam(required = false, defaultValue = "true") Boolean hideNoSales,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "refplu") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         
-        log.info("GET /purchase-analysis - refplu={}, hideNoSales={}, page={}, size={}, sortBy={}, sortDir={}",
-                refplu, hideNoSales, page, size, sortBy, sortDir);
+        log.info("GET /purchase-analysis - refplu={}, descricao={}, grupo={}, marca={}, hideNoSales={}, page={}, size={}, sortBy={}, sortDir={}",
+                refplu, descricao, grupo, marca, hideNoSales, page, size, sortBy, sortDir);
         
         try {
             PurchaseAnalysisPageResponse response = purchaseAnalysisControllerService.getPurchaseAnalysis(
-                refplu, hideNoSales, page, size, sortBy, sortDir
+                refplu, descricao, grupo, marca, hideNoSales, page, size, sortBy, sortDir
             );
             
             return ResponseEntity.ok(response);

@@ -34,13 +34,16 @@ public class PurchaseAnalysisService {
      * @throws RuntimeException Se houver erro na comunicação com Legacy API
      */
     public PurchaseAnalysisPageResponseDTO getPurchaseAnalysis(@Valid PurchaseAnalysisSearchRequest request) {
-        log.info("Buscando análise de compras: refplu={}, hideNoSales={}, page={}, size={}, sortBy={}, sortDir={}",
-                request.refplu(), request.hideNoSales(), request.page(), request.size(), request.sortBy(), request.sortDir());
+        log.info("Buscando análise de compras: refplu={}, descricao={}, grupo={}, marca={}, hideNoSales={}, page={}, size={}, sortBy={}, sortDir={}",
+                request.refplu(), request.descricao(), request.grupo(), request.marca(), request.hideNoSales(), request.page(), request.size(), request.sortBy(), request.sortDir());
         
         try {
             // Chamar Legacy API
             PurchaseAnalysisPageResponseDTO response = legacyApiClient.getPurchaseAnalysis(
                 request.refplu(),
+                request.descricao(),
+                request.grupo(),
+                request.marca(),
                 request.hideNoSales(),
                 request.page(),
                 request.size(),

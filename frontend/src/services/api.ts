@@ -34,12 +34,12 @@ import { PurchaseAnalysisPageResponse, PurchaseAnalysisFilters } from '@/types/p
  */
 export const businessApi = axios.create({
   baseURL: API_CONFIG.BUSINESS_API_BASE_URL,
-  timeout: 30000
+  timeout: 60000 // Aumentado temporariamente para 60 segundos devido à complexidade da query
 });
 
 export const legacyApi = axios.create({
   baseURL: API_CONFIG.LEGACY_API_BASE_URL,
-  timeout: 30000
+  timeout: 60000 // Aumentado temporariamente para 60 segundos devido à complexidade da query
 });
 
 // Alias para compatibilidade retroativa com código existente
@@ -863,6 +863,15 @@ export const purchaseAnalysisService = {
       if (filters.refplu) {
         params.append('refplu', filters.refplu);
       }
+      if (filters.descricao) {
+        params.append('descricao', filters.descricao);
+      }
+      if (filters.grupo) {
+        params.append('grupo', filters.grupo);
+      }
+      if (filters.marca) {
+        params.append('marca', filters.marca);
+      }
       
       // Adicionar filtro de produtos sem vendas (padrão true)
       params.append('hideNoSales', (filters.hideNoSales ?? true).toString());
@@ -896,9 +905,18 @@ export const criticalStockService = {
     try {
       const params = new URLSearchParams();
 
-      // Adicionar filtro opcional
+      // Adicionar filtros opcionais
       if (filters.refplu) {
         params.append('refplu', filters.refplu);
+      }
+      if (filters.descricao) {
+        params.append('descricao', filters.descricao);
+      }
+      if (filters.grupo) {
+        params.append('grupo', filters.grupo);
+      }
+      if (filters.marca) {
+        params.append('marca', filters.marca);
       }
 
       // Adicionar parâmetros de paginação e ordenação

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -44,6 +45,7 @@ const VendasChartYearly: React.FC<VendasChartYearlyProps> = ({
   selectedStoreCode,
   onMetricsChange
 }) => {
+  const { isMobile } = useLayout();
   const [chartData, setChartData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -138,7 +140,7 @@ const VendasChartYearly: React.FC<VendasChartYearlyProps> = ({
         display: true,
         text: `Vendas Anuais ${startYear} - ${endYear}`,
         font: {
-          size: 16,
+          size: isMobile ? 12 : 16,
           weight: 'bold' as const,
         },
       },
@@ -180,13 +182,13 @@ const VendasChartYearly: React.FC<VendasChartYearlyProps> = ({
    * Renderiza estado de loading
    */
   const renderLoadingState = (): React.ReactNode => (
-    <div className="flex items-center justify-center h-96">
+    <div className={`flex items-center justify-center ${isMobile ? 'h-64' : 'h-96'}`}>
       <div className="flex items-center space-x-2">
         <svg className="animate-spin h-8 w-8 text-smart-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <span className="text-lg text-smart-gray-600">Carregando dados do gráfico...</span>
+        <span className={`text-smart-gray-600 ${isMobile ? 'text-sm' : 'text-lg'}`}>Carregando dados do gráfico...</span>
       </div>
     </div>
   );
@@ -195,13 +197,13 @@ const VendasChartYearly: React.FC<VendasChartYearlyProps> = ({
    * Renderiza estado de erro
    */
   const renderErrorState = (): React.ReactNode => (
-    <div className="flex items-center justify-center h-96">
+    <div className={`flex items-center justify-center ${isMobile ? 'h-64' : 'h-96'}`}>
       <div className="text-center">
-        <svg className="w-16 h-16 text-red-500 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className={`${isMobile ? 'w-12 h-12' : 'w-16 h-16'} text-red-500 mx-auto mb-4`} fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
         </svg>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">Erro ao carregar dados</h3>
-        <p className="text-sm text-gray-500">{error}</p>
+        <h3 className={`font-medium text-gray-900 mb-2 ${isMobile ? 'text-sm' : 'text-lg'}`}>Erro ao carregar dados</h3>
+        <p className={`text-gray-500 ${isMobile ? 'text-xs' : 'text-sm'}`}>{error}</p>
       </div>
     </div>
   );
@@ -210,13 +212,13 @@ const VendasChartYearly: React.FC<VendasChartYearlyProps> = ({
    * Renderiza estado vazio
    */
   const renderEmptyState = (): React.ReactNode => (
-    <div className="flex items-center justify-center h-96">
+    <div className={`flex items-center justify-center ${isMobile ? 'h-64' : 'h-96'}`}>
       <div className="text-center">
-        <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+        <svg className={`${isMobile ? 'w-12 h-12' : 'w-16 h-16'} text-gray-400 mx-auto mb-4`} fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9a1 1 0 00-2 0v4a1 1 0 102 0V9zm3-1a1 1 0 10-2 0v5a1 1 0 102 0V8z" clipRule="evenodd" />
         </svg>
-        <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum dado encontrado</h3>
-        <p className="text-sm text-gray-500">Não há dados de vendas anuais para o período selecionado.</p>
+        <h3 className={`font-medium text-gray-900 mb-2 ${isMobile ? 'text-sm' : 'text-lg'}`}>Nenhum dado encontrado</h3>
+        <p className={`text-gray-500 ${isMobile ? 'text-xs' : 'text-sm'}`}>Não há dados de vendas anuais para o período selecionado.</p>
       </div>
     </div>
   );
@@ -234,8 +236,8 @@ const VendasChartYearly: React.FC<VendasChartYearlyProps> = ({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="h-96">
+    <div className="bg-white rounded-lg shadow-md p-3 md:p-6 w-full max-w-full box-border overflow-x-hidden">
+      <div className={`${isMobile ? 'h-64' : 'h-96'} w-full max-w-full overflow-x-hidden`}>
         <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
