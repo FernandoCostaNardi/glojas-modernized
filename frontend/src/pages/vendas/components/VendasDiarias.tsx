@@ -49,6 +49,7 @@ interface ChartMetricsState {
  * Gerencia filtros de data e exibe relatórios de vendas
  * Seguindo princípios de Clean Code com responsabilidade única
  */
+const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
   /**
    * Obtém o primeiro dia do mês atual
    * @returns Data no formato YYYY-MM-DD
@@ -59,8 +60,6 @@ interface ChartMetricsState {
     return firstDay.toISOString().split('T')[0] || '';
   };
 
-
-const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
   const today = new Date().toISOString().split('T')[0] || '';
   
   const [startDate, setStartDate] = useState<string>(today);
@@ -296,28 +295,28 @@ const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
    * Renderiza o formulário de filtros
    */
   const renderFilters = (): React.ReactNode => (
-    <div className="bg-white rounded-lg shadow-md px-6 py-4 mb-6">
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-wrap items-end gap-4">
+    <div className="bg-white rounded-lg shadow-md px-3 py-3 md:px-6 md:py-4 mb-6 w-full max-w-full box-border">
+      <form onSubmit={handleSubmit} className="w-full max-w-full box-border">
+        <div className="flex flex-col md:flex-row md:flex-wrap md:items-end gap-3 md:gap-4 w-full max-w-full box-border">
           {/* Date Range */}
-          <div className="flex-1 min-w-[200px]">
+          <div className="flex-1 w-full md:min-w-[200px] max-w-full box-border">
             <label className="block text-xs font-medium text-smart-gray-700 mb-1">
               Período
             </label>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 w-full min-w-0">
               <input
                 type="date"
                 value={startDate}
                 onChange={handleStartDateChange}
-                className="flex-1 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
+                className="flex-1 min-w-0 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
                 required
               />
-              <span className="text-smart-gray-500">-</span>
+              <span className="text-smart-gray-500 flex-shrink-0">-</span>
               <input
                 type="date"
                 value={endDate}
                 onChange={handleEndDateChange}
-                className="flex-1 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
+                className="flex-1 min-w-0 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -327,7 +326,7 @@ const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
           <button
             type="submit"
             disabled={vendasState.loading}
-            className="bg-smart-blue-600 hover:bg-smart-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="w-full md:w-auto bg-smart-blue-600 hover:bg-smart-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {vendasState.loading ? (
               <>
@@ -349,7 +348,7 @@ const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
           
           {/* Indicador de tipo de dados */}
           {shouldUseCurrentDailySales(startDate, endDate) && (
-            <div className="flex items-center text-xs text-smart-blue-600 bg-smart-blue-50 px-3 py-2 rounded-lg">
+            <div className="flex items-center justify-center md:justify-start text-xs text-smart-blue-600 bg-smart-blue-50 px-3 py-2 rounded-lg">
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -367,9 +366,9 @@ const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
    */
   const renderMainLayout = (): React.ReactNode => {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Gráfico */}
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           <StoreSelector
             selectedStoreCode={selectedStoreForChart}
             onStoreChange={setSelectedStoreForChart}
@@ -394,8 +393,8 @@ const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
   };
 
   return (
-    <div className={`vendas-diarias bg-smart-gray-50 p-6 ${className}`}>
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className={`vendas-diarias bg-smart-gray-50 p-3 md:p-6 overflow-x-hidden w-full max-w-full box-border ${className}`}>
+      <div className="w-full max-w-full box-border space-y-4 md:space-y-6">
         {/* Cards de Métricas */}
         <SalesMetricsCards data={getMetricsForCards()} />
         
@@ -407,13 +406,13 @@ const VendasDiarias: React.FC<VendasDiariasProps> = ({ className = '' }) => {
       </div>
       
       {/* Footer */}
-      <footer className="bg-smart-gray-800 text-white py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="bg-smart-gray-800 text-white py-6 md:py-8 mt-8 md:mt-12">
+        <div className="max-w-7xl mx-auto px-3 md:px-6">
           <div className="text-center">
-            <p className="text-smart-gray-300 mb-2">
+            <p className="text-smart-gray-300 mb-2 text-sm md:text-base">
               © 2025 Smart Eletron. Todos os direitos reservados.
             </p>
-            <p className="text-sm text-smart-gray-400">
+            <p className="text-xs md:text-sm text-smart-gray-400">
               Sistema de Gestão de Vendas - Desenvolvido com ❤️
             </p>
           </div>

@@ -210,8 +210,8 @@ const Dashboard: React.FC = () => {
    * Renderiza conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className={`flex-1 bg-smart-gray-50 overflow-auto ${
-      isMobile ? 'p-4' : 'p-6'
+    <main className={`flex-1 bg-smart-gray-50 ${
+      isMobile ? 'overflow-y-auto p-4 pb-8' : 'overflow-auto p-6'
     }`}>
       {/* Cabeçalho de boas-vindas */}
       <div className={`mb-6 ${isMobile ? 'mb-4' : 'mb-6'}`}>
@@ -246,12 +246,12 @@ const Dashboard: React.FC = () => {
   );
 
   return (
-    <div className="h-screen flex flex-col bg-smart-gray-50">
+    <div className={`${isMobile ? 'min-h-screen' : 'h-screen'} flex flex-col bg-smart-gray-50`}>
       {/* Header */}
       <Header />
       
       {/* Layout principal */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className={`flex flex-1 ${isMobile ? 'overflow-y-auto' : 'overflow-hidden'} relative`}>
         {/* Sidebar */}
         <Sidebar />
         

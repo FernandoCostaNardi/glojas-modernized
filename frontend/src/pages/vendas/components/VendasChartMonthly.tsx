@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -64,6 +65,7 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
   onMetricsChange,
   className = ''
 }) => {
+  const { isMobile } = useLayout();
   
   const [chartState, setChartState] = useState<ChartState>({
     data: null,
@@ -320,7 +322,7 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
             ? `Vendas Mensais - Loja ${selectedStoreCode}` 
             : 'Vendas Mensais - Todas as Lojas',
           font: {
-            size: 16,
+            size: isMobile ? 12 : 16,
             weight: 'bold' as const
           }
         },
@@ -365,7 +367,7 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
     };
 
     return (
-      <div className="h-96 w-full">
+      <div className={`${isMobile ? 'h-64' : 'h-96'} w-full max-w-full overflow-x-hidden`}>
         <Line data={chartConfig} options={options} />
       </div>
     );
@@ -387,12 +389,16 @@ const VendasChartMonthly: React.FC<VendasChartMonthlyProps> = ({
   };
 
   return (
-    <div className={`vendas-chart-monthly bg-white rounded-lg shadow-md p-6 ${className}`}>
+    <div className={`vendas-chart-monthly bg-white rounded-lg shadow-md p-3 md:p-6 w-full max-w-full box-border overflow-x-hidden ${className}`}>
       <div className="mb-4">
-        <h3 className="text-lg font-medium text-smart-gray-900">
+        <h3 className={`font-medium text-smart-gray-900 ${
+          isMobile ? 'text-sm' : 'text-lg'
+        }`}>
           Gráfico de Vendas Mensais
         </h3>
-        <p className="text-sm text-smart-gray-600">
+        <p className={`text-smart-gray-600 ${
+          isMobile ? 'text-xs' : 'text-sm'
+        }`}>
           Período: {formatYearMonthForDisplay(startYearMonth)} a {formatYearMonthForDisplay(endYearMonth)}
         </p>
       </div>

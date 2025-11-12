@@ -27,6 +27,9 @@ public class CriticalStockController {
      * Busca produtos com estoque crítico.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @param page Número da página (base 0)
      * @param size Tamanho da página
      * @param sortBy Campo para ordenação (padrão: diferenca)
@@ -36,17 +39,20 @@ public class CriticalStockController {
     @GetMapping
     public ResponseEntity<CriticalStockPageResponse> getCriticalStock(
             @RequestParam(required = false) String refplu,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) String grupo,
+            @RequestParam(required = false) String marca,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "diferenca") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
         
-        log.info("GET /critical-stock - refplu={}, page={}, size={}, sortBy={}, sortDir={}",
-                refplu, page, size, sortBy, sortDir);
+        log.info("GET /critical-stock - refplu={}, descricao={}, grupo={}, marca={}, page={}, size={}, sortBy={}, sortDir={}",
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir);
         
         try {
             CriticalStockPageResponse response = criticalStockControllerService.getCriticalStock(
-                refplu, page, size, sortBy, sortDir
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir
             );
             
             return ResponseEntity.ok(response);

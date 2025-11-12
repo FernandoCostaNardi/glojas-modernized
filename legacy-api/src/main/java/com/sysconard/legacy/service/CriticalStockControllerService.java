@@ -27,6 +27,9 @@ public class CriticalStockControllerService {
      * Busca produtos com estoque crítico com filtros, paginação e ordenação.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @param page Número da página (base 0)
      * @param size Tamanho da página
      * @param sortBy Campo para ordenação
@@ -34,19 +37,19 @@ public class CriticalStockControllerService {
      * @return Resposta paginada com itens de estoque crítico
      */
     public CriticalStockPageResponse getCriticalStock(
-            String refplu, int page, int size, String sortBy, String sortDir) {
+            String refplu, String descricao, String grupo, String marca, int page, int size, String sortBy, String sortDir) {
         
-        log.info("Processando requisição de estoque crítico: refplu={}, page={}, size={}, sortBy={}, sortDir={}",
-                refplu, page, size, sortBy, sortDir);
+        log.info("Processando requisição de estoque crítico: refplu={}, descricao={}, grupo={}, marca={}, page={}, size={}, sortBy={}, sortDir={}",
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir);
         
         try {
             // Buscar dados
             List<CriticalStockItemDTO> content = criticalStockService.findCriticalStockWithFilters(
-                refplu, page, size, sortBy, sortDir
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir
             );
             
             // Contar total
-            long totalElements = criticalStockService.countWithFilters(refplu);
+            long totalElements = criticalStockService.countWithFilters(refplu, descricao, grupo, marca);
             
             // Calcular total de páginas
             int totalPages = (int) Math.ceil((double) totalElements / size);

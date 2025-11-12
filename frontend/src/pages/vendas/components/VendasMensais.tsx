@@ -268,28 +268,28 @@ const VendasMensais: React.FC<VendasMensaisProps> = ({ className = '' }) => {
    * Renderiza o formulário de filtros
    */
   const renderFilters = (): React.ReactNode => (
-    <div className="bg-white rounded-lg shadow-md px-6 py-4 mb-6">
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-wrap items-center gap-4">
+    <div className="bg-white rounded-lg shadow-md px-3 py-3 md:px-6 md:py-4 mb-6 w-full max-w-full box-border">
+      <form onSubmit={handleSubmit} className="w-full max-w-full box-border">
+        <div className="flex flex-col md:flex-row md:flex-wrap md:items-end gap-3 md:gap-4 w-full max-w-full box-border">
           {/* Year/Month Range */}
-          <div className="flex-1 min-w-[200px]">
+          <div className="flex-1 w-full md:min-w-[200px] max-w-full box-border">
             <label className="block text-xs font-medium text-smart-gray-700 mb-1">
               Período (Mês)
             </label>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 w-full min-w-0">
               <input
                 type="month"
                 value={startYearMonth}
                 onChange={handleStartYearMonthChange}
-                className="flex-1 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
+                className="flex-1 min-w-0 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
                 required
               />
-              <span className="text-smart-gray-500">-</span>
+              <span className="text-smart-gray-500 flex-shrink-0">-</span>
               <input
                 type="month"
                 value={endYearMonth}
                 onChange={handleEndYearMonthChange}
-                className="flex-1 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
+                className="flex-1 min-w-0 px-3 py-2 text-sm border border-smart-gray-300 rounded-lg focus:ring-2 focus:ring-smart-blue-500 focus:border-smart-blue-500 transition-colors duration-200"
                 required
               />
             </div>
@@ -302,7 +302,7 @@ const VendasMensais: React.FC<VendasMensaisProps> = ({ className = '' }) => {
           <button
             type="submit"
             disabled={vendasState.loading}
-            className="bg-smart-blue-600 hover:bg-smart-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="w-full md:w-auto bg-smart-blue-600 hover:bg-smart-blue-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {vendasState.loading ? (
               <>
@@ -332,9 +332,9 @@ const VendasMensais: React.FC<VendasMensaisProps> = ({ className = '' }) => {
    */
   const renderMainLayout = (): React.ReactNode => {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 md:space-y-6">
         {/* Gráfico */}
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           <StoreSelector
             selectedStoreCode={selectedStoreForChart}
             onStoreChange={setSelectedStoreForChart}
@@ -359,8 +359,8 @@ const VendasMensais: React.FC<VendasMensaisProps> = ({ className = '' }) => {
   };
 
   return (
-    <div className={`vendas-mensais bg-smart-gray-50 p-6 ${className}`}>
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className={`vendas-mensais bg-smart-gray-50 p-3 md:p-6 overflow-x-hidden w-full max-w-full box-border ${className}`}>
+      <div className="w-full max-w-full box-border space-y-4 md:space-y-6">
         {/* Cards de Métricas */}
         <SalesMetricsCards 
           data={getMetricsForCards()} 
@@ -376,13 +376,13 @@ const VendasMensais: React.FC<VendasMensaisProps> = ({ className = '' }) => {
       </div>
       
       {/* Footer */}
-      <footer className="bg-smart-gray-800 text-white py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-6">
+      <footer className="bg-smart-gray-800 text-white py-6 md:py-8 mt-8 md:mt-12">
+        <div className="max-w-7xl mx-auto px-3 md:px-6">
           <div className="text-center">
-            <p className="text-smart-gray-300 mb-2">
+            <p className="text-smart-gray-300 mb-2 text-sm md:text-base">
               © 2025 Smart Eletron. Todos os direitos reservados.
             </p>
-            <p className="text-sm text-smart-gray-400">
+            <p className="text-xs md:text-sm text-smart-gray-400">
               Sistema de Gestão de Vendas - Desenvolvido com ❤️
             </p>
           </div>

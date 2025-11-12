@@ -1,7 +1,9 @@
 package com.sysconard.legacy.service;
 
 import com.sysconard.legacy.dto.StockItemDTO;
+import com.sysconard.legacy.entity.store.Store;
 import com.sysconard.legacy.repository.StockRepository;
+import com.sysconard.legacy.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -38,9 +39,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StockService {
 
-    private static final int MAX_SEARCH_WORDS = 5;
-
     private final StockRepository stockRepository;
+    private final StoreRepository storeRepository;
 
     /**
      * Busca estoque com filtros, paginação e ordenação
@@ -73,14 +73,22 @@ public class StockService {
         // Preparar filtros
         StockFilters filters = createStockFilters(refplu, marca, descricao);
 
+        // Buscar lojas ativas para conversão
+        List<Store> stores = getActiveStores();
+        
         // Buscar dados
         List<Object[]> rows = fetchStockData(filters, hasStock, pageable);
         Long totalElements = countStockData(filters, hasStock);
 
-        // Converter para DTOs
-        List<StockItemDTO> dtos = convertToStockDTOs(rows);
+        log.info("Linhas retornadas do repositório: {} (página: {}, tamanho solicitado: {})", 
+                rows.size(), pageable.getPageNumber(), pageable.getPageSize());
 
-        log.debug("Itens de estoque encontrados: {} de {}", dtos.size(), totalElements);
+        // Converter para DTOs
+        // A query SQL já garante que não há duplicatas (GROUP BY r.refplu)
+        List<StockItemDTO> dtos = convertToStockDTOs(rows, stores);
+
+        log.info("Itens de estoque convertidos: {} de {} linhas (totalElements: {}, página: {}, tamanho: {})", 
+                dtos.size(), rows.size(), totalElements, pageable.getPageNumber(), pageable.getPageSize());
 
         return new PageImpl<>(dtos, pageable, totalElements);
     }
@@ -120,16 +128,18 @@ public class StockService {
         }
         
         // Validar valores permitidos para sortBy
-        List<String> validSortFields = Arrays.asList(
-            "refplu", "marca", "descricao", 
-            "loj1", "loj2", "loj3", "loj4", "loj5", "loj6", "loj7", 
-            "loj8", "loj9", "loj10", "loj11", "loj12", "loj13", "loj14",
-            "total"
-        );
+        // Campos básicos sempre válidos
+        List<String> basicSortFields = Arrays.asList("refplu", "marca", "descricao", "total");
         
-        if (!validSortFields.contains(sortBy.toLowerCase())) {
+        // Verificar se é um campo básico
+        if (basicSortFields.contains(sortBy.toLowerCase())) {
+            // Campo básico válido
+        } else if (sortBy.toLowerCase().matches("loj\\d+")) {
+            // Campo de loja dinâmico (loj1, loj2, etc.) - aceitar qualquer número
+            // A validação real será feita na query baseada nas lojas disponíveis
+        } else {
             throw new IllegalArgumentException(
-                "Campo de ordenação inválido: " + sortBy + ". Valores válidos: " + validSortFields
+                "Campo de ordenação inválido: " + sortBy + ". Deve ser refplu, marca, descricao, total ou lojN (onde N é o número da loja)"
             );
         }
         
@@ -163,21 +173,8 @@ public class StockService {
      * @return StockFilters configurado
      */
     private StockFilters createStockFilters(String refplu, String marca, String descricao) {
-        List<String> words = splitIntoWords(descricao);
-
-        String[] wordLikes = new String[MAX_SEARCH_WORDS];
-        for (int i = 0; i < MAX_SEARCH_WORDS; i++) {
-            if (i < words.size()) {
-                wordLikes[i] = "%" + words.get(i) + "%";
-            } else {
-                wordLikes[i] = null;
-            }
-        }
-
-        String lettersPattern = buildLettersPattern(descricao, words);
-        if (lettersPattern != null && words.size() == 1) {
-            wordLikes[0] = null;
-        }
+        // Processa múltiplas palavras na descrição
+        List<String> descricaoWords = splitIntoWords(descricao);
         
         return StockFilters.builder()
                 .refplu(refplu)
@@ -185,12 +182,8 @@ public class StockService {
                 .descricao(descricao)
                 .refpluFilter(createLikeFilter(refplu))
                 .marcaFilter(createLikeFilter(marca))
-                .word1(wordLikes[0])
-                .word2(wordLikes[1])
-                .word3(wordLikes[2])
-                .word4(wordLikes[3])
-                .word5(wordLikes[4])
-                .lettersPattern(lettersPattern)
+                .descricaoWords(descricaoWords.isEmpty() ? null : String.join("|", descricaoWords))
+                .grupoWords(descricaoWords.isEmpty() ? null : String.join("|", descricaoWords))
                 .build();
     }
     
@@ -206,40 +199,6 @@ public class StockService {
         }
         String[] words = value.trim().toUpperCase().split("\\s+");
         return Arrays.asList(words);
-    }
-
-    /**
-     * Cria padrão de letras contidas para buscas abreviadas (ex: NTB -> %N%T%B%)
-     *
-     * @param value Valor original informado na descrição
-     * @param words Palavras processadas a partir do valor
-     * @return Padrão de letras contidas ou null se não aplicável
-     */
-    private String buildLettersPattern(String value, List<String> words) {
-        if (!StringUtils.hasText(value) || words.size() != 1) {
-            return null;
-        }
-
-        String sanitized = value.replaceAll("[^A-Za-z0-9]", "").toUpperCase();
-        if (sanitized.length() < 2 || sanitized.length() > 5) {
-            return null;
-        }
-
-        boolean hasVowel = sanitized.chars()
-                .mapToObj(c -> (char) c)
-                .anyMatch(c -> "AEIOU".indexOf(c) >= 0);
-        if (hasVowel) {
-            return null;
-        }
-
-        StringBuilder pattern = new StringBuilder("%");
-        for (char c : sanitized.toCharArray()) {
-            if (Character.isLetterOrDigit(c)) {
-                pattern.append(c).append("%");
-            }
-        }
-
-        return pattern.length() > 1 ? pattern.toString() : null;
     }
 
     /**
@@ -267,11 +226,25 @@ public class StockService {
         String sortDir = pageable.getSort().iterator().hasNext() && 
                 pageable.getSort().iterator().next().isDescending() ? "desc" : "asc";
         
-        return stockRepository.findStocksWithFilters(
+        // Buscar lojas ativas
+        List<com.sysconard.legacy.entity.store.Store> stores = getActiveStores();
+        List<Long> storeIds = stores.stream()
+                .map(com.sysconard.legacy.entity.store.Store::getId)
+                .collect(Collectors.toList());
+        
+        // Log para debug - verificar mapeamento de lojas
+        if (log.isDebugEnabled()) {
+            log.debug("Lojas ativas ordenadas por ID (para fetchStockData):");
+            for (int i = 0; i < stores.size(); i++) {
+                log.debug("  loj{}: ID={}, Nome={}", i+1, stores.get(i).getId(), stores.get(i).getName());
+            }
+        }
+        
+        return stockRepository.findStocksWithFiltersDynamic(
                 filters.getRefplu(), filters.getMarca(), filters.getDescricao(),
                 filters.getRefpluFilter(), filters.getMarcaFilter(),
-                filters.getWord1(), filters.getWord2(), filters.getWord3(), filters.getWord4(), filters.getWord5(),
-                filters.getLettersPattern(),
+                filters.getDescricaoWords(), filters.getGrupoWords(),
+                storeIds,
                 hasStock, sortBy, sortDir, offset, pageable.getPageSize()
         );
     }
@@ -284,11 +257,17 @@ public class StockService {
      * @return Total de registros
      */
     private Long countStockData(StockFilters filters, Boolean hasStock) {
-        return stockRepository.countStocksWithFilters(
+        // Buscar lojas ativas
+        List<com.sysconard.legacy.entity.store.Store> stores = getActiveStores();
+        List<Long> storeIds = stores.stream()
+                .map(com.sysconard.legacy.entity.store.Store::getId)
+                .collect(Collectors.toList());
+        
+        return stockRepository.countStocksWithFiltersDynamic(
                 filters.getRefplu(), filters.getMarca(), filters.getDescricao(),
                 filters.getRefpluFilter(), filters.getMarcaFilter(),
-                filters.getWord1(), filters.getWord2(), filters.getWord3(), filters.getWord4(), filters.getWord5(),
-                filters.getLettersPattern(),
+                filters.getDescricaoWords(), filters.getGrupoWords(),
+                storeIds,
                 hasStock
         );
     }
@@ -297,11 +276,12 @@ public class StockService {
      * Converte lista de objetos para DTOs de estoque
      * 
      * @param rows Lista de objetos do repositório
+     * @param stores Lista de lojas para mapeamento dinâmico
      * @return Lista de StockItemDTO
      */
-    private List<StockItemDTO> convertToStockDTOs(List<Object[]> rows) {
+    private List<StockItemDTO> convertToStockDTOs(List<Object[]> rows, List<Store> stores) {
         return rows.stream()
-                .map(this::convertRowToStockDTO)
+                .map(row -> convertRowToStockDTO(row, stores))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
@@ -309,60 +289,93 @@ public class StockService {
     /**
      * Converte uma linha de dados para StockItemDTO
      * 
+     * Mapeia dinamicamente as colunas retornadas pela query baseado no número de lojas.
+     * A query retorna: refplu, marca, descricao, loj1, loj2, ..., lojN, total, rn
+     * 
      * @param row Linha de dados do repositório
+     * @param stores Lista de lojas para mapeamento dinâmico (ordenadas por ID)
      * @return StockItemDTO ou null se conversão falhar
      */
-    private StockItemDTO convertRowToStockDTO(Object[] row) {
+    private StockItemDTO convertRowToStockDTO(Object[] row, List<Store> stores) {
         try {
-            Long loj1 = convertToLong(row[3]);
-            Long loj2 = convertToLong(row[4]);
-            Long loj3 = convertToLong(row[5]);
-            Long loj4 = convertToLong(row[6]);
-            Long loj5 = convertToLong(row[7]);
-            Long loj6 = convertToLong(row[8]);
-            Long loj7 = convertToLong(row[9]);
-            Long loj8 = convertToLong(row[10]);
-            Long loj9 = convertToLong(row[11]);
-            Long loj10 = convertToLong(row[12]);
-            Long loj11 = convertToLong(row[13]);
-            Long loj12 = convertToLong(row[14]);
-            Long loj13 = convertToLong(row[15]);
-            Long loj14 = convertToLong(row[16]);
+            // Estrutura do array retornado pela query dinâmica:
+            // row[0] = refplu
+            // row[1] = marca
+            // row[2] = descricao
+            // row[3] até row[2+stores.size()] = quantidades por loja (loj1, loj2, ..., lojN)
+            // row[3+stores.size()] = total
+            // row[3+stores.size()+1] = rn (ROW_NUMBER) - se presente, ignorar
             
-            // Calcular total somando todas as quantidades das lojas
-            Long total = calculateTotal(loj1, loj2, loj3, loj4, loj5, loj6, loj7, 
-                                       loj8, loj9, loj10, loj11, loj12, loj13, loj14);
+            if (row.length < 3) {
+                log.warn("Linha com menos de 3 colunas: {}", row.length);
+                return null;
+            }
+            
+            Long[] lojas = new Long[14]; // Inicializar com null (compatibilidade com DTO)
+            Long total = 0L;
+            
+            int numStores = Math.min(stores.size(), 14); // Limitar a 14 para compatibilidade com DTO
+            
+            // Mapear quantidades das lojas dinamicamente
+            for (int i = 0; i < numStores; i++) {
+                int rowIndex = 3 + i; // Coluna da loja na query (após refplu, marca, descricao)
+                if (rowIndex < row.length) {
+                    Long quantidade = convertToLong(row[rowIndex]);
+                    lojas[i] = quantidade != null ? quantidade : 0L;
+                } else {
+                    lojas[i] = 0L; // Se não houver coluna, assumir 0
+                }
+            }
+            
+            // Buscar o total da query (coluna após todas as lojas)
+            int totalIndex = 3 + stores.size();
+            if (totalIndex < row.length) {
+                Long totalFromQuery = convertToLong(row[totalIndex]);
+                if (totalFromQuery != null) {
+                    total = totalFromQuery;
+                } else {
+                    // Se total for null, calcular somando as lojas
+                    for (int i = 0; i < numStores; i++) {
+                        if (lojas[i] != null) {
+                            total += lojas[i];
+                        }
+                    }
+                }
+            } else {
+                // Se não houver coluna de total, calcular somando as lojas
+                for (int i = 0; i < numStores; i++) {
+                    if (lojas[i] != null) {
+                        total += lojas[i];
+                    }
+                }
+            }
+            
+            // Log detalhado para debug
+            if (log.isDebugEnabled()) {
+                StringBuilder lojasStr = new StringBuilder();
+                for (int i = 0; i < Math.min(numStores, 5); i++) {
+                    if (lojas[i] != null) {
+                        lojasStr.append(String.format("loj%d=%d, ", i+1, lojas[i]));
+                    }
+                }
+                log.debug("Convertendo linha - refplu: {}, numStores: {}, totalIndex: {}, row.length: {}, total: {}, lojas: [{}]", 
+                        row[0], numStores, totalIndex, row.length, total, lojasStr.toString());
+            }
             
             return new StockItemDTO(
                     (String) row[0],    // refplu
                     (String) row[1],    // marca
                     (String) row[2],    // descricao
-                    loj1, loj2, loj3, loj4, loj5, loj6, loj7,
-                    loj8, loj9, loj10, loj11, loj12, loj13, loj14,
+                    lojas[0], lojas[1], lojas[2], lojas[3], lojas[4], lojas[5], lojas[6],
+                    lojas[7], lojas[8], lojas[9], lojas[10], lojas[11], lojas[12], lojas[13],
                     total               // total
             );
         } catch (Exception e) {
-            log.warn("Erro ao converter linha para StockItemDTO: {}", e.getMessage());
+            log.warn("Erro ao converter linha para StockItemDTO: {}", e.getMessage(), e);
             return null;
         }
     }
     
-    /**
-     * Calcula o total somando todas as quantidades das lojas
-     * Trata valores nulos como zero
-     * 
-     * @param quantities Quantidades das lojas
-     * @return Total calculado
-     */
-    private Long calculateTotal(Long... quantities) {
-        long sum = 0;
-        for (Long quantity : quantities) {
-            if (quantity != null) {
-                sum += quantity;
-            }
-        }
-        return sum;
-    }
 
     /**
      * Converte Object para Long, tratando diferentes tipos de dados do SQL Server
@@ -413,12 +426,8 @@ public class StockService {
         private String descricao;
         private String refpluFilter;
         private String marcaFilter;
-        private String word1;
-        private String word2;
-        private String word3;
-        private String word4;
-        private String word5;
-        private String lettersPattern;
+        private String descricaoWords;
+        private String grupoWords;
     }
     
     /**
@@ -446,5 +455,19 @@ public class StockService {
      */
     public List<Object[]> testStocksWithPivot() {
         return stockRepository.findTestStocksWithPivot();
+    }
+    
+    /**
+     * Busca todas as lojas ativas ordenadas por LOJCOD
+     * 
+     * @return Lista de lojas ordenadas por código
+     */
+    public List<Store> getActiveStores() {
+        log.debug("Buscando lojas ativas");
+        List<Store> stores = storeRepository.findAll();
+        // Ordenar por LOJCOD (id)
+        stores.sort((s1, s2) -> Long.compare(s1.getId(), s2.getId()));
+        log.debug("Lojas encontradas: {}", stores.size());
+        return stores;
     }
 }

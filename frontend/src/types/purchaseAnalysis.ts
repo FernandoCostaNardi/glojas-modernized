@@ -47,6 +47,9 @@ export interface PurchaseAnalysisPageResponse {
  */
 export interface PurchaseAnalysisFilters {
   refplu?: string;
+  descricao?: string;
+  grupo?: string;
+  marca?: string;
   hideNoSales?: boolean;
   page: number;
   size: number;

@@ -34,13 +34,16 @@ public class CriticalStockService {
      * @throws RuntimeException Se houver erro na comunicação com Legacy API
      */
     public CriticalStockPageResponseDTO getCriticalStock(@Valid CriticalStockSearchRequest request) {
-        log.info("Buscando estoque crítico: refplu={}, page={}, size={}, sortBy={}, sortDir={}",
-                request.refplu(), request.page(), request.size(), request.sortBy(), request.sortDir());
+        log.info("Buscando estoque crítico: refplu={}, descricao={}, grupo={}, marca={}, page={}, size={}, sortBy={}, sortDir={}",
+                request.refplu(), request.descricao(), request.grupo(), request.marca(), request.page(), request.size(), request.sortBy(), request.sortDir());
         
         try {
             // Chamar Legacy API
             CriticalStockPageResponseDTO response = legacyApiClient.getCriticalStock(
                 request.refplu(),
+                request.descricao(),
+                request.grupo(),
+                request.marca(),
                 request.page(),
                 request.size(),
                 request.sortBy(),

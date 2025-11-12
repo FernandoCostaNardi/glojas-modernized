@@ -10,6 +10,9 @@ import jakarta.validation.constraints.Size;
  * Usado no Business API (Java 17) - DTOs simples usam Records.
  * 
  * @param refplu Filtro opcional por REFPLU
+ * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+ * @param grupo Filtro opcional por grupo
+ * @param marca Filtro opcional por marca
  * @param page Número da página (base 0)
  * @param size Tamanho da página
  * @param sortBy Campo para ordenação (padrão: diferenca)
@@ -22,6 +25,15 @@ public record CriticalStockSearchRequest(
     
     @Size(max = 6, message = "REFPLU deve ter no máximo 6 caracteres")
     String refplu,
+    
+    @Size(max = 100, message = "Descrição deve ter no máximo 100 caracteres")
+    String descricao,
+    
+    @Size(max = 100, message = "Grupo deve ter no máximo 100 caracteres")
+    String grupo,
+    
+    @Size(max = 100, message = "Marca deve ter no máximo 100 caracteres")
+    String marca,
     
     @Min(value = 0, message = "Número da página deve ser >= 0")
     Integer page,

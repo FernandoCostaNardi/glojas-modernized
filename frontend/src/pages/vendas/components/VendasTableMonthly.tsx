@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLayout } from '@/contexts/LayoutContext';
 import { MonthlySalesReportResponse } from '../services/vendasApi';
 
 /**
@@ -27,6 +28,7 @@ const VendasTableMonthly: React.FC<VendasTableMonthlyProps> = ({
   error, 
   className = '' 
 }) => {
+  const { isMobile } = useLayout();
   
   /**
    * Formata valor monetário para exibição
@@ -100,13 +102,13 @@ const VendasTableMonthly: React.FC<VendasTableMonthlyProps> = ({
   const renderTableHeader = (): React.ReactNode => (
     <thead className="bg-smart-gray-50">
       <tr>
-        <th className="px-6 py-3 text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-left text-xs font-medium text-smart-gray-500 uppercase tracking-wider`}>
           Loja
         </th>
-        <th className="px-6 py-3 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider`}>
           Total
         </th>
-        <th className="px-6 py-3 text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider">
+        <th className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right text-xs font-medium text-smart-gray-500 uppercase tracking-wider`}>
           % do Total
         </th>
       </tr>
@@ -120,17 +122,17 @@ const VendasTableMonthly: React.FC<VendasTableMonthlyProps> = ({
    */
   const renderTableRow = (item: MonthlySalesReportResponse, index: number): React.ReactNode => (
     <tr key={`${item.storeName}-${index}`} className={index % 2 === 0 ? 'bg-white' : 'bg-smart-gray-50'}>
-      <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-smart-gray-900">
+      <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-4'} whitespace-nowrap`}>
+        <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-smart-gray-900`}>
           {item.storeName}
         </div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-right">
-        <div className="text-sm font-medium text-smart-gray-900">
+      <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-4'} whitespace-nowrap text-right`}>
+        <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-smart-gray-900`}>
           {formatCurrency(item.total)}
         </div>
       </td>
-      <td className="px-6 py-4 whitespace-nowrap text-right">
+      <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-4'} whitespace-nowrap text-right`}>
         <div className="flex items-center justify-end space-x-3">
           <div className="w-20 bg-smart-gray-200 rounded-full h-2">
             <div 
@@ -138,7 +140,7 @@ const VendasTableMonthly: React.FC<VendasTableMonthlyProps> = ({
               style={{ width: `${Math.min(item.percentageOfTotal, 100)}%` }}
             ></div>
           </div>
-          <div className="text-sm font-medium text-smart-gray-900 min-w-[60px] text-right">
+          <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-smart-gray-900 min-w-[60px] text-right`}>
             {formatPercentage(item.percentageOfTotal)}
           </div>
         </div>
@@ -155,13 +157,13 @@ const VendasTableMonthly: React.FC<VendasTableMonthlyProps> = ({
     return (
       <tfoot className="bg-smart-gray-100">
         <tr>
-          <td className="px-6 py-3 text-left text-sm font-bold text-smart-gray-900">
+          <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-left ${isMobile ? 'text-xs' : 'text-sm'} font-bold text-smart-gray-900`}>
             Total Geral
           </td>
-          <td className="px-6 py-3 text-right text-sm font-bold text-smart-gray-900">
+          <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right ${isMobile ? 'text-xs' : 'text-sm'} font-bold text-smart-gray-900`}>
             {formatCurrency(grandTotal)}
           </td>
-          <td className="px-6 py-3 text-right text-sm font-bold text-smart-gray-900">
+          <td className={`${isMobile ? 'px-3 py-2' : 'px-6 py-3'} text-right ${isMobile ? 'text-xs' : 'text-sm'} font-bold text-smart-gray-900`}>
             100.00%
           </td>
         </tr>
@@ -186,25 +188,31 @@ const VendasTableMonthly: React.FC<VendasTableMonthlyProps> = ({
     }
 
     return (
-      <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-        <table className="min-w-full divide-y divide-smart-gray-300">
-          {renderTableHeader()}
-          <tbody className="bg-white divide-y divide-smart-gray-200">
-            {data.map(renderTableRow)}
-          </tbody>
-          {renderTableFooter()}
-        </table>
+      <div className="bg-white rounded-lg shadow-lg border border-smart-gray-100 overflow-hidden w-full max-w-full box-border">
+        <div className="overflow-x-auto w-full max-w-full">
+          <table className="w-full divide-y divide-smart-gray-200 min-w-full">
+            {renderTableHeader()}
+            <tbody className="bg-white divide-y divide-smart-gray-200">
+              {data.map(renderTableRow)}
+            </tbody>
+            {renderTableFooter()}
+          </table>
+        </div>
       </div>
     );
   };
 
   return (
-    <div className={`vendas-table-monthly ${className}`}>
+    <div className={`vendas-table-monthly w-full max-w-full box-border ${className}`}>
       <div className="mb-4">
-        <h3 className="text-lg font-medium text-smart-gray-900">
+        <h3 className={`font-medium text-smart-gray-900 ${
+          isMobile ? 'text-sm' : 'text-lg'
+        }`}>
           Relatório de Vendas Mensais
         </h3>
-        <p className="text-sm text-smart-gray-600">
+        <p className={`text-smart-gray-600 ${
+          isMobile ? 'text-xs' : 'text-sm'
+        }`}>
           Dados agregados por loja com percentual de participação
         </p>
       </div>

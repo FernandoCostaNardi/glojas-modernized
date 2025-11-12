@@ -32,6 +32,9 @@ public class CriticalStockController {
      * Requer permissão buy:read.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @param page Número da página (base 0)
      * @param size Tamanho da página
      * @param sortBy Campo para ordenação (padrão: diferenca)
@@ -42,18 +45,21 @@ public class CriticalStockController {
     @PreAuthorize("hasAuthority('buy:read')")
     public ResponseEntity<CriticalStockPageResponseDTO> getCriticalStock(
             @RequestParam(required = false) String refplu,
+            @RequestParam(required = false) String descricao,
+            @RequestParam(required = false) String grupo,
+            @RequestParam(required = false) String marca,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "20") Integer size,
             @RequestParam(defaultValue = "diferenca") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir) {
         
-        log.info("GET /api/v1/critical-stock - refplu={}, page={}, size={}, sortBy={}, sortDir={}",
-                refplu, page, size, sortBy, sortDir);
+        log.info("GET /api/v1/critical-stock - refplu={}, descricao={}, grupo={}, marca={}, page={}, size={}, sortBy={}, sortDir={}",
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir);
         
         try {
             // Criar request validado
             CriticalStockSearchRequest request = new CriticalStockSearchRequest(
-                refplu, page, size, sortBy, sortDir
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir
             );
             
             // Buscar dados

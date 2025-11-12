@@ -136,6 +136,12 @@ public interface PurchaseAnalysisRepository extends JpaRepository<Product, Long>
             "    LEFT JOIN VendasAtual va ON r.REFPLU = va.REFPLU " +
             "    LEFT JOIN EstoqueTotal est ON r.REFPLU = est.REFPLU " +
             "    WHERE (:refplu IS NULL OR r.REFPLU LIKE :refpluFilter) " +
+            "      AND (:grupo IS NULL OR g.GRPDES LIKE :grupoFilter) " +
+            "      AND (:marca IS NULL OR m.MARDES LIKE :marcaFilter) " +
+            "      AND (:descricao IS NULL OR :descricaoWords IS NULL OR " +
+            "           (UPPER(p.PRODES) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "            UPPER(g.GRPDES) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "            UPPER(m.MARDES) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%')) " +
             "      AND (:hideNoSales = 0 OR ISNULL(v90.Total, 0) > 0) " +
             ") " +
             "SELECT " +
@@ -148,6 +154,12 @@ public interface PurchaseAnalysisRepository extends JpaRepository<Product, Long>
     List<Object[]> findPurchaseAnalysisWithFilters(
         @Param("refplu") String refplu,
         @Param("refpluFilter") String refpluFilter,
+        @Param("descricao") String descricao,
+        @Param("descricaoWords") String descricaoWords,
+        @Param("grupo") String grupo,
+        @Param("grupoFilter") String grupoFilter,
+        @Param("marca") String marca,
+        @Param("marcaFilter") String marcaFilter,
         @Param("hideNoSales") Boolean hideNoSales,
         @Param("sortColumn") String sortColumn,
         @Param("sortDirection") String sortDirection,
@@ -182,11 +194,23 @@ public interface PurchaseAnalysisRepository extends JpaRepository<Product, Long>
             "INNER JOIN REFERENCIA r ON p.PROCOD = r.PROCOD " +
             "LEFT JOIN Vendas90 v90 ON r.REFPLU = v90.REFPLU " +
             "WHERE (:refplu IS NULL OR r.REFPLU LIKE :refpluFilter) " +
+            "  AND (:grupo IS NULL OR g.GRPDES LIKE :grupoFilter) " +
+            "  AND (:marca IS NULL OR m.MARDES LIKE :marcaFilter) " +
+            "  AND (:descricao IS NULL OR :descricaoWords IS NULL OR " +
+            "       (UPPER(p.PRODES) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "        UPPER(g.GRPDES) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "        UPPER(m.MARDES) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%')) " +
             "  AND (:hideNoSales = 0 OR ISNULL(v90.Total, 0) > 0)",
            nativeQuery = true)
     Long countPurchaseAnalysisWithFilters(
         @Param("refplu") String refplu,
         @Param("refpluFilter") String refpluFilter,
+        @Param("descricao") String descricao,
+        @Param("descricaoWords") String descricaoWords,
+        @Param("grupo") String grupo,
+        @Param("grupoFilter") String grupoFilter,
+        @Param("marca") String marca,
+        @Param("marcaFilter") String marcaFilter,
         @Param("hideNoSales") Boolean hideNoSales
     );
 }

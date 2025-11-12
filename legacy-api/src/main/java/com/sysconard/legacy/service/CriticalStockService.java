@@ -3,12 +3,14 @@ package com.sysconard.legacy.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.sysconard.legacy.dto.CriticalStockItemDTO;
 import com.sysconard.legacy.repository.CriticalStockRepository;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +40,9 @@ public class CriticalStockService {
      * Busca produtos com estoque crítico.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @param page Número da página (base 0)
      * @param size Tamanho da página
      * @param sortBy Campo para ordenação
@@ -45,19 +50,23 @@ public class CriticalStockService {
      * @return Lista de itens de estoque crítico
      */
     public List<CriticalStockItemDTO> findCriticalStockWithFilters(
-            String refplu, int page, int size, String sortBy, String sortDir) {
+            String refplu, String descricao, String grupo, String marca, int page, int size, String sortBy, String sortDir) {
         
-        log.debug("Buscando estoque crítico: refplu={}, page={}, size={}, sortBy={}, sortDir={}",
-                refplu, page, size, sortBy, sortDir);
+        log.debug("Buscando estoque crítico: refplu={}, descricao={}, grupo={}, marca={}, page={}, size={}, sortBy={}, sortDir={}",
+                refplu, descricao, grupo, marca, page, size, sortBy, sortDir);
         
         // Validações
         validatePaginationParameters(page, size);
         validateSortParameters(sortBy, sortDir);
         
         // Preparar filtros
-        String refpluFilter = (refplu != null && !refplu.trim().isEmpty()) 
-            ? "%" + refplu.trim() + "%" 
-            : null;
+        String refpluFilter = createLikeFilter(refplu);
+        String grupoFilter = createLikeFilter(grupo);
+        String marcaFilter = createLikeFilter(marca);
+        
+        // Processar múltiplas palavras na descrição para busca ampla
+        List<String> descricaoWords = splitIntoWords(descricao);
+        String descricaoWordsParam = descricaoWords.isEmpty() ? null : String.join("|", descricaoWords);
         
         // Calcular offset
         int offset = page * size;
@@ -66,6 +75,12 @@ public class CriticalStockService {
         List<Object[]> rows = criticalStockRepository.findCriticalStockWithFilters(
             refplu,
             refpluFilter,
+            descricao,
+            descricaoWordsParam,
+            grupo,
+            grupoFilter,
+            marca,
+            marcaFilter,
             sortBy,
             sortDir.toUpperCase(),
             offset,
@@ -84,20 +99,53 @@ public class CriticalStockService {
      * Conta o total de produtos com estoque crítico.
      * 
      * @param refplu Filtro opcional por REFPLU
+     * @param descricao Filtro opcional por descrição (busca também em grupo e marca)
+     * @param grupo Filtro opcional por grupo
+     * @param marca Filtro opcional por marca
      * @return Total de registros
      */
-    public long countWithFilters(String refplu) {
-        log.debug("Contando produtos com estoque crítico: refplu={}", refplu);
+    public long countWithFilters(String refplu, String descricao, String grupo, String marca) {
+        log.debug("Contando produtos com estoque crítico: refplu={}, descricao={}, grupo={}, marca={}", 
+                refplu, descricao, grupo, marca);
         
-        String refpluFilter = (refplu != null && !refplu.trim().isEmpty()) 
-            ? "%" + refplu.trim() + "%" 
-            : null;
+        String refpluFilter = createLikeFilter(refplu);
+        String grupoFilter = createLikeFilter(grupo);
+        String marcaFilter = createLikeFilter(marca);
         
-        Long count = criticalStockRepository.countCriticalStockWithFilters(refplu, refpluFilter);
+        // Processar múltiplas palavras na descrição para busca ampla
+        List<String> descricaoWords = splitIntoWords(descricao);
+        String descricaoWordsParam = descricaoWords.isEmpty() ? null : String.join("|", descricaoWords);
+        
+        Long count = criticalStockRepository.countCriticalStockWithFilters(
+            refplu, refpluFilter, descricao, descricaoWordsParam, grupo, grupoFilter, marca, marcaFilter);
         
         log.debug("Total de produtos com estoque crítico: {}", count);
         
         return count != null ? count : 0L;
+    }
+    
+    /**
+     * Divide uma string em palavras, removendo espaços extras
+     * 
+     * @param value Valor para processar
+     * @return Lista de palavras ou lista vazia se valor for nulo/vazio
+     */
+    private List<String> splitIntoWords(String value) {
+        if (!StringUtils.hasText(value)) {
+            return Collections.emptyList();
+        }
+        String[] words = value.trim().toUpperCase().split("\\s+");
+        return Arrays.asList(words);
+    }
+
+    /**
+     * Cria filtro LIKE para busca no banco
+     * 
+     * @param value Valor para filtrar
+     * @return Filtro LIKE ou null se valor for nulo/vazio
+     */
+    private String createLikeFilter(String value) {
+        return StringUtils.hasText(value) ? "%" + value.trim() + "%" : null;
     }
     
     /**
