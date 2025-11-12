@@ -1,6 +1,7 @@
 package com.sysconard.business.repository.sell;
 
 import com.sysconard.business.dto.sell.DailySalesReportResponse;
+import com.sysconard.business.dto.sell.StoreReportResponse;
 import com.sysconard.business.entity.sell.DailySell;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -131,6 +132,36 @@ public interface DailySellRepository extends JpaRepository<DailySell, UUID> {
     List<DailySalesReportResponse> findAggregatedSalesByDateRange(
         @Param("startDate") LocalDate startDate,
         @Param("endDate") LocalDate endDate
+    );
+    
+    /**
+     * Busca vendas agregadas por loja em um período específico para relatório de lojas.
+     * Utiliza agregação SQL otimizada com filtro por códigos de loja.
+     * Retorna dados no formato StoreReportResponse (com danfe, pdv e troca/exchange).
+     * 
+     * @param startDate Data de início do período
+     * @param endDate Data de fim do período
+     * @param storeCodes Lista de códigos das lojas para filtrar
+     * @return Lista de vendas agregadas por loja no formato StoreReportResponse
+     */
+    @Query("""
+        SELECT new com.sysconard.business.dto.sell.StoreReportResponse(
+            d.storeName,
+            d.storeCode,
+            SUM(d.danfe),
+            SUM(d.pdv),
+            SUM(d.exchange)
+        )
+        FROM DailySell d 
+        WHERE d.date BETWEEN :startDate AND :endDate
+            AND d.storeCode IN :storeCodes
+        GROUP BY d.storeName, d.storeCode
+        ORDER BY d.storeName
+        """)
+    List<StoreReportResponse> findStoreReportByDateRange(
+        @Param("startDate") LocalDate startDate,
+        @Param("endDate") LocalDate endDate,
+        @Param("storeCodes") List<String> storeCodes
     );
     
     /**

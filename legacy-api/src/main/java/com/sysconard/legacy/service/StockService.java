@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -159,14 +160,34 @@ public class StockService {
      * @return StockFilters configurado
      */
     private StockFilters createStockFilters(String refplu, String marca, String descricao) {
+        // Processa múltiplas palavras na descrição
+        List<String> descricaoWords = splitIntoWords(descricao);
+        
         return StockFilters.builder()
                 .refplu(refplu)
                 .marca(marca)
                 .descricao(descricao)
                 .refpluFilter(createLikeFilter(refplu))
                 .marcaFilter(createLikeFilter(marca))
-                .descricaoFilter(createLikeFilter(descricao))
+                .descricaoFilter(createContainedLettersFilter(descricao))
+                .grupoFilter(createContainedLettersFilter(descricao))
+                .descricaoWords(descricaoWords.isEmpty() ? null : String.join("|", descricaoWords))
+                .grupoWords(descricaoWords.isEmpty() ? null : String.join("|", descricaoWords))
                 .build();
+    }
+    
+    /**
+     * Divide uma string em palavras, removendo espaços extras
+     * 
+     * @param value Valor para processar
+     * @return Lista de palavras ou lista vazia se valor for nulo/vazio
+     */
+    private List<String> splitIntoWords(String value) {
+        if (!StringUtils.hasText(value)) {
+            return Collections.emptyList();
+        }
+        String[] words = value.trim().toUpperCase().split("\\s+");
+        return Arrays.asList(words);
     }
 
     /**
@@ -177,6 +198,35 @@ public class StockService {
      */
     private String createLikeFilter(String value) {
         return StringUtils.hasText(value) ? "%" + value + "%" : null;
+    }
+
+    /**
+     * Cria filtro de busca por letras contidas
+     * Transforma "NTB" em "%N%T%B%" para buscar palavras que contenham essas letras na ordem
+     * Exemplo: "NTB" encontra "notebook", "NTB123", etc.
+     * 
+     * @param value Valor para filtrar
+     * @return Filtro LIKE com letras contidas ou null se valor for nulo/vazio
+     */
+    private String createContainedLettersFilter(String value) {
+        if (!StringUtils.hasText(value)) {
+            return null;
+        }
+        
+        // Remove espaços e converte para maiúsculo para busca case-insensitive
+        String cleaned = value.trim().toUpperCase();
+        
+        // Transforma cada letra em "%LETRA%"
+        // Exemplo: "NTB" -> "%N%T%B%"
+        StringBuilder filter = new StringBuilder();
+        for (char c : cleaned.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                filter.append("%").append(c);
+            }
+        }
+        filter.append("%");
+        
+        return filter.toString();
     }
 
     /**
@@ -196,7 +246,8 @@ public class StockService {
         
         return stockRepository.findStocksWithFilters(
                 filters.getRefplu(), filters.getMarca(), filters.getDescricao(),
-                filters.getRefpluFilter(), filters.getMarcaFilter(), filters.getDescricaoFilter(),
+                filters.getRefpluFilter(), filters.getMarcaFilter(),
+                filters.getDescricaoWords(), filters.getGrupoWords(),
                 hasStock, sortBy, sortDir, offset, pageable.getPageSize()
         );
     }
@@ -211,7 +262,8 @@ public class StockService {
     private Long countStockData(StockFilters filters, Boolean hasStock) {
         return stockRepository.countStocksWithFilters(
                 filters.getRefplu(), filters.getMarca(), filters.getDescricao(),
-                filters.getRefpluFilter(), filters.getMarcaFilter(), filters.getDescricaoFilter(),
+                filters.getRefpluFilter(), filters.getMarcaFilter(),
+                filters.getDescricaoWords(), filters.getGrupoWords(),
                 hasStock
         );
     }
@@ -337,6 +389,9 @@ public class StockService {
         private String refpluFilter;
         private String marcaFilter;
         private String descricaoFilter;
+        private String grupoFilter;
+        private String descricaoWords;
+        private String grupoWords;
     }
     
     /**
