@@ -6,6 +6,7 @@ import com.sysconard.business.dto.sell.StoreReportRequest;
 import com.sysconard.business.dto.sell.StoreReportResponse;
 import com.sysconard.business.dto.sell.StoreReportByDayResponse;
 import com.sysconard.business.exception.sell.StoreReportException;
+import com.sysconard.business.repository.sell.DailySellRepository;
 import com.sysconard.business.service.operation.OperationService;
 import com.sysconard.business.service.origin.EventOriginService;
 
@@ -59,10 +60,14 @@ public class SellService {
     private  EventOriginService originService;
     @Autowired
     private  OperationService operationService;
+    
+    private final DailySellRepository dailySellRepository;
 
     
     /**
-     * Obtém relatório de vendas por loja consumindo a Legacy API.
+     * Obtém relatório de vendas por loja com roteamento inteligente.
+     * Se a data for HOJE: busca na Legacy API (dados em tempo real).
+     * Se for qualquer outra data: busca na tabela daily_sells local (mais rápido).
      * 
      * @param request Parâmetros para geração do relatório
      * @return Lista de dados de vendas agregados por loja
@@ -76,18 +81,28 @@ public class SellService {
             // 1. Validar entrada
             validateRequest(request);
             
-            // 2. Converter para formato da Legacy API
-            Map<String, Object> legacyRequest = buildLegacyRequest(request);
+            // 2. Verificar se período contém hoje para decidir a fonte de dados
+            LocalDate today = LocalDate.now();
+            boolean containsToday = containsToday(request.startDate(), request.endDate());
             
-            // 3. Fazer chamada HTTP para Legacy API
-            List<Map<String, Object>> legacyResponse = callLegacyApi(legacyRequest);
-            
-            // 4. Converter resposta para nosso formato
-            List<StoreReportResponse> response = mapToStoreReportResponse(legacyResponse);
-            
-            log.info("Relatório de vendas obtido com sucesso: {} lojas processadas", response.size());
-            
-            return response;
+            if (containsToday) {
+                // Período contém hoje - buscar na Legacy API
+                log.info("Período contém hoje ({}). Buscando dados na Legacy API para tempo real.", today);
+                
+                // Verificar se é período misto (passado + hoje)
+                if (request.startDate().isBefore(today)) {
+                    // Período misto: combinar dados do passado (local) + hoje (Legacy API)
+                    log.info("Período misto detectado. Combinando dados locais e Legacy API.");
+                    return getStoreReportMixedPeriod(request, today);
+                } else {
+                    // Só hoje - buscar apenas na Legacy API
+                    return getStoreReportFromLegacy(request);
+                }
+            } else {
+                // Período não contém hoje - buscar na tabela local (mais rápido)
+                log.info("Período não contém hoje. Buscando dados na tabela local daily_sells.");
+                return getStoreReportFromLocal(request);
+            }
             
         } catch (StoreReportException e) {
             log.error("Erro ao obter relatório de vendas: {}", e.getMessage());
@@ -96,6 +111,143 @@ public class SellService {
             log.error("Erro inesperado ao obter relatório de vendas: {}", e.getMessage(), e);
             throw new StoreReportException("Erro interno ao processar relatório de vendas", e);
         }
+    }
+    
+    /**
+     * Busca relatório de vendas na Legacy API (comportamento original).
+     * Utilizado quando o período contém a data de hoje.
+     * 
+     * @param request Requisição com período e lojas
+     * @return Lista de vendas agregadas por loja
+     */
+    private List<StoreReportResponse> getStoreReportFromLegacy(StoreReportRequest request) {
+        log.debug("Buscando relatório na Legacy API");
+        
+        // 1. Converter para formato da Legacy API
+        Map<String, Object> legacyRequest = buildLegacyRequest(request);
+        
+        // 2. Fazer chamada HTTP para Legacy API
+        List<Map<String, Object>> legacyResponse = callLegacyApi(legacyRequest);
+        
+        // 3. Converter resposta para nosso formato
+        List<StoreReportResponse> response = mapToStoreReportResponse(legacyResponse);
+        
+        log.info("Relatório da Legacy API obtido com sucesso: {} lojas processadas", response.size());
+        
+        return response;
+    }
+    
+    /**
+     * Combina dados de período misto (passado + hoje).
+     * Busca dados do passado na tabela local e dados de hoje na Legacy API,
+     * depois agrega por loja.
+     * 
+     * @param request Requisição original
+     * @param today Data de hoje
+     * @return Lista combinada de vendas agregadas por loja
+     */
+    private List<StoreReportResponse> getStoreReportMixedPeriod(StoreReportRequest request, LocalDate today) {
+        log.info("Processando período misto: combinando dados locais e Legacy API");
+        
+        // 1. Buscar dados do passado na tabela local (até ontem)
+        LocalDate yesterday = today.minusDays(1);
+        StoreReportRequest pastRequest = StoreReportRequest.builder()
+            .startDate(request.startDate())
+            .endDate(yesterday.isBefore(request.startDate()) ? request.startDate() : yesterday)
+            .storeCodes(request.storeCodes())
+            .build();
+        
+        List<StoreReportResponse> pastData = getStoreReportFromLocal(pastRequest);
+        log.debug("Dados do passado obtidos: {} lojas", pastData.size());
+        
+        // 2. Buscar dados de hoje na Legacy API
+        StoreReportRequest todayRequest = StoreReportRequest.builder()
+            .startDate(today)
+            .endDate(today)
+            .storeCodes(request.storeCodes())
+            .build();
+        
+        List<StoreReportResponse> todayData = getStoreReportFromLegacy(todayRequest);
+        log.debug("Dados de hoje obtidos: {} lojas", todayData.size());
+        
+        // 3. Combinar e agregar dados por loja
+        List<StoreReportResponse> combinedData = combineStoreReports(pastData, todayData, request.storeCodes());
+        
+        log.info("Dados combinados com sucesso: {} lojas no total", combinedData.size());
+        
+        return combinedData;
+    }
+    
+    /**
+     * Combina dois relatórios de lojas, agregando valores por loja.
+     * Se uma loja aparece nos dois relatórios, soma os valores.
+     * 
+     * @param pastData Dados do passado
+     * @param todayData Dados de hoje
+     * @param requestedStoreCodes Lista de códigos de lojas solicitadas
+     * @return Lista combinada e agregada por loja
+     */
+    private List<StoreReportResponse> combineStoreReports(
+            List<StoreReportResponse> pastData,
+            List<StoreReportResponse> todayData,
+            List<String> requestedStoreCodes) {
+        
+        log.debug("Combinando relatórios: {} lojas no passado, {} lojas hoje", 
+                 pastData.size(), todayData.size());
+        
+        // Combinar dados por loja
+        Map<String, StoreReportResponse> combinedMap = new HashMap<>();
+        
+        // Adicionar dados do passado
+        for (StoreReportResponse past : pastData) {
+            combinedMap.put(past.storeCode(), past);
+        }
+        
+        // Adicionar/somar dados de hoje
+        for (StoreReportResponse today : todayData) {
+            StoreReportResponse existing = combinedMap.get(today.storeCode());
+            
+            if (existing != null) {
+                // Loja existe nos dois períodos - somar valores
+                StoreReportResponse combined = StoreReportResponse.builder()
+                    .storeName(today.storeName()) // Usar nome mais recente (de hoje)
+                    .storeCode(today.storeCode())
+                    .danfe(existing.danfe().add(today.danfe()))
+                    .pdv(existing.pdv().add(today.pdv()))
+                    .troca(existing.troca().add(today.troca()))
+                    .build();
+                combinedMap.put(today.storeCode(), combined);
+            } else {
+                // Loja só existe hoje
+                combinedMap.put(today.storeCode(), today);
+            }
+        }
+        
+        // 4. Garantir que todas as lojas solicitadas apareçam
+        List<StoreReportResponse> result = new java.util.ArrayList<>();
+        for (String storeCode : requestedStoreCodes) {
+            StoreReportResponse storeData = combinedMap.get(storeCode);
+            if (storeData != null) {
+                result.add(storeData);
+            } else {
+                // Loja não tem dados em nenhum período - criar zerado
+                log.debug("Loja {} não possui vendas em nenhum período. Criando registro zerado.", storeCode);
+                result.add(StoreReportResponse.builder()
+                    .storeName("Loja " + storeCode)
+                    .storeCode(storeCode)
+                    .danfe(BigDecimal.ZERO)
+                    .pdv(BigDecimal.ZERO)
+                    .troca(BigDecimal.ZERO)
+                    .build());
+            }
+        }
+        
+        // 5. Ordenar por nome da loja
+        result.sort(Comparator.comparing(StoreReportResponse::storeName));
+        
+        log.debug("Combinação concluída: {} lojas no resultado final", result.size());
+        
+        return result;
     }
     
     /**
@@ -116,6 +268,19 @@ public class SellService {
         if (request.storeCodes().size() > 50) {
             throw new StoreReportException("Máximo de 50 lojas por requisição");
         }
+    }
+    
+    /**
+     * Verifica se o período solicitado contém a data de hoje.
+     * Utilizado para decidir entre buscar na Legacy API ou na tabela local.
+     * 
+     * @param startDate Data de início do período
+     * @param endDate Data de fim do período
+     * @return true se o período contém hoje, false caso contrário
+     */
+    private boolean containsToday(LocalDate startDate, LocalDate endDate) {
+        LocalDate today = LocalDate.now();
+        return !today.isBefore(startDate) && !today.isAfter(endDate);
     }
     
     /**
@@ -196,6 +361,103 @@ public class SellService {
         return legacyResponse.stream()
                 .map(this::mapSingleStoreReport)
                 .toList();
+    }
+    
+    /**
+     * Busca relatório de vendas na tabela local daily_sells.
+     * Utilizado quando o período solicitado não contém a data de hoje.
+     * Garante que todas as lojas solicitadas apareçam no resultado, mesmo sem vendas.
+     * 
+     * @param request Requisição com período e lojas
+     * @return Lista de vendas agregadas por loja
+     */
+    private List<StoreReportResponse> getStoreReportFromLocal(StoreReportRequest request) {
+        log.info("Buscando relatório de vendas na tabela local daily_sells: startDate={}, endDate={}, storeCodes={}", 
+                request.startDate(), request.endDate(), request.storeCodes());
+        
+        try {
+            // 1. Buscar dados agregados na tabela local
+            List<StoreReportResponse> localData = dailySellRepository.findStoreReportByDateRange(
+                request.startDate(),
+                request.endDate(),
+                request.storeCodes()
+            );
+            
+            log.debug("Dados locais obtidos: {} lojas encontradas", localData.size());
+            
+            // 2. Garantir que todas as lojas solicitadas apareçam (mesmo sem vendas)
+            List<StoreReportResponse> completeResponse = ensureAllStoresPresent(localData, request.storeCodes());
+            
+            log.info("Relatório local obtido com sucesso: {} lojas processadas", completeResponse.size());
+            
+            return completeResponse;
+            
+        } catch (Exception e) {
+            log.error("Erro ao buscar relatório de vendas na tabela local: {}", e.getMessage(), e);
+            throw new StoreReportException("Erro ao processar relatório de vendas local", e);
+        }
+    }
+    
+    /**
+     * Garante que todas as lojas solicitadas apareçam no resultado.
+     * Lojas sem vendas são incluídas com valores zerados.
+     * 
+     * @param localData Dados retornados da query local
+     * @param requestedStoreCodes Lista de códigos de lojas solicitadas
+     * @return Lista completa com todas as lojas solicitadas
+     */
+    private List<StoreReportResponse> ensureAllStoresPresent(
+            List<StoreReportResponse> localData, List<String> requestedStoreCodes) {
+        
+        log.debug("Validando completude da resposta local: {} registros recebidos para {} lojas solicitadas", 
+                 localData.size(), requestedStoreCodes.size());
+        
+        // 1. Indexar dados reais por código da loja
+        Map<String, StoreReportResponse> dataMap = localData.stream()
+            .filter(response -> response.storeCode() != null)
+            .collect(Collectors.toMap(
+                StoreReportResponse::storeCode,
+                response -> response,
+                (existing, replacement) -> {
+                    log.warn("Loja duplicada encontrada: {}. Mantendo primeiro registro.", existing.storeCode());
+                    return existing;
+                }
+            ));
+        
+        // 2. Garantir que todas as lojas solicitadas apareçam
+        List<StoreReportResponse> completeResponse = new java.util.ArrayList<>();
+        
+        for (String storeCode : requestedStoreCodes) {
+            StoreReportResponse storeData = dataMap.get(storeCode);
+            
+            if (storeData != null) {
+                // Loja tem dados, usar dados reais
+                completeResponse.add(storeData);
+            } else {
+                // Loja não tem dados, criar com valores zerados
+                log.debug("Loja {} não possui vendas no período. Criando registro zerado.", storeCode);
+                StoreReportResponse zeroedData = StoreReportResponse.builder()
+                    .storeName("Loja " + storeCode)
+                    .storeCode(storeCode)
+                    .danfe(BigDecimal.ZERO)
+                    .pdv(BigDecimal.ZERO)
+                    .troca(BigDecimal.ZERO)
+                    .build();
+                completeResponse.add(zeroedData);
+            }
+        }
+        
+        // 3. Ordenar por nome da loja
+        completeResponse.sort(Comparator.comparing(StoreReportResponse::storeName));
+        
+        int addedStores = completeResponse.size() - localData.size();
+        if (addedStores > 0) {
+            log.info("Adicionadas {} lojas com valores zerados para garantir completude", addedStores);
+        }
+        
+        log.debug("Resposta local completa: {} lojas", completeResponse.size());
+        
+        return completeResponse;
     }
     
     /**

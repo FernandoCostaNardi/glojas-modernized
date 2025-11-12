@@ -27,7 +27,8 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
      * @param descricao Filtro por descrição (opcional)
      * @param refpluFilter Filtro LIKE para refplu
      * @param marcaFilter Filtro LIKE para marca
-     * @param descricaoFilter Filtro LIKE para descrição
+     * @param descricaoFilter Filtro LIKE para descrição (busca em descrição, marca e grupo)
+     * @param grupoFilter Filtro LIKE para grupo (usado quando descrição é informada)
      * @param hasStock Filtrar apenas produtos com estoque total > 0 (padrão: true)
      * @param offset Offset para paginação
      * @param size Tamanho da página
@@ -68,6 +69,13 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "COALESCE(MAX(CASE WHEN e.lojcod = 14 THEN e.esttot ELSE 0 END), 0) AS total, " +
             "ROW_NUMBER() OVER (" +
             "ORDER BY " +
+            "CASE WHEN :descricaoWords IS NOT NULL THEN " +
+            "CASE WHEN (" +
+            "UPPER(' ' + p.prodes + ' ') LIKE '% ' + SUBSTRING(:descricaoWords, 1, CASE WHEN CHARINDEX('|', :descricaoWords) > 0 THEN CHARINDEX('|', :descricaoWords) - 1 ELSE LEN(:descricaoWords) END) + ' %' OR " +
+            "UPPER(' ' + m.mardes + ' ') LIKE '% ' + SUBSTRING(:descricaoWords, 1, CASE WHEN CHARINDEX('|', :descricaoWords) > 0 THEN CHARINDEX('|', :descricaoWords) - 1 ELSE LEN(:descricaoWords) END) + ' %' OR " +
+            "UPPER(' ' + g.grpdes + ' ') LIKE '% ' + SUBSTRING(:descricaoWords, 1, CASE WHEN CHARINDEX('|', :descricaoWords) > 0 THEN CHARINDEX('|', :descricaoWords) - 1 ELSE LEN(:descricaoWords) END) + ' %'" +
+            ") THEN 0 ELSE 1 END " +
+            "ELSE 0 END ASC, " +
             "CASE WHEN :sortDir = 'asc' THEN " +
             "CASE WHEN :sortBy = 'refplu' THEN r.refplu " +
             "WHEN :sortBy = 'marca' THEN m.mardes " +
@@ -141,10 +149,17 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "INNER JOIN referencia r ON e.refplu = r.refplu " +
             "INNER JOIN produto p ON r.procod = p.procod " +
             "INNER JOIN marca m ON p.marcod = m.marcod " +
+            "INNER JOIN grupo g ON p.grpcod = g.grpcod " +
             "WHERE (:refplu IS NULL OR r.refplu LIKE :refpluFilter) " +
             "AND (:marca IS NULL OR m.mardes LIKE :marcaFilter) " +
-            "AND (:descricao IS NULL OR p.prodes LIKE :descricaoFilter) " +
-            "GROUP BY r.refplu, m.mardes, p.prodes " +
+            "AND (:descricao IS NULL OR (" +
+            "(:descricaoWords IS NULL OR (" +
+            "(UPPER(p.prodes) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "UPPER(m.mardes) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "UPPER(g.grpdes) LIKE '%' + REPLACE(:grupoWords, '|', '%') + '%')" +
+            "))" +
+            ")) " +
+            "GROUP BY r.refplu, m.mardes, p.prodes, g.grpdes " +
             "HAVING (:hasStock = 0 OR " +
             "COALESCE(MAX(CASE WHEN e.lojcod = 1 THEN e.esttot ELSE 0 END), 0) + " +
             "COALESCE(MAX(CASE WHEN e.lojcod = 2 THEN e.esttot ELSE 0 END), 0) + " +
@@ -169,7 +184,8 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             @Param("descricao") String descricao,
             @Param("refpluFilter") String refpluFilter,
             @Param("marcaFilter") String marcaFilter,
-            @Param("descricaoFilter") String descricaoFilter,
+            @Param("descricaoWords") String descricaoWords,
+            @Param("grupoWords") String grupoWords,
             @Param("hasStock") Boolean hasStock,
             @Param("sortBy") String sortBy,
             @Param("sortDir") String sortDir,
@@ -185,7 +201,8 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
      * @param descricao Filtro por descrição (opcional)
      * @param refpluFilter Filtro LIKE para refplu
      * @param marcaFilter Filtro LIKE para marca
-     * @param descricaoFilter Filtro LIKE para descrição
+     * @param descricaoFilter Filtro LIKE para descrição (busca em descrição, marca e grupo)
+     * @param grupoFilter Filtro LIKE para grupo (usado quando descrição é informada)
      * @param hasStock Filtrar apenas produtos com estoque total > 0 (padrão: true)
      * @return Total de registros
      */
@@ -195,10 +212,17 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "INNER JOIN referencia r ON e.refplu = r.refplu " +
             "INNER JOIN produto p ON r.procod = p.procod " +
             "INNER JOIN marca m ON p.marcod = m.marcod " +
+            "INNER JOIN grupo g ON p.grpcod = g.grpcod " +
             "WHERE (:refplu IS NULL OR r.refplu LIKE :refpluFilter) " +
             "AND (:marca IS NULL OR m.mardes LIKE :marcaFilter) " +
-            "AND (:descricao IS NULL OR p.prodes LIKE :descricaoFilter) " +
-            "GROUP BY r.refplu, m.mardes, p.prodes " +
+            "AND (:descricao IS NULL OR (" +
+            "(:descricaoWords IS NULL OR (" +
+            "(UPPER(p.prodes) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "UPPER(m.mardes) LIKE '%' + REPLACE(:descricaoWords, '|', '%') + '%' OR " +
+            "UPPER(g.grpdes) LIKE '%' + REPLACE(:grupoWords, '|', '%') + '%')" +
+            "))" +
+            ")) " +
+            "GROUP BY r.refplu, m.mardes, p.prodes, g.grpdes " +
             "HAVING (:hasStock = 0 OR " +
             "COALESCE(MAX(CASE WHEN e.lojcod = 1 THEN e.esttot ELSE 0 END), 0) + " +
             "COALESCE(MAX(CASE WHEN e.lojcod = 2 THEN e.esttot ELSE 0 END), 0) + " +
@@ -222,7 +246,8 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             @Param("descricao") String descricao,
             @Param("refpluFilter") String refpluFilter,
             @Param("marcaFilter") String marcaFilter,
-            @Param("descricaoFilter") String descricaoFilter,
+            @Param("descricaoWords") String descricaoWords,
+            @Param("grupoWords") String grupoWords,
             @Param("hasStock") Boolean hasStock
     );
     
@@ -282,7 +307,7 @@ public interface StockRepository extends JpaRepository<Stock, StockId> {
             "INNER JOIN referencia r ON e.refplu = r.refplu " +
             "INNER JOIN produto p ON r.procod = p.procod " +
             "INNER JOIN marca m ON p.marcod = m.marcod " +
-            "GROUP BY r.refplu, m.mardes, p.prodes " +
+            "GROUP BY r.refplu, m.mardes, p.prodes, g.grpdes " +
             "ORDER BY r.refplu",
             nativeQuery = true)
     List<Object[]> findTestStocksWithPivot();

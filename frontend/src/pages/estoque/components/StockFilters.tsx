@@ -30,9 +30,15 @@ const StockFilters: React.FC<StockFiltersProps> = ({
    * @param value Novo valor
    */
   const handleFilterChange = (field: keyof Pick<StockFiltersType, 'refplu' | 'marca' | 'descricao'>, value: string): void => {
+    // Para descrição, permite múltiplas palavras (preserva espaços internos)
+    // Para outros campos, remove espaços extras
+    const processedValue = field === 'descricao' 
+      ? (value || undefined)
+      : (value.trim() || undefined);
+    
     onFiltersChange({
       ...filters,
-      [field]: value.trim() || undefined
+      [field]: processedValue
     });
   };
 
