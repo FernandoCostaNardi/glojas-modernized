@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLayout } from '@/contexts/LayoutContext';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 
@@ -21,6 +22,7 @@ interface ConfigAction {
  */
 const Settings: React.FC = () => {
   const { hasPermission } = useAuth();
+  const { isMobile } = useLayout();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState<boolean>(false);
 
   /**
@@ -141,7 +143,7 @@ const Settings: React.FC = () => {
    * Renderiza o conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className="flex-1 p-6 bg-smart-gray-50 overflow-auto">
+    <main className={`flex-1 bg-smart-gray-50 ${isMobile ? 'overflow-y-auto p-4 pb-8' : 'overflow-auto p-6'}`}>
       {renderPageHeader()}
       
       {/* Grid de ações de configuração */}
@@ -154,9 +156,9 @@ const Settings: React.FC = () => {
   // Verifica permissão de acesso
   if (!canAccessSettings()) {
     return (
-      <div className="h-screen flex flex-col bg-smart-gray-50">
+      <div className={`${isMobile ? 'min-h-screen' : 'h-screen'} flex flex-col bg-smart-gray-50`}>
         <Header isSidebarCollapsed={isSidebarCollapsed} />
-        <div className="flex flex-1 overflow-hidden relative">
+        <div className={`flex flex-1 ${isMobile ? 'overflow-y-auto' : 'overflow-hidden'} relative`}>
           <Sidebar onCollapseChange={setIsSidebarCollapsed} />
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
@@ -175,12 +177,12 @@ const Settings: React.FC = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-smart-gray-50">
+    <div className={`${isMobile ? 'min-h-screen' : 'h-screen'} flex flex-col bg-smart-gray-50`}>
       {/* Header */}
       <Header isSidebarCollapsed={isSidebarCollapsed} />
       
       {/* Layout principal */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className={`flex flex-1 ${isMobile ? 'overflow-y-auto' : 'overflow-hidden'} relative`}>
         {/* Sidebar */}
         <Sidebar onCollapseChange={setIsSidebarCollapsed} />
         
