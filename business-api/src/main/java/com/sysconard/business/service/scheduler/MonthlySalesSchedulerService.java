@@ -24,7 +24,7 @@ import java.util.Optional;
 
 /**
  * Serviço responsável pelo agendamento e execução da sincronização de vendas mensais.
- * Executa diariamente às 01:30 AM com lógica especial para o primeiro dia do mês.
+ * Executa diariamente às 04:30 UTC (01:30 GMT-3) com lógica especial para o primeiro dia do mês.
  * 
  * Lógica de datas:
  * - Dia 1 do mês: processa fechamento do mês anterior
@@ -48,7 +48,7 @@ public class MonthlySalesSchedulerService {
     
     /**
      * Executa a sincronização agendada de vendas mensais.
-     * Executado diariamente às 01:30 AM via @Scheduled.
+     * Executado diariamente às 04:30 UTC (01:30 GMT-3) via @Scheduled.
      */
     @Scheduled(cron = "${sync.monthly-sales.schedule.cron}")
     public void executeScheduledMonthlySalesSync() {

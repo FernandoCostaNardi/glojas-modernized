@@ -14,8 +14,14 @@ import com.sysconard.business.dto.StockPageResponseDTO;
 import com.sysconard.business.dto.StockItemResponseDTO;
 import com.sysconard.business.dto.PurchaseAnalysisPageResponseDTO;
 import com.sysconard.business.dto.CriticalStockPageResponseDTO;
+import com.sysconard.business.dto.jobposition.JobPositionLegacyDTO;
+import com.sysconard.business.dto.collaborator.CollaboratorLegacyDTO;
+import com.sysconard.business.dto.sale.SaleItemLegacyDTO;
+import com.sysconard.business.dto.exchange.ExchangeLegacyDTO;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -164,6 +170,70 @@ public class LegacyApiClient {
         } catch (Exception e) {
             log.error("Erro inesperado ao chamar Legacy API", e);
             throw new RuntimeException("Erro inesperado ao buscar lojas: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Busca cargos (job positions) na Legacy API
+     * 
+     * @return Lista de cargos com id e description
+     * @throws RuntimeException Se houver erro na comunicação
+     */
+    public List<JobPositionLegacyDTO> getJobPositions() {
+        log.info("Buscando cargos na Legacy API");
+        
+        try {
+            return legacyApiWebClient
+                    .get()
+                    .uri("/job-positions")
+                    .retrieve()
+                    .bodyToFlux(JobPositionLegacyDTO.class)
+                    .collectList()
+                    .timeout(Duration.ofSeconds(60))
+                    .doOnSuccess(response -> log.info("Sucesso ao buscar cargos. Total encontrado: {}", 
+                            response != null ? response.size() : "N/A"))
+                    .doOnError(error -> log.error("Erro ao buscar cargos na Legacy API", error))
+                    .onErrorReturn(List.of()) // Fallback para lista vazia em caso de erro
+                    .block();
+                    
+        } catch (WebClientResponseException e) {
+            log.error("Erro HTTP ao chamar Legacy API: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Erro ao buscar cargos na Legacy API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Erro inesperado ao chamar Legacy API", e);
+            throw new RuntimeException("Erro inesperado ao buscar cargos: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Busca colaboradores ativos na Legacy API
+     * 
+     * @return Lista de colaboradores ativos com id, jobPositionCode, storeCode, name, etc.
+     * @throws RuntimeException Se houver erro na comunicação
+     */
+    public List<CollaboratorLegacyDTO> getActiveEmployees() {
+        log.info("Buscando colaboradores ativos na Legacy API");
+        
+        try {
+            return legacyApiWebClient
+                    .get()
+                    .uri("/employees/active")
+                    .retrieve()
+                    .bodyToFlux(CollaboratorLegacyDTO.class)
+                    .collectList()
+                    .timeout(Duration.ofSeconds(60))
+                    .doOnSuccess(response -> log.info("Sucesso ao buscar colaboradores ativos. Total encontrado: {}", 
+                            response != null ? response.size() : "N/A"))
+                    .doOnError(error -> log.error("Erro ao buscar colaboradores ativos na Legacy API", error))
+                    .onErrorReturn(List.of()) // Fallback para lista vazia em caso de erro
+                    .block();
+                    
+        } catch (WebClientResponseException e) {
+            log.error("Erro HTTP ao chamar Legacy API: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Erro ao buscar colaboradores ativos na Legacy API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Erro inesperado ao chamar Legacy API", e);
+            throw new RuntimeException("Erro inesperado ao buscar colaboradores ativos: " + e.getMessage(), e);
         }
     }
     
@@ -478,6 +548,138 @@ public class LegacyApiClient {
         } catch (Exception e) {
             log.error("Erro inesperado ao chamar Legacy API", e);
             throw new RuntimeException("Erro inesperado ao buscar estoque crítico: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Busca itens detalhados de vendas na Legacy API
+     * 
+     * @param startDate Data inicial (será convertida para primeiro segundo do dia)
+     * @param endDate Data final (será convertida para último segundo do dia)
+     * @param storeCodes Lista de códigos de lojas
+     * @param originCodes Lista de códigos de origem (PDV e DANFE)
+     * @param operationCodes Lista de códigos de operações
+     * @return Lista de itens de venda detalhados
+     * @throws RuntimeException Se houver erro na comunicação
+     */
+    public List<SaleItemLegacyDTO> getSaleItemsDetails(
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            List<String> storeCodes,
+            List<String> originCodes,
+            List<String> operationCodes) {
+        
+        log.info("Buscando itens detalhados de vendas na Legacy API - startDate: {}, endDate: {}, storeCodes: {}, originCodes: {}, operationCodes: {}", 
+                startDate, endDate, storeCodes != null ? storeCodes.size() : 0, originCodes != null ? originCodes.size() : 0, operationCodes != null ? operationCodes.size() : 0);
+        
+        // Validar que as listas não estão vazias
+        if (storeCodes == null || storeCodes.isEmpty()) {
+            throw new IllegalArgumentException("Lista de códigos de lojas não pode ser nula ou vazia");
+        }
+        if (originCodes == null || originCodes.isEmpty()) {
+            throw new IllegalArgumentException("Lista de códigos de origem não pode ser nula ou vazia");
+        }
+        if (operationCodes == null || operationCodes.isEmpty()) {
+            throw new IllegalArgumentException("Lista de códigos de operação não pode ser nula ou vazia");
+        }
+        
+        try {
+            // Formatar datas no formato esperado pela Legacy API: "yyyy-MM-dd'T'HH:mm:ss" (SEM timezone)
+            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            String startDateStr = startDate.format(formatter);
+            String endDateStr = endDate.format(formatter);
+            
+            log.debug("Datas formatadas - startDate: {}, endDate: {}", startDateStr, endDateStr);
+            
+            return legacyApiWebClient
+                    .post()
+                    .uri("/sale-items/details")
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .bodyValue(Map.of(
+                            "startDate", startDateStr,
+                            "endDate", endDateStr,
+                            "storeCodes", storeCodes,
+                            "originCodes", originCodes,
+                            "operationCodes", operationCodes
+                    ))
+                    .retrieve()
+                    .bodyToFlux(SaleItemLegacyDTO.class)
+                    .collectList()
+                    .timeout(Duration.ofSeconds(timeoutSeconds))
+                    .doOnSuccess(response -> log.info("Sucesso ao buscar itens detalhados de vendas. Total encontrado: {}", 
+                            response != null ? response.size() : "N/A"))
+                    .doOnError(error -> log.error("Erro ao buscar itens detalhados de vendas na Legacy API", error))
+                    .block();
+                    
+        } catch (WebClientResponseException e) {
+            log.error("Erro HTTP ao chamar Legacy API: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Erro ao buscar itens detalhados de vendas na Legacy API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Erro inesperado ao chamar Legacy API", e);
+            throw new RuntimeException("Erro inesperado ao buscar itens detalhados de vendas: " + e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Busca trocas realizadas na Legacy API.
+     * 
+     * @param startDate Data de início do período (formato LocalDate)
+     * @param endDate Data de fim do período (formato LocalDate)
+     * @param originCodes Lista de códigos de origem (ORICOD) para filtrar
+     * @param operationCodes Lista de códigos de operação (OPECOD) para filtrar
+     * @return Lista de trocas encontradas
+     * @throws RuntimeException Se houver erro na comunicação
+     */
+    public List<ExchangeLegacyDTO> getExchanges(
+            LocalDate startDate,
+            LocalDate endDate,
+            List<String> originCodes,
+            List<String> operationCodes) {
+        
+        log.info("Buscando trocas na Legacy API - startDate: {}, endDate: {}, originCodes: {}, operationCodes: {}", 
+                startDate, endDate, originCodes != null ? originCodes.size() : 0, operationCodes != null ? operationCodes.size() : 0);
+        
+        // Validar que as listas não estão vazias
+        if (originCodes == null || originCodes.isEmpty()) {
+            throw new IllegalArgumentException("Lista de códigos de origem não pode ser nula ou vazia");
+        }
+        if (operationCodes == null || operationCodes.isEmpty()) {
+            throw new IllegalArgumentException("Lista de códigos de operação não pode ser nula ou vazia");
+        }
+        
+        try {
+            // Formatar datas no formato esperado pela Legacy API: "yyyy-MM-dd"
+            java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String startDateStr = startDate.format(formatter);
+            String endDateStr = endDate.format(formatter);
+            
+            log.debug("Datas formatadas - startDate: {}, endDate: {}", startDateStr, endDateStr);
+            
+            return legacyApiWebClient
+                    .post()
+                    .uri("/exchanges")
+                    .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+                    .bodyValue(Map.of(
+                            "startDate", startDateStr,
+                            "endDate", endDateStr,
+                            "originCodes", originCodes,
+                            "operationCodes", operationCodes
+                    ))
+                    .retrieve()
+                    .bodyToFlux(ExchangeLegacyDTO.class)
+                    .collectList()
+                    .timeout(Duration.ofSeconds(timeoutSeconds))
+                    .doOnSuccess(response -> log.info("Sucesso ao buscar trocas. Total encontrado: {}", 
+                            response != null ? response.size() : "N/A"))
+                    .doOnError(error -> log.error("Erro ao buscar trocas na Legacy API", error))
+                    .block();
+                    
+        } catch (WebClientResponseException e) {
+            log.error("Erro HTTP ao chamar Legacy API: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Erro ao buscar trocas na Legacy API: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("Erro inesperado ao chamar Legacy API", e);
+            throw new RuntimeException("Erro inesperado ao buscar trocas: " + e.getMessage(), e);
         }
     }
     

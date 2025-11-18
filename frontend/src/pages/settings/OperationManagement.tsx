@@ -164,11 +164,11 @@ const OperationManagement: React.FC = () => {
    * Renderiza o cabeçalho da página
    */
   const renderPageHeader = (): React.ReactNode => (
-    <div className="mb-8">
-      <h1 className="text-3xl font-bold text-smart-gray-800 mb-2">
+    <div className="mb-4 md:mb-8">
+      <h1 className="text-xl md:text-3xl font-bold text-smart-gray-800 mb-2">
         Gerenciamento de Operações ⚙️
       </h1>
-      <p className="text-smart-gray-600">
+      <p className="text-sm md:text-base text-smart-gray-600">
         Gerencie códigos de operação do sistema Smart Eletron.
       </p>
     </div>
@@ -178,7 +178,7 @@ const OperationManagement: React.FC = () => {
    * Renderiza os cards de totalizadores
    */
   const renderStatisticsCards = (): React.ReactNode => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
       <div className="bg-white overflow-hidden shadow rounded-lg">
         <div className="p-5">
           <div className="flex items-center">
@@ -253,7 +253,7 @@ const OperationManagement: React.FC = () => {
    * Renderiza a seção de filtros
    */
   const renderFiltersSection = (): React.ReactNode => (
-    <div className="mb-6">
+    <div className="mb-4 md:mb-6">
       <OperationFilters
         filters={filters}
         pendingFilters={pendingFilters}
@@ -270,25 +270,27 @@ const OperationManagement: React.FC = () => {
    * Renderiza a seção de operações
    */
   const renderOperationsSection = (): React.ReactNode => (
-    <div className="bg-white rounded-lg shadow-smart-md p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-smart-gray-800">Operações do Sistema</h2>
+    <div className="bg-white rounded-lg shadow-smart-md p-3 md:p-6 w-full max-w-full box-border">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0 mb-4 md:mb-6">
+        <h2 className="text-lg md:text-xl font-semibold text-smart-gray-800">Operações do Sistema</h2>
         <button
           onClick={handleCreateOperation}
-          className="px-4 py-2 bg-smart-red-600 text-white rounded-md hover:bg-smart-red-700 transition-colors duration-200"
+          className="w-full md:w-auto px-4 py-2 bg-smart-red-600 text-white rounded-md hover:bg-smart-red-700 transition-colors duration-200 text-sm md:text-base"
         >
           + Nova Operação
         </button>
       </div>
 
-      <OperationsTable
-        operations={operations}
-        isLoading={isLoadingOperations}
-        onEditOperation={handleEditOperation}
-        sortBy={sortBy}
-        sortDir={sortDir}
-        onSort={handleSort}
-      />
+      <div className="w-full max-w-full overflow-x-auto">
+        <OperationsTable
+          operations={operations}
+          isLoading={isLoadingOperations}
+          onEditOperation={handleEditOperation}
+          sortBy={sortBy}
+          sortDir={sortDir}
+          onSort={handleSort}
+        />
+      </div>
       
       {/* Paginação */}
       <Pagination
@@ -306,23 +308,25 @@ const OperationManagement: React.FC = () => {
    * Renderiza o conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className="flex-1 p-6 bg-smart-gray-50 overflow-auto">
-      {renderPageHeader()}
-      {renderStatisticsCards()}
-      {renderFiltersSection()}
-      {renderOperationsSection()}
+    <main className="flex-1 bg-smart-gray-50 overflow-x-hidden overflow-y-auto w-full max-w-full">
+      <div className="p-3 md:p-6 w-full max-w-full box-border">
+        {renderPageHeader()}
+        {renderStatisticsCards()}
+        {renderFiltersSection()}
+        {renderOperationsSection()}
+      </div>
     </main>
   );
 
   // Verifica permissão de acesso
   if (!canManageOperations()) {
     return (
-      <div className="h-screen flex flex-col bg-smart-gray-50">
+      <div className="min-h-screen flex flex-col bg-smart-gray-50 w-full max-w-full overflow-x-hidden">
         <Header isSidebarCollapsed={isSidebarCollapsed} />
-        <div className="flex flex-1 overflow-hidden relative">
+        <div className="flex flex-1 relative w-full max-w-full overflow-x-hidden">
           <Sidebar onCollapseChange={setIsSidebarCollapsed} />
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
+          <div className="flex-1 flex items-center justify-center overflow-y-auto">
+            <div className="text-center p-4">
               <div className="text-6xl mb-4">🚫</div>
               <h1 className="text-2xl font-bold text-smart-gray-800 mb-2">
                 Acesso Negado
@@ -338,17 +342,17 @@ const OperationManagement: React.FC = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-smart-gray-50">
+    <div className="min-h-screen flex flex-col bg-smart-gray-50 w-full max-w-full overflow-x-hidden">
       {/* Header */}
       <Header isSidebarCollapsed={isSidebarCollapsed} />
       
       {/* Layout principal */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 relative w-full max-w-full overflow-x-hidden">
         {/* Sidebar */}
         <Sidebar onCollapseChange={setIsSidebarCollapsed} />
         
         {/* Conteúdo principal */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
           {renderMainContent()}
         </div>
       </div>

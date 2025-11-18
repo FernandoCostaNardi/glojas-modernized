@@ -7,3 +7,4 @@ export { OperationsTable } from './OperationsTable';
 export { UsersTable } from './UsersTable';
 export { EventOriginTable } from './EventOriginTable';
 export { StoresTable } from './StoresTable';
+export { default as SalesTargetConfigTable } from './SalesTargetConfigTable';

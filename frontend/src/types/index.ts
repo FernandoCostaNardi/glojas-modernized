@@ -16,6 +16,9 @@ export * from './store';
 // Exportar tipos de EmailNotifier
 export * from './emailNotifier';
 
+// Exportar tipos de SalesTargetConfig
+export * from './salesTargetConfig';
+
 // =====================================================
 // TIPOS DE COMPONENTES UI
 // =====================================================

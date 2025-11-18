@@ -10,6 +10,7 @@ import OperationManagement from '@/pages/settings/OperationManagement';
 import EventOriginManagement from '@/pages/settings/EventOriginManagement';
 import StoreManagement from '@/pages/settings/StoreManagement';
 import EmailNotifierManagement from '@/pages/settings/EmailNotifierManagement';
+import SalesTargetConfigManagement from '@/pages/settings/SalesTargetConfigManagement';
 import VendasPage from '@/pages/vendas/VendasPage';
 import Estoque from '@/pages/estoque/Estoque';
 import AnaliseCompras from '@/pages/analise-compras/AnaliseCompras';
@@ -96,6 +97,14 @@ const AppContent: React.FC = () => {
     return (
       <ProtectedRoute>
         <EmailNotifierManagement />
+      </ProtectedRoute>
+    );
+  }
+
+  if (currentPath === '/settings/sales-targets-config') {
+    return (
+      <ProtectedRoute>
+        <SalesTargetConfigManagement />
       </ProtectedRoute>
     );
   }

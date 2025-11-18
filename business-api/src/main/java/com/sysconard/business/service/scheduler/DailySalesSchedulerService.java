@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * Serviço responsável pela execução agendada de sincronização e envio de emails.
- * Executa diariamente às 01:00 AM para sincronizar vendas do dia anterior
+ * Executa diariamente às 04:00 UTC (01:00 GMT-3) para sincronizar vendas do dia anterior
  * e enviar relatórios por email para destinatários cadastrados.
  * Segue os princípios de Clean Code com responsabilidades bem definidas.
  * 
@@ -44,7 +44,7 @@ public class DailySalesSchedulerService {
     
     /**
      * Executa o processo agendado de sincronização e envio de emails.
-     * Executado diariamente às 01:00 AM conforme configuração do cron.
+     * Executado diariamente às 04:00 UTC (01:00 GMT-3) conforme configuração do cron.
      */
     @Scheduled(cron = "${sync.daily-sales.schedule.cron:0 0 1 * * *}")
     public void executeDailySalesSyncAndEmail() {
