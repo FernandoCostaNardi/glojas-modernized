@@ -102,7 +102,7 @@ sync:
     timeout: 30s
     schedule:
       enabled: true
-      cron: "0 0 1 * * *"  # Diariamente às 1h da manhã
+      cron: "0 0 4 * * *"  # Diariamente às 04:00 UTC = 01:00 GMT-3
     weekly:
       enabled: false
       cron: "0 0 2 * * SUN"  # Todo domingo às 02:00 AM
@@ -114,4 +114,4 @@ sync:
     timeout: 30s
     schedule:
       enabled: true
-      cron: "0 30 1 * * *"  # Diariamente às 01:30 AM
+      cron: "0 30 4 * * *"  # Diariamente às 04:30 UTC = 01:30 GMT-3

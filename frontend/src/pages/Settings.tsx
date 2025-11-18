@@ -77,6 +77,13 @@ const Settings: React.FC = () => {
       description: 'Gerenciar emails que receberão notificações de vendas',
       icon: '📧',
       href: '/settings/email-notifiers'
+    },
+    {
+      id: 'sales-targets-config',
+      title: 'Metas de Vendas e Comissões',
+      description: 'Gerenciar metas de vendas e percentuais de comissão por loja e competência',
+      icon: '🎯',
+      href: '/settings/sales-targets-config'
     }
   ];
 
@@ -122,6 +129,8 @@ const Settings: React.FC = () => {
       window.location.href = '/settings/stores';
     } else if (action.id === 'email-notifiers') {
       window.location.href = '/settings/email-notifiers';
+    } else if (action.id === 'sales-targets-config') {
+      window.location.href = '/settings/sales-targets-config';
     }
   };
 

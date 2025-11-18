@@ -140,4 +140,30 @@ public interface DocumentRepository extends JpaRepository<Documento, Long> {
                                                    @Param("exchangeOrigin") List<String> exchangeOrigin,
                                                    @Param("sellOperation") List<String> sellOperation,
                                                    @Param("exchangeOperation") List<String> exchangeOperation);
+
+    /**
+     * Busca trocas realizadas em um período específico.
+     * Aplica filtros de origem, operação, status e período de datas.
+     * Retorna dados detalhados de cada troca realizada.
+     *
+     * @param originCodes Lista de códigos de origem (ORICOD) para filtrar
+     * @param operationCodes Lista de códigos de operação (OPECOD) para filtrar
+     * @param startDate Data de início do período (formato timestamp: YYYY-MM-DDTHH:mm:ss)
+     * @param endDate Data de fim do período (formato timestamp: YYYY-MM-DDTHH:mm:ss)
+     * @return Lista de arrays Object[] com dados das trocas: [ORICOD, OPECOD, LOJCOD, DOCCOD, FUNCOD, DOCNUMDOC, DOCCHVNFE, DOCDATEMI, DOCOBS]
+     */
+    @Query(value = "SELECT D.ORICOD, D.OPECOD, D.LOJCOD, D.DOCCOD, D.FUNCOD, " +
+                   "D.DOCNUMDOC, D.DOCCHVNFE, D.DOCDATEMI, D.DOCOBS " +
+                   "FROM DOCUMENTO D " +
+                   "WHERE D.ORICOD IN (:originCodes) " +
+                   "  AND D.OPECOD IN (:operationCodes) " +
+                   "  AND D.DOCSTA = 'E' " +
+                   "  AND D.DOCSTANFE = 'A' " +
+                   "  AND D.DOCDATEMI >= CAST(:startDate AS DATETIME) " +
+                   "  AND D.DOCDATEMI < CAST(:endDate AS DATETIME)",
+           nativeQuery = true)
+    List<Object[]> findExchanges(@Param("originCodes") List<String> originCodes,
+                                 @Param("operationCodes") List<String> operationCodes,
+                                 @Param("startDate") String startDate,
+                                 @Param("endDate") String endDate);
 }

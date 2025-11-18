@@ -195,87 +195,89 @@ const UserManagement: React.FC = () => {
    * Renderiza o conteúdo principal da página
    */
   const renderMainContent = (): React.ReactNode => (
-    <main className={`flex-1 bg-smart-gray-50 overflow-auto ${
-      isMobile ? 'p-4' : 'p-6'
-    }`}>
-      {renderPageHeader()}
-      
-      {/* Estatísticas rápidas */}
-      <SystemStatsCards systemCounts={systemCounts} />
+    <main className="flex-1 bg-smart-gray-50 overflow-x-hidden overflow-y-auto w-full max-w-full">
+      <div className={`w-full max-w-full box-border ${
+        isMobile ? 'p-4' : 'p-6'
+      }`}>
+        {renderPageHeader()}
+        
+        {/* Estatísticas rápidas */}
+        <SystemStatsCards systemCounts={systemCounts} />
 
-      {/* Filtros de busca */}
-      <UserFilters
-        filters={filters}
-        availableRoles={availableRoles}
-        totalElements={totalElements}
-        onFiltersChange={setFilters}
-        onClearFilters={clearFilters}
-      />
-
-      {/* Tabela de usuários */}
-      {isLoading ? (
-        <div className="flex items-center justify-center py-12">
-          <div className="text-center">
-            <div className={`animate-spin rounded-full border-b-2 border-smart-red-600 mx-auto mb-4 ${
-              isMobile ? 'h-8 w-8' : 'h-12 w-12'
-            }`}></div>
-            <p className={`text-smart-gray-600 ${
-              isMobile ? 'text-sm' : 'text-base'
-            }`}>
-              {isMobile ? 'Carregando...' : 'Carregando usuários...'}
-            </p>
-          </div>
-        </div>
-      ) : (
-        <>
-          <UsersTable
-            users={users}
-            sortBy={sortBy}
-            sortDir={sortDir}
-            onSort={handleSort}
-            onEditUser={handleEditUser}
-            onToggleUserStatus={handleToggleUserStatus}
-            onToggleUserLock={handleToggleUserLock}
-            onChangePassword={handleChangePassword}
-          />
-          
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            totalElements={totalElements}
-            pageSize={pageSize}
-            onPageChange={changePage}
-          />
-        </>
-      )}
-
-      {/* Modal de confirmação de status */}
-      {showStatusConfirmation && (
-        <ConfirmationModal
-          isOpen={showStatusConfirmation}
-          onClose={handleCloseConfirmationModal}
-          onConfirm={handleConfirmStatusChange}
-          title={confirmationAction === 'toggleActive' ? 'Alterar Status do Usuário' : 'Alterar Status de Bloqueio'}
-          message={confirmationAction === 'toggleActive' 
-            ? `Tem certeza que deseja ${confirmingUser?.active ? 'desabilitar' : 'habilitar'} o usuário "${confirmingUser?.name}"?`
-            : `Tem certeza que deseja ${confirmingUser?.notLocked ? 'bloquear' : 'desbloquear'} o usuário "${confirmingUser?.name}"?`
-          }
-          confirmButtonText={confirmationAction === 'toggleActive'
-            ? (confirmingUser?.active ? 'Sim, Desabilitar' : 'Sim, Habilitar')
-            : (confirmingUser?.notLocked ? 'Sim, Bloquear' : 'Sim, Desbloquear')
-          }
-          cancelButtonText="Cancelar"
+        {/* Filtros de busca */}
+        <UserFilters
+          filters={filters}
+          availableRoles={availableRoles}
+          totalElements={totalElements}
+          onFiltersChange={setFilters}
+          onClearFilters={clearFilters}
         />
-      )}
 
-      {/* Modal de usuário (Clean Code - componente único) */}
-      <UserModal
-        isOpen={showModal}
-        onClose={closeModal}
-        mode={modalMode}
-        user={editingUser}
-        onSuccess={onModalSuccess}
-      />
+        {/* Tabela de usuários */}
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="text-center">
+              <div className={`animate-spin rounded-full border-b-2 border-smart-red-600 mx-auto mb-4 ${
+                isMobile ? 'h-8 w-8' : 'h-12 w-12'
+              }`}></div>
+              <p className={`text-smart-gray-600 ${
+                isMobile ? 'text-sm' : 'text-base'
+              }`}>
+                {isMobile ? 'Carregando...' : 'Carregando usuários...'}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <UsersTable
+              users={users}
+              sortBy={sortBy}
+              sortDir={sortDir}
+              onSort={handleSort}
+              onEditUser={handleEditUser}
+              onToggleUserStatus={handleToggleUserStatus}
+              onToggleUserLock={handleToggleUserLock}
+              onChangePassword={handleChangePassword}
+            />
+            
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalElements={totalElements}
+              pageSize={pageSize}
+              onPageChange={changePage}
+            />
+          </>
+        )}
+
+        {/* Modal de confirmação de status */}
+        {showStatusConfirmation && (
+          <ConfirmationModal
+            isOpen={showStatusConfirmation}
+            onClose={handleCloseConfirmationModal}
+            onConfirm={handleConfirmStatusChange}
+            title={confirmationAction === 'toggleActive' ? 'Alterar Status do Usuário' : 'Alterar Status de Bloqueio'}
+            message={confirmationAction === 'toggleActive' 
+              ? `Tem certeza que deseja ${confirmingUser?.active ? 'desabilitar' : 'habilitar'} o usuário "${confirmingUser?.name}"?`
+              : `Tem certeza que deseja ${confirmingUser?.notLocked ? 'bloquear' : 'desbloquear'} o usuário "${confirmingUser?.name}"?`
+            }
+            confirmButtonText={confirmationAction === 'toggleActive'
+              ? (confirmingUser?.active ? 'Sim, Desabilitar' : 'Sim, Habilitar')
+              : (confirmingUser?.notLocked ? 'Sim, Bloquear' : 'Sim, Desbloquear')
+            }
+            cancelButtonText="Cancelar"
+          />
+        )}
+
+        {/* Modal de usuário (Clean Code - componente único) */}
+        <UserModal
+          isOpen={showModal}
+          onClose={closeModal}
+          mode={modalMode}
+          user={editingUser}
+          onSuccess={onModalSuccess}
+        />
+      </div>
     </main>
   );
 
@@ -286,12 +288,12 @@ const UserManagement: React.FC = () => {
   // Verifica permissão de acesso
   if (!canManageUsers()) {
     return (
-      <div className="h-screen flex flex-col bg-smart-gray-50">
+      <div className="min-h-screen flex flex-col bg-smart-gray-50 w-full max-w-full overflow-x-hidden">
         <Header />
-        <div className="flex flex-1 overflow-hidden relative">
+        <div className="flex flex-1 relative w-full max-w-full overflow-x-hidden">
           <Sidebar />
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
+          <div className="flex-1 flex items-center justify-center overflow-y-auto">
+            <div className="text-center p-4">
               <div className={`mb-4 ${isMobile ? 'text-4xl' : 'text-6xl'}`}>🚫</div>
               <h1 className={`font-bold text-smart-gray-800 mb-2 ${
                 isMobile ? 'text-xl' : 'text-2xl'
@@ -299,7 +301,7 @@ const UserManagement: React.FC = () => {
                 Acesso Negado
               </h1>
               <p className={`text-smart-gray-600 ${
-                isMobile ? 'text-sm px-4' : 'text-base'
+                isMobile ? 'text-sm' : 'text-base'
               }`}>
                 Você não tem permissão para gerenciar usuários do sistema.
               </p>
@@ -311,17 +313,17 @@ const UserManagement: React.FC = () => {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-smart-gray-50">
+    <div className="min-h-screen flex flex-col bg-smart-gray-50 w-full max-w-full overflow-x-hidden">
       {/* Header */}
       <Header />
       
       {/* Layout principal */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 relative w-full max-w-full overflow-x-hidden">
         {/* Sidebar */}
         <Sidebar />
         
         {/* Conteúdo principal */}
-        <div className="flex-1">
+        <div className="flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
           {renderMainContent()}
         </div>
       </div>

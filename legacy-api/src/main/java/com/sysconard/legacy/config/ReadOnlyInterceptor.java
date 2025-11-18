@@ -20,11 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 public class ReadOnlyInterceptor implements HandlerInterceptor {
     
     private static final Logger log = LoggerFactory.getLogger(ReadOnlyInterceptor.class);
-    
-    // Constantes para endpoints de relatório permitidos
-    private static final String SALES_REPORT_ENDPOINT = "/api/sales/store-report";
-    private static final String LEGACY_SALES_REPORT_ENDPOINT = "/api/legacy/api/sales/store-report";
-    private static final String STORE_REPORT_PATTERN = "/store-report";
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
@@ -62,6 +57,8 @@ public class ReadOnlyInterceptor implements HandlerInterceptor {
      * - /api/sales/store-report (endpoint direto)
      * - /api/legacy/api/sales/store-report (endpoint com contexto legacy)
      * - Qualquer URI que contenha /store-report
+     * - Qualquer URI que contenha /sale-items/details
+     * - Qualquer URI que contenha /exchanges
      * 
      * @param requestURI URI da requisição
      * @return true se for um endpoint de relatório permitido
@@ -69,8 +66,10 @@ public class ReadOnlyInterceptor implements HandlerInterceptor {
     private boolean isReportEndpoint(String requestURI) {
         log.info("Verificando se é endpoint de relatório: {}", requestURI);
         
-        // Lógica simplificada: se contém "store-report", é um endpoint de relatório
-        boolean isReport = requestURI.contains("store-report");
+        // Verifica se contém padrões de endpoints de relatório
+        boolean isReport = requestURI.contains("store-report") 
+                || requestURI.contains("sale-items/details")
+                || requestURI.contains("exchanges");
         
         log.info("Resultado final: {}", isReport ? "É ENDPOINT DE RELATÓRIO" : "NÃO É ENDPOINT DE RELATÓRIO");
         

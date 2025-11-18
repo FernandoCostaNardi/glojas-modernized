@@ -28,6 +28,7 @@ import {
 } from '@/types';
 import { StockPageResponse, StockFilters } from '@/types/stock';
 import { PurchaseAnalysisPageResponse, PurchaseAnalysisFilters } from '@/types/purchaseAnalysis';
+import { SalesTargetConfig, SalesTargetConfigRequest, UpdateSalesTargetConfigRequest } from '@/types';
 
 /**
  * Clientes Axios centralizados
@@ -929,6 +930,101 @@ export const criticalStockService = {
       return response.data;
     } catch (error) {
       console.error('❌ Erro ao buscar estoque crítico:', error);
+      throw error;
+    }
+  }
+};
+
+/**
+ * Serviço para operações de configurações de metas e comissões
+ * Seguindo princípios de Clean Code com responsabilidade única
+ */
+export const salesTargetConfigService = {
+  /**
+   * Busca configurações de metas e comissões
+   * @param storeCode Código da loja (opcional)
+   * @param competenceDate Data de competência no formato MM/YYYY (opcional)
+   * @returns Promise com lista de configurações
+   */
+  getAllSalesTargetConfigs: async (storeCode?: string, competenceDate?: string): Promise<SalesTargetConfig[]> => {
+    try {
+      const params = new URLSearchParams();
+      
+      if (storeCode && storeCode.trim()) {
+        params.append('storeCode', storeCode.trim());
+      }
+      
+      if (competenceDate && competenceDate.trim()) {
+        params.append('competenceDate', competenceDate.trim());
+      }
+      
+      const queryString = params.toString();
+      const url = queryString ? `/v1/sales-targets-config?${queryString}` : '/v1/sales-targets-config';
+      
+      const response = await businessApi.get(url);
+      return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+      console.error('❌ Erro ao buscar configurações de metas e comissões:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Busca uma configuração específica por ID
+   * @param id ID da configuração (UUID)
+   * @returns Promise com dados da configuração
+   */
+  getSalesTargetConfigById: async (id: string): Promise<SalesTargetConfig> => {
+    try {
+      const response = await businessApi.get(`/v1/sales-targets-config/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao buscar configuração de metas e comissões por ID:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Cria uma nova configuração de metas e comissões
+   * @param data Dados da configuração a ser criada
+   * @returns Promise com dados da configuração criada
+   */
+  createSalesTargetConfig: async (data: SalesTargetConfigRequest): Promise<SalesTargetConfig> => {
+    try {
+      const response = await businessApi.post('/v1/sales-targets-config', data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao criar configuração de metas e comissões:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Atualiza uma configuração de metas e comissões existente
+   * @param id ID da configuração a ser atualizada
+   * @param data Dados atualizados da configuração
+   * @returns Promise com dados da configuração atualizada
+   */
+  updateSalesTargetConfig: async (id: string, data: UpdateSalesTargetConfigRequest): Promise<SalesTargetConfig> => {
+    try {
+      const response = await businessApi.put(`/v1/sales-targets-config/${id}`, data);
+      return response.data;
+    } catch (error) {
+      console.error('❌ Erro ao atualizar configuração de metas e comissões:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Deleta uma configuração de metas e comissões
+   * @param id ID da configuração a ser deletada
+   * @returns Promise vazia
+   */
+  deleteSalesTargetConfig: async (id: string): Promise<void> => {
+    try {
+      await businessApi.delete(`/v1/sales-targets-config/${id}`);
+    } catch (error) {
+      console.error('❌ Erro ao deletar configuração de metas e comissões:', error);
       throw error;
     }
   }

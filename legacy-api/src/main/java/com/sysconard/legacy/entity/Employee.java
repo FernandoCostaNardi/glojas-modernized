@@ -13,6 +13,7 @@ import com.sysconard.legacy.entity.store.Store;
 import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Entidade que representa um funcionário no sistema.
@@ -88,9 +89,23 @@ public class Employee implements Serializable {
     private String email;
 
     /**
+     * Data de nascimento do funcionário
+     */
+    @Column(name = "FUNNAS")
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
+
+    /**
      * Status ativo do funcionário (S/N)
      */
     @Size(max = 1)
     @Column(name = "FUNATV", columnDefinition = "char(1)")
     private String active;
+
+    /**
+     * Sexo do funcionário
+     */
+    @Size(max = 1)
+    @Column(name = "FUNSEX", columnDefinition = "char(1)")
+    private String gender;
 }

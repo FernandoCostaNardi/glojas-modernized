@@ -106,12 +106,12 @@ const EmailNotifierManagement: React.FC = () => {
   // Verificação de permissão
   if (!canManageEmailNotifiers()) {
     return (
-      <div className="h-screen flex flex-col bg-smart-gray-50">
+      <div className="min-h-screen flex flex-col bg-smart-gray-50 w-full max-w-full overflow-x-hidden">
         <Header isSidebarCollapsed={isSidebarCollapsed} />
-        <div className="flex flex-1 overflow-hidden relative">
+        <div className="flex flex-1 relative w-full max-w-full overflow-x-hidden">
           <Sidebar onCollapseChange={setIsSidebarCollapsed} />
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
+          <div className="flex-1 flex items-center justify-center overflow-y-auto">
+            <div className="text-center p-4">
               <div className="text-6xl mb-4">🚫</div>
               <h1 className="text-2xl font-bold text-smart-gray-800 mb-2">
                 Acesso Negado
@@ -130,20 +130,20 @@ const EmailNotifierManagement: React.FC = () => {
    * Renderiza o cabeçalho da página
    */
   const renderPageHeader = (): React.ReactNode => (
-    <div className="mb-8">
-      <div className="flex items-center justify-between">
+    <div className="mb-4 md:mb-8">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0">
         <div>
-          <h1 className="text-3xl font-bold text-smart-gray-800 mb-2">
+          <h1 className="text-xl md:text-3xl font-bold text-smart-gray-800 mb-2">
             Notificações por Email 📧
           </h1>
-          <p className="text-smart-gray-600">
+          <p className="text-sm md:text-base text-smart-gray-600">
             Gerencie emails que receberão notificações de vendas do sistema.
           </p>
         </div>
         <button
           onClick={handleCreateEmailNotifier}
           disabled={isLoading || isSubmitting}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-smart-red-600 hover:bg-smart-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-smart-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full md:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-smart-red-600 hover:bg-smart-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-smart-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -158,7 +158,7 @@ const EmailNotifierManagement: React.FC = () => {
    * Renderiza estatísticas da página
    */
   const renderStats = (): React.ReactNode => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
       <div className="bg-white overflow-hidden shadow rounded-lg">
         <div className="p-5">
           <div className="flex items-center">
@@ -225,18 +225,20 @@ const EmailNotifierManagement: React.FC = () => {
    * Renderiza a tabela de emails
    */
   const renderEmailNotifierTable = (): React.ReactNode => (
-    <div className="bg-white shadow overflow-hidden sm:rounded-md">
-      <EmailNotifierTable
-        data={emailNotifiers}
-        loading={isLoading}
-        error={error}
-        onEdit={handleEditEmailNotifier}
-        onDelete={handleDeleteEmailNotifier}
-        onSort={handleSortChange}
-        sortBy={sortBy}
-        sortDir={sortDir}
-        isDeleting={isDeleting}
-      />
+    <div className="bg-white shadow overflow-hidden sm:rounded-md w-full max-w-full box-border">
+      <div className="w-full max-w-full overflow-x-auto">
+        <EmailNotifierTable
+          data={emailNotifiers}
+          loading={isLoading}
+          error={error}
+          onEdit={handleEditEmailNotifier}
+          onDelete={handleDeleteEmailNotifier}
+          onSort={handleSortChange}
+          sortBy={sortBy}
+          sortDir={sortDir}
+          isDeleting={isDeleting}
+        />
+      </div>
     </div>
   );
 
@@ -247,7 +249,7 @@ const EmailNotifierManagement: React.FC = () => {
     if (totalPages <= 1) return null;
 
     return (
-      <div className="mt-6">
+      <div className="mt-4 md:mt-6">
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
@@ -275,22 +277,24 @@ const EmailNotifierManagement: React.FC = () => {
   );
 
   return (
-    <div className="h-screen flex flex-col bg-smart-gray-50">
+    <div className="min-h-screen flex flex-col bg-smart-gray-50 w-full max-w-full overflow-x-hidden">
       {/* Header */}
       <Header isSidebarCollapsed={isSidebarCollapsed} />
       
       {/* Layout principal */}
-      <div className="flex flex-1 overflow-hidden relative">
+      <div className="flex flex-1 relative w-full max-w-full overflow-x-hidden">
         {/* Sidebar */}
         <Sidebar onCollapseChange={setIsSidebarCollapsed} />
         
         {/* Conteúdo principal */}
-        <div className="flex-1 overflow-auto">
-          <main className="p-6">
-            {renderPageHeader()}
-            {renderStats()}
-            {renderEmailNotifierTable()}
-            {renderPagination()}
+        <div className="flex-1 min-w-0 w-full max-w-full overflow-x-hidden">
+          <main className="h-full bg-smart-gray-50 overflow-x-hidden overflow-y-auto w-full max-w-full">
+            <div className="p-3 md:p-6 w-full max-w-full box-border">
+              {renderPageHeader()}
+              {renderStats()}
+              {renderEmailNotifierTable()}
+              {renderPagination()}
+            </div>
           </main>
         </div>
       </div>

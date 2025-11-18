@@ -129,6 +129,7 @@ public class DailySalesSyncService {
     
     /**
      * Mapeia dados do relatório externo para entidades DailySell.
+     * Utiliza nomes de lojas da fonte confiável (banco de dados) ao invés do relatório.
      * 
      * @param reportData Dados do relatório externo
      * @param activeStores Lista de lojas ativas
@@ -138,10 +139,28 @@ public class DailySalesSyncService {
         // Criar mapa de códigos para UUIDs das lojas
         Map<String, UUID> storeCodeToIdMap = createStoreCodeToIdMap(activeStores);
         
-        return reportData.stream()
+        // Criar mapa de códigos para nomes das lojas (fonte confiável)
+        Map<String, String> storeCodeToNameMap = createStoreCodeToNameMap(activeStores);
+        
+        log.debug("Mapa de nomes de lojas criado: {} lojas mapeadas", storeCodeToNameMap.size());
+        
+        // Validar que todos os códigos do relatório têm nomes no mapa
+        long missingNames = reportData.stream()
+                .filter(report -> !storeCodeToNameMap.containsKey(report.storeCode()))
+                .count();
+        
+        if (missingNames > 0) {
+            log.warn("Atenção: {} registros do relatório não possuem nome no mapa de lojas ativas", missingNames);
+        }
+        
+        List<DailySell> result = reportData.stream()
                 .filter(report -> storeCodeToIdMap.containsKey(report.storeCode()))
-                .map(report -> mapSingleRecord(report, storeCodeToIdMap))
+                .map(report -> mapSingleRecord(report, storeCodeToIdMap, storeCodeToNameMap))
                 .collect(Collectors.toList());
+        
+        log.debug("Mapeamento concluído: {} registros processados", result.size());
+        
+        return result;
     }
     
     /**
@@ -163,16 +182,57 @@ public class DailySalesSyncService {
     }
     
     /**
-     * Mapeia um único registro do relatório para DailySell.
+     * Cria mapa de código de loja para nome da loja para lookup eficiente.
+     * Utiliza a fonte confiável (banco de dados) ao invés do relatório da Legacy API.
+     * 
+     * @param activeStores Lista de lojas ativas
+     * @return Map com código da loja como chave e nome da loja como valor
      */
-    private DailySell mapSingleRecord(StoreReportByDayResponse report, Map<String, UUID> storeCodeToIdMap) {
+    private Map<String, String> createStoreCodeToNameMap(List<StoreResponseDto> activeStores) {
+        Map<String, String> codeToNameMap = new HashMap<>();
+        
+        for (StoreResponseDto store : activeStores) {
+            if (store.getCode() != null && store.getName() != null) {
+                codeToNameMap.put(store.getCode(), store.getName());
+            } else {
+                log.warn("Loja com código ou nome nulo ignorada: código={}, nome={}", 
+                        store.getCode(), store.getName());
+            }
+        }
+        
+        return codeToNameMap;
+    }
+    
+    /**
+     * Mapeia um único registro do relatório para DailySell.
+     * Utiliza o nome da loja da fonte confiável (banco de dados) ao invés do relatório.
+     * 
+     * @param report Dados do relatório externo
+     * @param storeCodeToIdMap Mapa de código para UUID da loja
+     * @param storeCodeToNameMap Mapa de código para nome da loja (fonte confiável)
+     * @return Entidade DailySell mapeada
+     */
+    private DailySell mapSingleRecord(StoreReportByDayResponse report, 
+                                     Map<String, UUID> storeCodeToIdMap,
+                                     Map<String, String> storeCodeToNameMap) {
         UUID storeId = storeCodeToIdMap.get(report.storeCode());
         BigDecimal total = report.danfe().add(report.pdv()).subtract(report.troca());
+        
+        // Obter nome da loja da fonte confiável (banco de dados)
+        // Se não encontrar, usar o nome do relatório como fallback (caso de erro)
+        String storeName = storeCodeToNameMap.getOrDefault(report.storeCode(), report.storeName());
+        
+        // Log de validação: verificar se o nome do relatório difere do nome correto
+        String reportStoreName = report.storeName();
+        if (reportStoreName != null && !reportStoreName.equals(storeName)) {
+            log.debug("Nome da loja corrigido: código={}, nome do relatório='{}', nome correto='{}'", 
+                    report.storeCode(), reportStoreName, storeName);
+        }
         
         return DailySell.builder()
                 .storeId(storeId)
                 .storeCode(report.storeCode())
-                .storeName(report.storeName())
+                .storeName(storeName)
                 .date(report.reportDate())
                 .danfe(report.danfe())
                 .pdv(report.pdv())
@@ -232,8 +292,18 @@ public class DailySalesSyncService {
     
     /**
      * Atualiza campos de um registro existente com dados externos.
+     * O nome da loja já vem correto do mapeamento (fonte confiável).
+     * 
+     * @param existing Registro existente no banco
+     * @param external Dados externos já mapeados com nome correto
      */
     private void updateExistingRecord(DailySell existing, DailySell external) {
+        // Validar se o nome está sendo atualizado corretamente
+        if (!existing.getStoreName().equals(external.getStoreName())) {
+            log.debug("Atualizando nome da loja: código={}, nome antigo='{}', nome novo='{}'", 
+                    existing.getStoreCode(), existing.getStoreName(), external.getStoreName());
+        }
+        
         existing.setStoreName(external.getStoreName());
         existing.setDanfe(external.getDanfe());
         existing.setPdv(external.getPdv());
